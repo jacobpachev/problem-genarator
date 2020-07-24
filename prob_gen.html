@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="app">
-    
+
 <template>
   <v-form v-model="valid">
     <v-container>
@@ -18,8 +18,9 @@
           md="2"
         >
           <v-text-field
-            v-model="numproblems"
+            v-model="n_problems"
             label="Number of problems"
+            type="number"
             required
           ></v-text-field>
         </v-col>
@@ -28,8 +29,9 @@
           md="2"
         >
           <v-text-field
-            v-model="maxnum"
-            label="Maximum number"
+            v-model="max_val"
+            label="Maximum value"
+            type="number"
             required
           ></v-text-field>
         </v-col>
@@ -39,36 +41,36 @@
           md="2"
         >
           <v-text-field
-            v-model="answer"
-            label="Answer"
+            v-model="n_terms"
+            label="Number of terms"
+            type="number"
             required
           ></v-text-field>
         </v-col>
-
         </v-col>
+      </v-row>
+      <v-row>
+				<v-btn @click="generate()">Generate</v-btn>
       </v-row>
     </v-container>
   </v-form>
 </template>
+	<v-container>
+		<template v-for="i in n_problems">
+			<v-row>
+				<v-col>
+					{{i}} Problem
+				</v-col>
+
+			</v-row>
+		</template>
+	</v-container>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
-    })
+  <script src="js/app.js">
   </script>
-  
-<script>
-  export default {
-    data: () => ({
-      valid: false,
-      numproblems: '',
-      answer: '',
-    }),
-  }
-</script>
+
 </body>
 </html>
