@@ -1,37 +1,57 @@
 class Fraction {
-	function Fraction (whole,numer,den) {
+	constructor (whole,numer,den) {
 		this.whole = whole;
 		this.numer = numer;
 		this.den = den;
 	}
 	
-	function extract_whole() {
+	extract_whole() {
 		var num = ~~(this.numer/this.den);
-        if(this.whole < 0  )
+        
 		this.whole += num;
-		this.numer -= num*den;
+		this.numer -= num*this.den;
+		if (this.den < 0) 
+		{
+			this.numer = -this.numer;
+			this.den = -this.den;
+		}
+		
+		if (this.whole > 0 && this.numer < 0) 
+		{
+			this.whole--;
+			this.numer += this.den;
+		}
+		else if (this.whole < 0 && this.numer > 0) 
+		{
+			this.numer -= this.den;
+			this.whole++;
+		}
 	}
-	function reduce() {
-		var gcd = function gcd(a,b){
+	reduce() {
+		var gcd =  function gcd(a,b){
 			return b ? gcd(b, a%b) : a;
 		};
-		var fract_gcd = gcd(this.numer,this.den)
+		var fract_gcd = gcd(Math.abs(this.numer),Math.abs(this.den))
 		this.numer /= fract_gcd;
 		this.den /= fract_gcd;
 	}
-	function add(other) {
+	add(other) {
         this.whole += other.whole;
         this.numer = (this.numer * other.den) + (other.numer * this.den);
-        this.den = Math.abs(this.den) * Math.abs(other.den);
-        this.extract_whole();
-        this.reduce();
-    }
-
-    function neg(other) {
-        this.whole = -this.whole;
-        this.numer = -this.numer;
         this.den = this.den * other.den;
         this.extract_whole();
         this.reduce();
     }
+	
+	neg(other) {
+        this.whole = -this.whole;
+        this.numer = -this.numer;
+    }
+    equals(whole,numer,den) {
+		return this.whole == whole && this.numer == numer && this.den == den;
+	}
 };
+if (exports) 
+{
+	exports.Fraction = Fraction;
+}
