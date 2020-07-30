@@ -28,7 +28,8 @@ class Fraction {
 		}
 	}
 	reduce() {
-		var gcd =  function gcd(a,b){
+		var gcd =  function gcd(a,b) 
+        {
 			return b ? gcd(b, a%b) : a;
 		};
 		var fract_gcd = gcd(Math.abs(this.numer),Math.abs(this.den))
@@ -51,7 +52,7 @@ class Fraction {
 		return this.whole == whole && this.numer == numer && this.den == den;
 	}
 };
-if (exports) 
+if (typeof exports !== "undefined") 
 {
 	exports.Fraction = Fraction;
 }
