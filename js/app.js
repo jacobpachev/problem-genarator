@@ -18,9 +18,14 @@ Vue.component('fract', {
   template: '<div><div><span class = "whole">{{data.whole}}</span></div><span class = "numerator">{{data.numer}}</span><div><hr class="fract_line"></hr></span></div><div><span class = "denominator">{{data.den}}</span></div></div>'
 })
 
+Vue.component('sign', {
+	props: ['data'],
+	template: '<div><span class="signs">{{data}}</span></div>'
+});
+
 Vue.component('problem', {
 	props: ['data'],
-	template: '<v-row><v-col v-for="i in data.fracts.length"><fract :data="data.fracts[i-1]"></fract></v-col></v-row>'
+	template: '<v-row><v-col v-for="i in data.fracts.length"><fract :data="data.fracts[i-1]"></fract><sign :data="data.signs[i]"></sign></v-col></v-col></v-row>'
 });
 
 class Problem
