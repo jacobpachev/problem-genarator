@@ -8,22 +8,34 @@ function range_rand(range) {
 function rand_fraction (max_val) {
 	return new Fraction(range_rand(max_val),range_rand(max_val),range_rand(max_val));
 }
-function symbol(max_val) {
-    var rand = range_rand(max_val);
-    if(rand >= max_val/2) 
-    {
-        return "+";
-    }
-    else if(rand < max_val/2) {
-        return "-";
-    }
+function rand_sign() {
+    let rand = Math.random();
+		return rand >= 0.5 ? '+' : '-';
 }
 Vue.component('fract', {
   props : ['data'],
-    
+
   template: '<div><div><span class = "whole">{{data.whole}}</span></div><span class = "numerator">{{data.numer}}</span><div><hr class="fract_line"></hr></span></div><div><span class = "denominator">{{data.den}}</span></div></div>'
 })
 
+Vue.component('problem', {
+	props: ['data'],
+	template: '<v-row><v-col v-for="i in data.fracts.length"><fract :data="data.fracts[i-1]"></fract></v-col></v-row>'
+});
+
+class Problem
+{
+	constructor (n_terms, max_val)
+	{
+		this.fracts = [];
+		this.signs = [];
+		for (let i = 0; i < n_terms; i++)
+		{
+			this.fracts[i] = rand_fraction(max_val);
+			this.signs[i] = rand_sign();
+		}
+	}
+}
 
 new Vue({
 	el: '#app',
@@ -33,13 +45,19 @@ new Vue({
 		n_problems: 10,
 		n_terms: 3,
 		max_val: 10,
-		f: rand_fraction(10),   
-		f1: rand_fraction(10)
+		problems: []
     },
-	
+
 	methods: {
 		generate: function () {
 			this.n_problems = parseInt(this.n_problems);
+			let problems = [];
+			for (let i = 0; i < this.n_problems; i++)
+			{
+				problems[i] = new Problem(this.n_terms, this.max_val);
+			}
+
+			this.problems = problems;
 		}
 	}
 })

@@ -56,16 +56,15 @@
   </v-form>
 </template>
 	<v-container>
-		<template v-for="i in n_problems">
+		<template v-for="i in problems.length">
 			<v-row>
 				<v-col>
 					{{i}} Problem
 				</v-col>
 				<v-col>
-					<fract :data="f"></fract>
-				</v-col>
-				<v-col>
-					<fract :data="f1"></fract>
+					<v-container>
+						<problem :data="problems[i-1]"></problem>
+					</v-container>
 				</v-col>
 			</v-row>
 		</template>
