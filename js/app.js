@@ -8,11 +8,23 @@ function range_rand(range) {
 function rand_fraction (max_val) {
 	return new Fraction(range_rand(max_val),range_rand(max_val),range_rand(max_val));
 }
+function symbol(max_val) {
+    var rand = range_rand(max_val);
+    if(rand >= max_val/2) 
+    {
+        return "+";
+    }
+    else if(rand < max_val/2) {
+        return "-";
+    }
+}
 Vue.component('fract', {
-    props : ['data'],
+  props : ['data'],
     
-  template: ' <div class="fract"><v-container > <v-row align="center" justify="center"> <v-col>{{data.whole}} </v-col> <v-col><v-container ><v-row><v-col>{{data.numer}}</v-col> </v-row> <v-row> <v-col> <hr class="fract_line"></hr> </v-col> </v-row> <v-row> <v-col>{{data.den}}</v-col></v-row> </v-container></v-col></v-row></v-container></div>'
+  template: '<div><div><span class = "whole">{{data.whole}}</span></div><span class = "numerator">{{data.numer}}</span><div><hr class="fract_line"></hr></span></div><div><span class = "denominator">{{data.den}}</span></div></div>'
 })
+
+
 new Vue({
 	el: '#app',
 	vuetify: new Vuetify(),
@@ -21,7 +33,8 @@ new Vue({
 		n_problems: 10,
 		n_terms: 3,
 		max_val: 10,
-        f: new Fraction(1,2,3)
+		f: rand_fraction(10),   
+		f1: rand_fraction(10)
     },
 	
 	methods: {
@@ -30,3 +43,4 @@ new Vue({
 		}
 	}
 })
+

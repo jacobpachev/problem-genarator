@@ -1,8 +1,8 @@
 .fract_line {
     width: 10px;
 }
-.fract {
-  width: 100px;
-  height: 175px;
-  background-color: red;
+.whole {
+    position: relative;
+    right: 18px;
+    top: 27px;
 }
