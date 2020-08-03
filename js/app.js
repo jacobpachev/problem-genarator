@@ -25,7 +25,7 @@ Vue.component('sign', {
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<v-row><template v-for="i in data.fracts.length"><v-col><sign :data="data.signs[i-1]"></sign></v-col><v-col ><fract :data="data.fracts[i-1]"></fract></v-col></template></v-row>'
+	template: '<div class="problem_table" ><table><th><template v-for="i in data.fracts.length"><td><tr><sign :data="data.signs[i-2]"></sign></td><td ><fract :data="data.fracts[i-1]"></fract></td></template></th></tr></table></div>'
 });
 
 class Problem

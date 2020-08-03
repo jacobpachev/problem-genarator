@@ -8,6 +8,7 @@
 }
 .signs {
     position: relative;
-    left: 108px;
-    bottom: 25px;
+    padding: 30px;
+    top: 25px;
 }
+
