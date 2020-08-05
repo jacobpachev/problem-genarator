@@ -1,14 +1,40 @@
 .fract_line {
     width: 10px;
 }
-.whole {
-    position: relative;
-    right: 18px;
-    top: 27px;
+
+input.whole {
+
 }
+
+.whole {
+	position: relative;
+	top: 7px;
+	left: 0px;
+	font-size: 14px;
+}
+
+.numerator {
+	position: relative;
+	top: 0px;
+	left: 10px;
+	font-size: 14px;
+}
+
+.denominator {
+	position: relative;
+	top: 20px;
+	left: 10px;
+	font-size: 14px;
+}
+
+.fract_line {
+	position: relative;
+	top: 10px;
+	left: 10px;
+	font-size: 14px;
+}
+
+
 .signs {
-    position: relative;
-    padding: 30px;
-    top: 25px;
 }
 

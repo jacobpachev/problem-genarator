@@ -15,17 +15,22 @@ function rand_sign() {
 Vue.component('fract', {
   props : ['data'],
 
-  template: '<div><div><span class = "whole">{{data.whole}}</span></div><span class = "numerator">{{data.numer}}</span><div><hr class="fract_line"></hr></span></div><div><span class = "denominator">{{data.den}}</span></div></div>'
+  template: '<div><span class="whole">{{data.whole}}</span><span class="numerator">{{data.numer}}</span><span><hr class="fract_line"></hr></span><span class="denominator">{{data.den}}</span></div>'
 })
 
 Vue.component('sign', {
 	props: ['data'],
-	template: '<div><span class="signs">{{data}}</span></div>'
+	template: '<span class="signs">{{data}}</span>'
 });
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<div class="problem_table" ><table><th><template v-for="i in data.fracts.length"><td><tr><sign :data="data.signs[i-2]"></sign></td><td ><fract :data="data.fracts[i-1]"></fract></td></template></th></tr></table></div>'
+	template: '<div class="problem_table"><table><tr><template v-for="i in data.fracts.length"><td><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></td><td></fract></td></template><td>=</td><td>' +
+	'<answer-input></answer-input></td></tr></table></div>'
+});
+
+Vue.component('answer-input', {
+  template: '<div><div><input class="whole"></input></div><input class="numerator"></input><div><hr class="fract_line"></hr></span></div><div><input class="denominator"></input></div></div>'
 });
 
 class Problem
