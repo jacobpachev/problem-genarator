@@ -25,12 +25,12 @@ Vue.component('sign', {
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<div class="problem_table"><table><tr><template v-for="i in data.fracts.length"><td><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></td><td></fract></td></template><td>=</td><td>' +
-	'<answer-input></answer-input></td></tr></table></div>'
+	template: '<div class="problem_table"><table><tr><template v-for="i in data.fracts.length"><td><th><sign :data="data.signs[i-2]"></sign><th><fract :data="data.fracts[i-1]"></td><td></fract></td></template><td>=</td><td>' +
+	'<answer-input></answer-input></td></th></th></tr></table></div>'
 });
 
 Vue.component('answer-input', {
-  template: '<div><div><input class="whole"></input></div><input class="numerator"></input><div><hr class="fract_line"></hr></span></div><div><input class="denominator"></input></div></div>'
+  template: '<div><div><input class="whole"></input></div><input class="numerator"></input><div><hr class="fract_line_answer"></hr></span></div><div><input class="denominator"></input></div></div>'
 });
 
 class Problem

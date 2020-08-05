@@ -1,40 +1,57 @@
-.fract_line {
+input.whole {
+	position: relative;
+	top: 15px;
+	right: 5px;
+	width: 15px;
+}
+input.numerator {
+	position: relative;
+	bottom: 15px;
+	left: 15px;
+	width: 15px;
+}
+input.denominator {
+	position: relative;
+	bottom: 10px;
+	left: 12px;
+	width: 15px;
+}
+.fract_line_answer {
+	position: relative;
+	left: 15px;
+	bottom: 10px;
+	font-size: 14px;
     width: 10px;
 }
-
-input.whole {
-
-}
-
 .whole {
 	position: relative;
-	top: 7px;
-	left: 0px;
+	top: 5px;
+	right: 20px;
 	font-size: 14px;
 }
 
 .numerator {
 	position: relative;
-	top: 0px;
-	left: 10px;
+	right: 17px;
 	font-size: 14px;
 }
 
 .denominator {
 	position: relative;
-	top: 20px;
-	left: 10px;
+	right: 15px;
 	font-size: 14px;
 }
 
 .fract_line {
 	position: relative;
-	top: 10px;
-	left: 10px;
+	right: 10px;
 	font-size: 14px;
+    width: 10px;
 }
 
 
 .signs {
+	position: relative;
+	right: 20px;
 }
 
