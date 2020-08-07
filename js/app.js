@@ -21,12 +21,12 @@ Vue.component('fract', {
 
 Vue.component('sign', {
 	props: ['data'],
-	template: '<span class="sign">{{data}}</span>'
+	template: '<div class="sign">{{data}}</div>'
 });
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></fract></div></td><td></fract></td></template><div>=</div>' +
+	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
 	'<answer-input></answer-input></div>'
 });
 
@@ -44,7 +44,7 @@ Vue.component('answer-input', {
 			console.log("entered fraction:", this.fract);
 		}
 	},
-	template: '<div><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
+	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
 		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
 		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
 });

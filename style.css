@@ -16,6 +16,7 @@ input.denominator {
 	left: 15px;
 	width: 15px;
 }
+
 .fract_line_answer {
 	position: absolute;
 	left: 15px;
@@ -24,12 +25,26 @@ input.denominator {
     width: 10px;
 }
 
+.problem_table {
+	background-color: yellow;
+	display: inline-block;
+	width: 400px;
+}
+
 .fract {
-	position: relative;
+	position: absolute;
 	top: 0px;
+	left: 20px;
 	height: 40px;
 	width: 40px;
-	display: inline;
+	background-color: pink;
+}
+
+.problem_container {
+	width: 400px;
+	height: 100px;
+	background-color: blue;
+	border: 1px solid black;
 }
 
 .whole {
@@ -63,12 +78,42 @@ input.denominator {
 
 .fract_w_sign {
 	position: relative;
-	display: inline;
+	display: inline-block;
+	width: 50px;
+	height: 40px;
+	background-color: #406070;
 }
 
 .sign {
 	position: absolute;
 	top: 10px;
 	left: 0px;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-color: green;
+	z-index: 99999;
+	padding: 5px 5px 5px 5px;
 }
 
+.problem_label {
+	display: inline-block;
+	width: 70px;
+}
+
+.eq {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	z-index: 99999;
+	background-color: azure;
+}
+
+.answer_container {
+	width: 100px;
+	height: 100px;
+	background-color: magenta;
+	z-index: 99999;
+	display: inline-block;
+}
