@@ -15,18 +15,19 @@ function rand_sign() {
 Vue.component('fract', {
   props : ['data'],
 
-  template: '<div><span class="whole">{{data.whole}}</span><span class="numerator">{{data.numer}}</span><span><hr class="fract_line"></hr></span><span class="denominator">{{data.den}}</span></div>'
+  template: '<div class="fract"><span class="whole">{{data.whole}}</span><span class="numerator">{{data.numer}}</span>'  +
+	'<span class="fract_line"><hr ></hr></span><span class="denominator">{{data.den}}</span></div>'
 })
 
 Vue.component('sign', {
 	props: ['data'],
-	template: '<span class="signs">{{data}}</span>'
+	template: '<span class="sign">{{data}}</span>'
 });
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<div class="problem_table"><table><tr><template v-for="i in data.fracts.length"><td><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></fract></td><td></fract></td></template><td>=</td><td>' +
-	'<answer-input></answer-input></td></tr></table></div>'
+	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></fract></div></td><td></fract></td></template><div>=</div>' +
+	'<answer-input></answer-input></div>'
 });
 
 Vue.component('answer-input', {
