@@ -1,33 +1,39 @@
 input.whole {
 	position: absolute;
-	top: 15px;
+	top: 7px;
 	left: 3px;
-	width: 15px;
+	width: 20px;
+	height: 20px;
+	background-color: #ff0080;
 }
 input.numerator {
 	position: absolute;
-	bottom: 10px;
-	left: 14px;
-	width: 15px;
+	top: 0px;
+	left: 20px;
+	width: 20px;
+	background-color: #80ff80;
 }
+
 input.denominator {
 	position: absolute;
-	bottom: 12px;
-	left: 15px;
-	width: 15px;
+	top: 12px;
+	left: 20px;
+	width: 20px;
+	background-color: #ffff80;
 }
 
 .fract_line_answer {
 	position: absolute;
 	left: 15px;
-	bottom: 10px;
+	top: 10px;
 	font-size: 14px;
-    width: 10px;
+	width: 23px;
 }
 
 .problem_table {
+	position: relative;
 	background-color: yellow;
-	display: inline-block;
+	display: block;
 	width: 400px;
 }
 
@@ -45,6 +51,8 @@ input.denominator {
 	height: 100px;
 	background-color: blue;
 	border: 1px solid black;
+	display: block;
+	margin: 20px;
 }
 
 .whole {
@@ -91,7 +99,7 @@ input.denominator {
 	width: 20px;
 	height: 20px;
 	display: inline-block;
-	background-color: green;
+	background-color: lightgreen;
 	z-index: 99999;
 	padding: 5px 5px 5px 5px;
 }
@@ -102,18 +110,21 @@ input.denominator {
 }
 
 .eq {
-	position: absolute;
 	width: 20px;
 	height: 20px;
 	display: inline-block;
-	z-index: 99999;
-	background-color: azure;
+	z-index: 999999;
+	background-color: green;
+	position: relative;
+	left: 20px;
 }
 
 .answer_container {
 	width: 100px;
-	height: 100px;
+	height: 40px;
 	background-color: magenta;
 	z-index: 99999;
 	display: inline-block;
+	position: relative;
+	left: 20px;
 }
