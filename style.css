@@ -1,19 +1,19 @@
 input.whole {
 	position: relative;
 	top: 15px;
-	right: 5px;
+	left: 3px;
 	width: 15px;
 }
 input.numerator {
 	position: relative;
-	bottom: 15px;
-	left: 15px;
+	bottom: 10px;
+	left: 14px;
 	width: 15px;
 }
 input.denominator {
 	position: relative;
-	bottom: 10px;
-	left: 12px;
+	bottom: 12px;
+	left: 15px;
 	width: 15px;
 }
 .fract_line_answer {
@@ -25,7 +25,7 @@ input.denominator {
 }
 .whole {
 	position: relative;
-	top: 5px;
+	top: 7px;
 	right: 20px;
 	font-size: 14px;
 }
@@ -38,7 +38,7 @@ input.denominator {
 
 .denominator {
 	position: relative;
-	right: 15px;
+	right: 10px;
 	font-size: 14px;
 }
 
