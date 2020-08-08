@@ -6,7 +6,10 @@ function range_rand(range) {
 }
 
 function rand_fraction (max_val) {
-	return new Fraction(range_rand(max_val),range_rand(max_val),range_rand(max_val));
+	let denom = range_rand(max_val);
+	if (denom < 2) 
+		denom = 2;
+	return new Fraction(range_rand(max_val), range_rand(denom-1), denom);
 }
 function rand_sign() {
     let rand = Math.random();
@@ -26,11 +29,12 @@ Vue.component('sign', {
 
 Vue.component('problem', {
 	props: ['data'],
-	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-2]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
-	'<answer-input></answer-input></div>'
+	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-1]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
+	'<answer-input :problem="data"></answer-input></div>'
 });
 
 Vue.component('answer-input', {
+	props: ['problem'],
 	data: function() { return {
 			num: null,
 			denom: null,
@@ -40,8 +44,13 @@ Vue.component('answer-input', {
 	},
 	methods: {
 		handle_change: function() {
-			this.fract = new Fraction(this.whole, this.num, this.denom);
+			this.whole = parseInt(this.whole);
+			this.num = parseInt(this.num);
+			this.denom = parseInt(this.denom);
+			this.fract = new Fraction(this.whole, this.whole < 0 ? -this.num: this.num, this.denom);
+			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
+			
 		}
 	},
 	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
@@ -51,16 +60,46 @@ Vue.component('answer-input', {
 
 class Problem
 {
-	constructor (n_terms, max_val)
+	constructor (ctx)
 	{
 		this.fracts = [];
 		this.signs = [];
-		for (let i = 0; i < n_terms; i++)
+		this.result = {};
+		this.ctx = ctx;
+		this.user_answer = null;
+		for (let i = 0; i < ctx.n_terms; i++)
 		{
-			this.fracts[i] = rand_fraction(max_val);
+			this.fracts[i] = rand_fraction(ctx.max_val);
 			this.signs[i] = rand_sign();
 		}
+		this.compute_answer();
 	}
+	update_user_answer(answer) 
+	{
+		this.user_answer = answer;
+		this.ctx.check_answers();
+	}
+	compute_answer()
+	{
+		this.answer = new Fraction(0,0,1);
+		for(let i = 0; i < this.fracts.length; i++) 
+		{
+			if (this.signs[i] == "+") 
+				this.answer.add(this.fracts[i]);
+			else 
+			{
+				let tmp = this.fracts[i].clone();
+				tmp.neg();
+				this.answer.add(tmp);
+			}
+		}
+		console.log("Answer",this.answer);
+	}
+	answer_is_correct()
+	{
+		return this.user_answer && this.answer.obj_equals(this.user_answer);
+	}
+	
 }
 
 new Vue({
@@ -71,19 +110,29 @@ new Vue({
 		n_problems: 10,
 		n_terms: 3,
 		max_val: 10,
-		problems: []
+		problems: [],
+		results: []
     },
-
 	methods: {
 		generate: function () {
 			this.n_problems = parseInt(this.n_problems);
 			let problems = [];
+			let results = [];
 			for (let i = 0; i < this.n_problems; i++)
 			{
-				problems[i] = new Problem(this.n_terms, this.max_val);
+				problems[i] = new Problem(this);
+				results[i] = false;
 			}
 
 			this.problems = problems;
+			this.results = results;
+		},
+		check_answers: function () {
+			for (let i = 0; i < this.problems.length; i++)
+			{
+				this.results[i]  = this.problems[i].answer_is_correct();
+			}
+			console.log("Checking answers",this.results);
 		}
 	}
 })

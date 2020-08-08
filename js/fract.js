@@ -51,6 +51,14 @@ class Fraction {
     equals(whole,numer,den) {
 		return this.whole == whole && this.numer == numer && this.den == den;
 	}
+	obj_equals(other)
+    {
+        return this.equals(other.whole, other.numer, other.den);
+    }
+	clone() 
+    {
+        return new Fraction(this.whole, this.numer, this.den);
+    }
 };
 if (typeof exports !== "undefined") 
 {
