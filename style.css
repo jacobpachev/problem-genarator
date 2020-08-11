@@ -133,3 +133,9 @@ input.denominator {
 	position: relative;
 	left: 20px;
 }
+
+.checkmark {
+	color: green;
+	position: relative;
+	left: 150px;
+}

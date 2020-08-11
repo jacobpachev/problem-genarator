@@ -16,7 +16,7 @@ function rand_sign() {
 		return rand >= 0.5 ? '+' : '-';
 }
 Vue.component('fract', {
-  props : ['data'],
+	props : ['data'],
 
   template: '<div class="fract"><span class="whole">{{data.whole}}</span><span class="numerator">{{data.numer}}</span>'  +
 	'<span class="fract_line"><hr ></hr></span><span class="denominator">{{data.den}}</span></div>'
@@ -24,33 +24,34 @@ Vue.component('fract', {
 
 Vue.component('sign', {
 	props: ['data'],
+	
 	template: '<div class="sign">{{data}}</div>'
 });
 
 Vue.component('problem', {
 	props: ['data'],
+	data: function() { return {
+		correct: false
+	}
+	},
 	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-1]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
-	'<answer-input :problem="data"></answer-input></div>'
+	'<answer-input :problem="data"></answer-input><div class="checkmark"><span v-if="correct">&#10003;</span></div></div>'
 });
 
 Vue.component('answer-input', {
 	props: ['problem'],
 	data: function() { return {
-			num: null,
-			denom: null,
-			whole: null,
-			fract: null
+		num: null,
+		denom: null,
+		whole: null,
+		fract: null
 		}
 	},
 	methods: {
 		handle_change: function() {
-			this.whole = parseInt(this.whole);
-			this.num = parseInt(this.num);
-			this.denom = parseInt(this.denom);
 			this.fract = new Fraction(this.whole, this.whole < 0 ? -this.num: this.num, this.denom);
 			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
-			
 		}
 	},
 	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
@@ -65,6 +66,9 @@ class Problem
 		this.fracts = [];
 		this.signs = [];
 		this.result = {};
+		this.whole = parseInt(this.whole);
+		this.num = parseInt(this.num);
+		this.denom = parseInt(this.denom);
 		this.ctx = ctx;
 		this.user_answer = null;
 		for (let i = 0; i < ctx.n_terms; i++)
@@ -115,6 +119,7 @@ new Vue({
     },
 	methods: {
 		generate: function () {
+			const time = Date.now();
 			this.n_problems = parseInt(this.n_problems);
 			let problems = [];
 			let results = [];
@@ -131,8 +136,12 @@ new Vue({
 			for (let i = 0; i < this.problems.length; i++)
 			{
 				this.results[i]  = this.problems[i].answer_is_correct();
+				if (this.results[i]) 
+				{
+					
+				}
 			}
-			console.log("Checking answers",this.results);
+		console.log("Checking answers",this.results);
 		}
 	}
 })
