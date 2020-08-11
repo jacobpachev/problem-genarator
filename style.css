@@ -136,6 +136,6 @@ input.denominator {
 
 .checkmark {
 	color: green;
-	position: relative;
-	left: 150px;
+	font-size: 24px;
+	display: inline-block;
 }

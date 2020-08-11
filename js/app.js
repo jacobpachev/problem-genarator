@@ -7,7 +7,7 @@ function range_rand(range) {
 
 function rand_fraction (max_val) {
 	let denom = range_rand(max_val);
-	if (denom < 2) 
+	if (denom < 2)
 		denom = 2;
 	return new Fraction(range_rand(max_val), range_rand(denom-1), denom);
 }
@@ -24,18 +24,15 @@ Vue.component('fract', {
 
 Vue.component('sign', {
 	props: ['data'],
-	
+
 	template: '<div class="sign">{{data}}</div>'
 });
 
 Vue.component('problem', {
 	props: ['data'],
-	data: function() { return {
-		correct: false
-	}
-	},
 	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-1]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
-	'<answer-input :problem="data"></answer-input><div class="checkmark"><span v-if="correct">&#10003;</span></div></div>'
+	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
+	'&#10003;</div></div>'
 });
 
 Vue.component('answer-input', {
@@ -78,7 +75,7 @@ class Problem
 		}
 		this.compute_answer();
 	}
-	update_user_answer(answer) 
+	update_user_answer(answer)
 	{
 		this.user_answer = answer;
 		this.ctx.check_answers();
@@ -86,11 +83,11 @@ class Problem
 	compute_answer()
 	{
 		this.answer = new Fraction(0,0,1);
-		for(let i = 0; i < this.fracts.length; i++) 
+		for(let i = 0; i < this.fracts.length; i++)
 		{
-			if (this.signs[i] == "+") 
+			if (this.signs[i] == "+")
 				this.answer.add(this.fracts[i]);
-			else 
+			else
 			{
 				let tmp = this.fracts[i].clone();
 				tmp.neg();
@@ -103,7 +100,6 @@ class Problem
 	{
 		return this.user_answer && this.answer.obj_equals(this.user_answer);
 	}
-	
 }
 
 new Vue({
@@ -115,11 +111,20 @@ new Vue({
 		n_terms: 3,
 		max_val: 10,
 		problems: [],
-		results: []
-    },
+		results: [],
+		start_time: null,
+		solve_time: null
+	},
+	computed: {
+		pretty_solve_time: function() {
+			if (!this.solve_time)
+				return null;
+			return (this.solve_time / 1000).toFixed(2);
+		}
+
+	},
 	methods: {
 		generate: function () {
-			const time = Date.now();
 			this.n_problems = parseInt(this.n_problems);
 			let problems = [];
 			let results = [];
@@ -131,16 +136,22 @@ new Vue({
 
 			this.problems = problems;
 			this.results = results;
+			this.start_time = Date.now();
+			this.solve_time = null;
+		},
+		report_time: function () {
+			this.solve_time = Date.now() - this.start_time;
 		},
 		check_answers: function () {
+			let n_correct = 0;
 			for (let i = 0; i < this.problems.length; i++)
 			{
 				this.results[i]  = this.problems[i].answer_is_correct();
-				if (this.results[i]) 
-				{
-					
-				}
+				n_correct += this.results[i];
 			}
+
+			if (n_correct == this.problems.length)
+				this.report_time();
 		console.log("Checking answers",this.results);
 		}
 	}
