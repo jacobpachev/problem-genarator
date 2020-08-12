@@ -55,33 +55,41 @@ Vue.component('answer-input', {
 		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
 		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
 });
+
+function pad(num, size)
+{
+	var s = num+"";
+	while (s.length < size) s = "0" + s;
+	return s;
+}
+
+function fmt_time(t, show_ms)
+{
+	let tmp = t;
+	let ms = tmp % 1000;
+	tmp -= ms;
+	tmp /= 1000;
+	let ss = tmp % 60;
+	tmp -= ss;
+	let mm = tmp / 60;
+	let res = pad(mm, 2) + ":" + pad(ss, 2);
+
+	if (show_ms)
+		res += "." + pad(ms, 3);
+
+	return res;
+}
+
 Vue.component('clock', {
-	props: ['data'],
-	data: function() { return {
-		seconds: null
-		}
-	},
+	props: ['time'],
 	methods: {
-		timer: function() {
-			let seconds = 0;
-			let minutes = 0;
-			setInterval( function() { 
-				if (seconds == 59) 
-			{
-					seconds = 0;
-			}
-				seconds++;
-				console.log("Seconds: ",seconds);
-			}, 1000)
-			setInterval( function() { 
-				minutes++;
-				console.log("Minutes: ",minutes);
-			}, 60000)
-			this.seconds = seconds;
-			this.minutes = minutes;
+		display_time: function() {
+			if (!this.time)
+				return "00:00";
+			return fmt_time(this.time, false);
 		}
 	},
-	template: '<p>{{timer()}} Seconds: {{this.seconds}}</p>'
+	template: '<p>{{display_time()}}</p>'
 });
 class Problem
 {
@@ -141,14 +149,13 @@ new Vue({
 		results: [],
 		start_time: null,
 		solve_time: null,
-		seconds: null,
-		minutes: null
+		work_time: 0
 	},
 	computed: {
 		pretty_solve_time: function() {
 			if (!this.solve_time)
 				return null;
-			return (this.solve_time / 1000).toFixed(2);
+			return fmt_time(this.solve_time, true);
 		}
 	},
 	methods: {
@@ -169,6 +176,9 @@ new Vue({
 			this.results = results;
 			this.start_time = Date.now();
 			this.solve_time = null;
+			this.work_time = 0;
+			let vm = this;
+			setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
