@@ -38,29 +38,35 @@ Vue.component('problem', {
 Vue.component('answer-input', {
 	props: ['problem'],
 	data: function() { return {
-		num: null,
-		denom: null,
-		whole: null,
+		num: "",
+		denom: "",
+		whole: "",
 		fract: null
 		}
+	},
+	created() {
+	    this.num = this.denom = this.whole = "";
+	    console.log("Created input",this);
 	},
 	methods: {
 		handle_change: function() {
 			let whole = this.whole;
 			let num = this.num;
 			let denom = this.denom;
-			if(!whole){
+			if (!whole){
 			    whole = 0;
 			}
-			if(whole = "-"){
+			if (whole == "-"){
 			    whole = 0;
-			    num = num*-1;
+			    num = -num;
 			}
-			if(!num&&!denom){
+			if (!num && !denom){
 			    num = 0
 			    denom = 1
 			}
-			
+			if (whole < 0){
+			    num = - num;
+			}
 			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
@@ -113,9 +119,6 @@ class Problem
 		this.fracts = [];
 		this.signs = [];
 		this.result = {};
-		this.whole = parseInt(this.whole);
-		this.num = parseInt(this.num);
-		this.denom = parseInt(this.denom);
 		this.ctx = ctx;
 		this.user_answer = null;
 		for (let i = 0; i < ctx.n_terms; i++)
