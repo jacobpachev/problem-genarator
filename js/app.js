@@ -46,7 +46,22 @@ Vue.component('answer-input', {
 	},
 	methods: {
 		handle_change: function() {
-			this.fract = new Fraction(this.whole, this.whole < 0 ? -this.num: this.num, this.denom);
+			let whole = this.whole;
+			let num = this.num;
+			let denom = this.denom;
+			if(!whole){
+			    whole = 0;
+			}
+			if(whole = "-"){
+			    whole = 0;
+			    num = num*-1;
+			}
+			if(!num&&!denom){
+			    num = 0
+			    denom = 1
+			}
+			
+			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
 		}
