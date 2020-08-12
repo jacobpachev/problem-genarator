@@ -55,7 +55,34 @@ Vue.component('answer-input', {
 		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
 		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
 });
-
+Vue.component('clock', {
+	props: ['data'],
+	data: function() { return {
+		seconds: null
+		}
+	},
+	methods: {
+		timer: function() {
+			let seconds = 0;
+			let minutes = 0;
+			setInterval( function() { 
+				if (seconds == 59) 
+			{
+					seconds = 0;
+			}
+				seconds++;
+				console.log("Seconds: ",seconds);
+			}, 1000)
+			setInterval( function() { 
+				minutes++;
+				console.log("Minutes: ",minutes);
+			}, 60000)
+			this.seconds = seconds;
+			this.minutes = minutes;
+		}
+	},
+	template: '<p>{{timer()}} Seconds: {{this.seconds}}</p>'
+});
 class Problem
 {
 	constructor (ctx)
@@ -113,7 +140,9 @@ new Vue({
 		problems: [],
 		results: [],
 		start_time: null,
-		solve_time: null
+		solve_time: null,
+		seconds: null,
+		minutes: null
 	},
 	computed: {
 		pretty_solve_time: function() {
@@ -121,19 +150,21 @@ new Vue({
 				return null;
 			return (this.solve_time / 1000).toFixed(2);
 		}
-
 	},
 	methods: {
 		generate: function () {
 			this.n_problems = parseInt(this.n_problems);
 			let problems = [];
 			let results = [];
+			let seconds = 0;
+			let minutes = 0;
 			for (let i = 0; i < this.n_problems; i++)
 			{
 				problems[i] = new Problem(this);
 				results[i] = false;
 			}
-
+			this.seconds = seconds;
+			this.minutes = minutes;
 			this.problems = problems;
 			this.results = results;
 			this.start_time = Date.now();

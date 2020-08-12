@@ -7,7 +7,6 @@ input.whole {
 	height: 20px;
 	border: 1px solid black;
 	display: block;
-	background-color: yellow;
 
 }
 input.numerator {
@@ -17,7 +16,6 @@ input.numerator {
 	width: 25px;
 	border: 1px solid black;
 	display: block;
-	background-color: blue;
 }
 
 input.denominator {
@@ -27,7 +25,6 @@ input.denominator {
 	width: 25px;
 	border: 1px solid black;
 	display: block;
-	background-color: purple;
 }
 
 .fract_line_answer {
@@ -36,7 +33,6 @@ input.denominator {
 	top: 17px;
 	font-size: 14px;
 	width: 30px;
-	border: 2px solid red;
 	z-index: 9999999;
 }
 
