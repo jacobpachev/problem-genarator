@@ -51,7 +51,6 @@
       </v-row>
       <v-row>
 				<v-btn @click="generate()">Generate</v-btn>
-				<clock :data="this.seconds"></clock>
       </v-row>
     </v-container>
   </v-form>
@@ -65,6 +64,7 @@
 						<problem :data="problems[i-1]"></problem>
 				</div>
 		</template>
+			<clock :time="work_time"></clock>
 		<div class="solve-time" v-if="pretty_solve_time">
 			Solved in {{pretty_solve_time}} seconds.
 		</div>
