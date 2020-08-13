@@ -44,15 +44,16 @@ Vue.component('answer-input', {
 		fract: null
 		}
 	},
-	created() {
+	mounted() {
 	    this.num = this.denom = this.whole = "";
-	    console.log("Created input",this);
+	    console.log("Mounted input", this);
 	},
 	methods: {
 		handle_change: function() {
 			let whole = this.whole;
 			let num = this.num;
 			let denom = this.denom;
+
 			if (!whole){
 			    whole = 0;
 			}
@@ -167,7 +168,7 @@ new Vue({
 		start_time: null,
 		solve_time: null,
 		work_time: 0,
-        timer_id: 0
+		timer_id: 0
 	},
 	computed: {
 		pretty_solve_time: function() {
@@ -188,15 +189,23 @@ new Vue({
 				problems[i] = new Problem(this);
 				results[i] = false;
 			}
-			this.seconds = seconds;
-			this.minutes = minutes;
 			this.problems = problems;
 			this.results = results;
 			this.start_time = Date.now();
 			this.solve_time = null;
 			this.work_time = 0;
-			let vm = this;
+			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
+		},
+		reset_timer: function () {
+			if (this.timer_id)
+			{
+				clearInterval(this.timer_id);
+				this.timer_id = 0;
+			}
+		},
+		gen_key: function(pos) {
+			return this.start_time.toString() + "-" + pos;
 		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
@@ -212,9 +221,10 @@ new Vue({
 			if (n_correct == this.problems.length)
 			{
 				this.report_time();
-				clearInterval(this.timer_id);
+				this.reset_timer();
 			}
-		console.log("Checking answers",this.results);
+
+			console.log("Checking answers",this.results);
 		}
 	}
 })
