@@ -149,7 +149,8 @@ new Vue({
 		results: [],
 		start_time: null,
 		solve_time: null,
-		work_time: 0
+		work_time: 0,
+        timer_id: 0
 	},
 	computed: {
 		pretty_solve_time: function() {
@@ -178,7 +179,7 @@ new Vue({
 			this.solve_time = null;
 			this.work_time = 0;
 			let vm = this;
-			setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
+			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
@@ -192,7 +193,10 @@ new Vue({
 			}
 
 			if (n_correct == this.problems.length)
+			{
 				this.report_time();
+				clearInterval(this.timer_id);
+			}
 		console.log("Checking answers",this.results);
 		}
 	}
