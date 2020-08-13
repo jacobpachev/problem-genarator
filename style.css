@@ -42,7 +42,7 @@ input.denominator {
 	width: 400px;
 }
 
-.fract {
+.fraction {
 	position: absolute;
 	top: 0px;
 	left: 20px;
@@ -58,7 +58,7 @@ input.denominator {
 	margin: 20px;
 }
 
-.whole {
+.whole_part {
 	position: absolute;
 	top: 7px;
 	left: 0px;

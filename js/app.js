@@ -17,9 +17,8 @@ function rand_sign() {
 }
 Vue.component('fract', {
 	props : ['data'],
-
-  template: '<div class="fract"><span class="whole">{{data.whole}}</span><span class="numerator">{{data.numer}}</span>'  +
-	'<span class="fract_line"><hr ></hr></span><span class="denominator">{{data.den}}</span></div>'
+  template: '<div class="fraction"><span class="whole_part">{{data.whole}}</span><span class="numerator">{{data.numer}}</span>'  +
+	'<span class="fract_line"><hr></hr></span><span class="denominator">{{data.den}}</span></div>'
 })
 
 Vue.component('sign', {
@@ -168,7 +167,8 @@ new Vue({
 		start_time: null,
 		solve_time: null,
 		work_time: 0,
-		timer_id: 0
+		timer_id: 0,
+		max_val_length: null
 	},
 	computed: {
 		pretty_solve_time: function() {
@@ -197,6 +197,11 @@ new Vue({
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 		},
+		fract_width: function () {
+			let max_val_length = this.max_val.toString().length;
+			this.max_val_length = max_val_length;
+		},
+	
 		reset_timer: function () {
 			if (this.timer_id)
 			{
@@ -225,6 +230,15 @@ new Vue({
 			}
 
 			console.log("Checking answers",this.results);
+		},
+		fix_style: function() {
+			let x = document.querySelectorAll(".whole_part");
+			this.max_val_length = parseInt(this.max_val_length);
+			let padding = this.max_val_length;
+			for (var i = 0; i < x.length; i++) {
+				 x[i].style.padding = padding + "px";
+ 				 x[i].style.backgroundColor = "red";
+			}
 		}
 	}
 })
