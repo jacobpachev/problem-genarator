@@ -61,7 +61,7 @@
 					<div class="problem_label">
 					Problem {{i}}
 					</div>
-						<problem :data="problems[i-1]"></problem>
+						<problem :data="problems[i-1]" :key="gen_key(i)"></problem>
 				</div>
 		</template>
 			<clock :time="work_time"></clock>
