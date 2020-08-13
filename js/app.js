@@ -129,7 +129,6 @@ class Problem
 				this.answer.add(tmp);
 			}
 		}
-		console.log("Answer",this.answer);
 	}
 	answer_is_correct()
 	{
@@ -201,4 +200,3 @@ new Vue({
 		}
 	}
 })
-
