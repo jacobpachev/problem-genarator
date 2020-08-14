@@ -1,4 +1,5 @@
-
+const FRACT_INC_W = 5;
+const FRACT_BASE_W = 10;
 
 function range_rand(range) {
 	var rand = Math.floor(Math.random() * range)+1;
@@ -199,9 +200,9 @@ new Vue({
 		},
 		fract_width: function () {
 			let max_val_length = this.max_val.toString().length;
-			this.max_val_length = max_val_length;
+			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
 		},
-	
+
 		reset_timer: function () {
 			if (this.timer_id)
 			{
@@ -231,14 +232,24 @@ new Vue({
 
 			console.log("Checking answers",this.results);
 		},
-		fix_style: function() {
-			let x = document.querySelectorAll(".whole_part");
-			this.max_val_length = parseInt(this.max_val_length);
-			let padding = this.max_val_length;
-			for (var i = 0; i < x.length; i++) {
-				 x[i].style.padding = padding + "px";
- 				 x[i].style.backgroundColor = "red";
+		fix_styles_for_class(cl, props) {
+			let els = document.querySelector("." + cl);
+
+			for (let el of els)
+			{
+				for (let p in props)
+				{
+					el.style[p] = p + "px";
+				}
 			}
+		},
+		fix_styles: function() {
+			let fract_w = this.fract_width();
+			let props = { width: fract_w};
+			this.fix_styles_for_class("whole_part", props);
+			this.fix_styles_for_class("numerator", props);
+			this.fix_styles_for_class("fract_line", props);
+			this.fix_styles_for_class("denominator", props);
 		}
 	}
 })
