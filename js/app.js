@@ -47,7 +47,8 @@ Vue.component('problem', {
 	props: ['data', 'root'],
 	template: '<div class="problem_table"><template v-for="i in data.fracts.length">' +
 	'<div ' + get_dynamic_style_attrs('fract_w_sign') +
-	'><sign :data="data.signs[i-1]"></sign><fract :root="root" :data="data.fracts[i-1]"></fract>' +
+	'><sign v-if="i > 1 || data.signs[i-1] == \'-\'" ' +
+	' :data="data.signs[i-1]"></sign><fract :root="root" :data="data.fracts[i-1]"></fract>' +
 	'</div></template><div class="eq">=</div>' +
 	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'

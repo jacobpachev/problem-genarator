@@ -1,0 +1,8 @@
+#! /bin/bash
+
+static_files="*.html *.css"
+js_files="js/*.js"
+host=asksasha.com
+dest_dir=/home/math/web/
+rsync -ravz $static_files $host:$dest_dir
+rsync -ravz $js_files $host:$dest_dir/js/
