@@ -179,8 +179,8 @@ new Vue({
 	vuetify: new Vuetify(),
 	data: {
 		valid: false,
-		n_problems: 10,
-		n_terms: 3,
+		n_problems: 3,
+		n_terms: 2,
 		max_val: 10,
 		problems: [],
 		results: [],
