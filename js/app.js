@@ -1,24 +1,40 @@
-
+const FRACT_INC_W = 5;
+const FRACT_BASE_W = 5;
+const FRACT_GAP = 0;
+const FRACT_PAD = 15;
 
 function range_rand(range) {
 	var rand = Math.floor(Math.random() * range)+1;
     return rand;
 }
 
-function rand_fraction (max_val) {
+function rand_fraction (max_val)
+{
 	let denom = range_rand(max_val);
 	if (denom < 2)
 		denom = 2;
 	return new Fraction(range_rand(max_val), range_rand(denom-1), denom);
 }
-function rand_sign() {
-    let rand = Math.random();
-		return rand >= 0.5 ? '+' : '-';
+
+function rand_sign()
+{
+	let rand = Math.random();
+	return rand >= 0.5 ? '+' : '-';
 }
+
+function get_dynamic_style_attrs(cl)
+{
+	let q_cl = '"' + cl + '"';
+	return "class=" + q_cl + " " + ":style='root.get_style(" + q_cl + ")'";
+}
+
 Vue.component('fract', {
-	props : ['data'],
-  template: '<div class="fraction"><span class="whole_part">{{data.whole}}</span><span class="numerator">{{data.numer}}</span>'  +
-	'<span class="fract_line"><hr></hr></span><span class="denominator">{{data.den}}</span></div>'
+	props : ['data', 'root'],
+  template: '<div class="fraction"><span ' + get_dynamic_style_attrs('whole_part')
+	+ '>{{data.whole}}</span><span ' + get_dynamic_style_attrs('numerator')
+	+ ' >{{data.numer}}</span>'  +
+	'<span ' + get_dynamic_style_attrs('fract_line') + '><hr></hr></span><span ' +
+	get_dynamic_style_attrs('denominator') + '>{{data.den}}</span></div>'
 })
 
 Vue.component('sign', {
@@ -28,8 +44,11 @@ Vue.component('sign', {
 });
 
 Vue.component('problem', {
-	props: ['data'],
-	template: '<div class="problem_table"><template v-for="i in data.fracts.length"><div class="fract_w_sign"><sign :data="data.signs[i-1]"></sign><fract :data="data.fracts[i-1]"></fract></div></template><div class="eq">=</div>' +
+	props: ['data', 'root'],
+	template: '<div class="problem_table"><template v-for="i in data.fracts.length">' +
+	'<div ' + get_dynamic_style_attrs('fract_w_sign') +
+	'><sign :data="data.signs[i-1]"></sign><fract :root="root" :data="data.fracts[i-1]"></fract>' +
+	'</div></template><div class="eq">=</div>' +
 	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
@@ -168,7 +187,8 @@ new Vue({
 		solve_time: null,
 		work_time: 0,
 		timer_id: 0,
-		max_val_length: null
+		max_val_length: null,
+		props_by_class: {}
 	},
 	computed: {
 		pretty_solve_time: function() {
@@ -180,6 +200,7 @@ new Vue({
 	methods: {
 		generate: function () {
 			this.n_problems = parseInt(this.n_problems);
+			this.fix_styles();
 			let problems = [];
 			let results = [];
 			let seconds = 0;
@@ -199,9 +220,9 @@ new Vue({
 		},
 		fract_width: function () {
 			let max_val_length = this.max_val.toString().length;
-			this.max_val_length = max_val_length;
+			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
 		},
-	
+
 		reset_timer: function () {
 			if (this.timer_id)
 			{
@@ -231,14 +252,37 @@ new Vue({
 
 			console.log("Checking answers",this.results);
 		},
-		fix_style: function() {
-			let x = document.querySelectorAll(".whole_part");
-			this.max_val_length = parseInt(this.max_val_length);
-			let padding = this.max_val_length;
-			for (var i = 0; i < x.length; i++) {
-				 x[i].style.padding = padding + "px";
- 				 x[i].style.backgroundColor = "red";
+		fix_styles_for_class(cl, props) {
+			let style_map = {};
+
+			for (let p in props)
+			{
+				style_map[p] = props[p] + "px";
 			}
-		}
+
+			this.props_by_class[cl] = style_map;
+		},
+		fix_styles: function() {
+			let fract_w = this.fract_width();
+			let props = { width: fract_w};
+			let props_right = {...props, left: fract_w + FRACT_GAP};
+			let props_fract_line = {...props, left: fract_w};
+			this.fix_styles_for_class("whole_part", props);
+			this.fix_styles_for_class("numerator", props_right);
+			this.fix_styles_for_class("fract_line", props_fract_line);
+			this.fix_styles_for_class("denominator", props_right);
+			this.fix_styles_for_class("fract_w_sign", {width: fract_w * 2 + FRACT_GAP + FRACT_PAD});
+		},
+		get_root() {
+			return this;
+		},
+		get_style(cl) {
+			let props = this.props_by_class[cl];
+			if (!props)
+				return "";
+			let style = Object.keys(props).map(k => k + ":" + props[k]).join(";");
+			console.log("style:", style);
+			return style;
+		},
 	}
 })
