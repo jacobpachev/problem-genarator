@@ -53,7 +53,15 @@ Vue.component('problem', {
 	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
-
+Vue.component('problems', ) {
+	
+}
+Vue.component('problems-parameters', ) {
+	
+}
+Vue.component('problems-list', ) {
+	
+}
 Vue.component('answer-input', {
 	props: ['problem'],
 	data: function() { return {
