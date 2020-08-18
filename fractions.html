@@ -9,68 +9,8 @@
 </head>
 <body>
   <div id="app">
-<template>
-  <v-form v-model="valid">
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          md="2"
-        >
-          <v-text-field
-            v-model="n_problems"
-            label="Number of problems"
-            type="number"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="2"
-        >
-          <v-text-field
-            v-model="max_val"
-            label="Maximum value"
-            type="number"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="2"
-        >
-          <v-text-field
-            v-model="n_terms"
-            label="Number of terms"
-            type="number"
-            required
-          ></v-text-field>
-        </v-col>
-        </v-col>
-      </v-row>
-      <v-row>
-				<v-btn @click="generate()">Generate</v-btn>
-      </v-row>
-      <div v-if="generate">
-      </div>
-    </v-container>
-  </v-form>
-</template>
-	<v-container>
-		<template v-for="i in problems.length">
-				<div class="problem_container">
-					<div class="problem_label">
-					Problem {{i}}
-					</div>
-						<problem :data="problems[i-1]" :key="gen_key(i)" :root="get_root()"></problem>
-				</div>
-		</template>
-			<clock :time="work_time"></clock>
-		<div class="solve-time" v-if="pretty_solve_time">
-			Solved in {{pretty_solve_time}} seconds.
-		</div>
-	</v-container>
+<problem-parameters :root="get_root()"></problem-parameters>
+<problem-list :root="get_root()"></problem-list>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>

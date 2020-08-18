@@ -53,15 +53,75 @@ Vue.component('problem', {
 	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
-Vue.component('problems', ) {
+Vue.component('problems', {
 	
-}
-Vue.component('problems-parameters', ) {
-	
-}
-Vue.component('problems-list', ) {
-	
-}
+});
+Vue.component('problem-parameters', {
+	props: ['root'],
+	template: `  <v-form><v-container><v-row><v-col
+		cols="12"
+		md="2"
+        >
+          <v-text-field
+            v-model="root.n_problems"
+            label="Number of problems"
+            type="number"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="2"
+        >
+          <v-text-field
+            v-model="root.max_val"
+            label="Maximum value"
+            type="number"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="2"
+        >
+          <v-text-field
+            v-model="root.n_terms"
+            label="Number of terms"
+            type="number"
+            required
+          ></v-text-field>
+        </v-col>
+        </v-col>
+      </v-row>
+      <v-row>
+				<v-btn @click="root.generate()">Generate</v-btn>
+      </v-row>
+    </v-container>
+  </v-form>`
+});
+Vue.component('problem-list', {
+	props: ['root','type'],
+	template: `<v-container>
+		<template v-for="i in root.problems.length">
+				<div class="problem_container">
+					<div class="problem_label">
+					Problem {{i}}
+					</div>
+						<problem :data="root.problems[i-1]" :key="root.gen_key(i)" :root="root.get_root()"></problem>
+				</div>
+		</template>
+			<clock :time="root.work_time"></clock>
+		<div class="solve-time" v-if="root.pretty_solve_time">
+			Solved in {{root.pretty_solve_time}} seconds.
+		</div>
+	</v-container>`,
+	methods: {
+		get_template: function() {
+			
+		}
+	}
+});
 Vue.component('answer-input', {
 	props: ['problem'],
 	data: function() { return {
@@ -186,7 +246,6 @@ new Vue({
 	el: '#app',
 	vuetify: new Vuetify(),
 	data: {
-		valid: false,
 		n_problems: 3,
 		n_terms: 2,
 		max_val: 10,
