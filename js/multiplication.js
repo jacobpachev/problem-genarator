@@ -78,7 +78,6 @@ new Vue({
 			this.work_time = 0;
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
-			console.log(seconds);
 		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
