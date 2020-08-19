@@ -118,7 +118,7 @@ Vue.component('problem-list', {
 	</v-container>`,
 	methods: {
 		get_template: function() {
-			
+	
 		}
 	}
 });
