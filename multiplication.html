@@ -17,7 +17,7 @@
 		md="2"
         >
           <v-text-field
-            v-model="table_len"
+            v-model="table_len_input"
             label="Length of table"
             type="number"
             required
@@ -26,12 +26,12 @@
         </v-col>
       </v-row>
       <v-row>
-				<v-btn @click="generate()">Generate</v-btn>
+				<v-btn @click="generate()">Start</v-btn>
       </v-row>
       <v-row>
-      <multiplication-table :root="get_root()" >
+      <multiplication-table :root="get_root()" v-if="generated">
       </multiplication-table>
-      
+
       </v-row>
     </v-container>
   </v-form>
