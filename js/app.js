@@ -111,7 +111,9 @@ Vue.component('problem-list', {
 						<problem :data="root.problems[i-1]" :key="root.gen_key(i)" :root="root.get_root()"></problem>
 				</div>
 		</template>
+		<div v-if="root.timer_is_true">
 			<clock :time="root.work_time"></clock>
+        </div>
 		<div class="solve-time" v-if="root.pretty_solve_time">
 			Solved in {{root.pretty_solve_time}} seconds.
 		</div>
@@ -253,6 +255,7 @@ new Vue({
 		results: [],
 		start_time: null,
 		solve_time: null,
+        timer_is_true: null,
 		work_time: 0,
 		timer_id: 0,
 		max_val_length: null,
@@ -282,6 +285,7 @@ new Vue({
 			this.results = results;
 			this.start_time = Date.now();
 			this.solve_time = null;
+            this.timer_is_true = true;
 			this.work_time = 0;
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
@@ -316,6 +320,7 @@ new Vue({
 			{
 				this.report_time();
 				this.reset_timer();
+                this.timer_is_true = false;
 			}
 
 			console.log("Checking answers",this.results);
