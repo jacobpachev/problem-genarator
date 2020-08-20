@@ -25,12 +25,8 @@ Vue.component('multiplication-table', {
 	template: `
 	<v-container>
 	<template v-for="i in root.table_len">
-	<div class="table_length">
-	{{i}}
-	</div>
-	<div class="table_width">
-	{{i}}
-	</div>
+	<v-row>{{i}}</v-row>
+	<v-col>{{i}}</v-col>
 	</template>
 	<clock :time="root.work_time"></clock>` + 
 	`
