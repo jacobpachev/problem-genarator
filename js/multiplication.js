@@ -121,6 +121,14 @@ new Vue({
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 			this.generated = true;
+			this.reset_answers();
+		},
+		reset_answers() {
+			for (k in this.answer_inputs)
+			{
+				this.answer_inputs[k].user_answer = "";
+			}
+
 			this.answer_inputs = {};
 		},
 		check_all() {
