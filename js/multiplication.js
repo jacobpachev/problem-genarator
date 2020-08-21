@@ -22,14 +22,14 @@ function pad(num, size)
 }
 
 Vue.component('answer-input', {
-	props: ['root', 'data'],
+	props: ['root', 'data', 'row', 'col'],
 	data() {
 		return {
 			user_answer: ""
 		}
 	},
 	mounted() {
-		this.root.answer_inputs[this.data] = this;
+		this.root.answer_inputs[this.$vnode.key] = this;
 	},
 	methods: {
 		get_cl() {
@@ -38,21 +38,37 @@ Vue.component('answer-input', {
 		answer_is_correct() {
 			return this.user_answer == this.data;
 		},
+		get_next() {
+			let row = this.row;
+			let col = this.col + 1;
+			if (col > this.root.table_len)
+			{
+				col = 2;
+				row++;
+			}
+			return document.getElementById(this.root.get_input_id(row, col));
+		},
 		check_answer() {
 			console.log("Checking answer:", this.user_answer);
 			if (this.answer_is_correct())
+			{
 				this.root.check_all();
+				let el = this.get_next();
+				if (el)
+					el.focus();
+			}
+
 		}
 	},
 
-	template: '<input :class="get_cl()" type="number" v-model="user_answer" @input="check_answer"></input>'
+	template: '<input :class="get_cl()" :id="root.get_input_id(row,col)" type="number" v-model="user_answer" @input="check_answer"></input>'
 });
 
 Vue.component('multiplication-table', {
 	props: ['root'],
 	methods: {
 		gen_key(i,j) {
-			return "answer-input-" + (i * j);
+			return "answer-input-" + i.toString() + "-" +  j.toString() + "-" + this.root.n_runs;
 		},
 		gen_row_key(i) {
 			return "answer-row-" + i;
@@ -63,13 +79,14 @@ Vue.component('multiplication-table', {
 	<v-container>
 		<table class = "multiplication-table">
 		<tr :key="gen_row_key(i)" v-for="i in root.table_len">
-			<td :key="gen_key(i,j)" v-for="j in root.table_len">
+			<td :key="'cell-' + gen_key(i,j)" v-for="j in root.table_len">
 				<span v-if="i == 1 || j == 1">{{i == 1 ? j : i}}</span>
-				<answer-input :root="root" :key="gen_key(i,j)" v-else :data="i*j"></answer-input>
+				<answer-input :row="i"
+				  :col="j" :root="root" :key="gen_key(i,j)" v-else :data="i*j"></answer-input>
 			</td>
 		</tr>
 	</table>
-	<div v-if="root.timer_is_true">
+	<div v-if="root.timer_running">
 	<clock :time="root.work_time"></clock>
 	</div>
 	<div class="solve-time" v-if="root.solve_time">
@@ -97,11 +114,12 @@ new Vue({
 		table_len_input: "12",
 		start_time: null,
 		solve_time: null,
-		timer_is_true: null,
+		timer_running: null,
 		work_time: 0,
 		timer_id: 0,
 		generated: false,
-		answer_inputs: {}
+		answer_inputs: {},
+		n_runs: 0
 	},
 	computed: {
 
@@ -120,11 +138,17 @@ new Vue({
 			this.solve_time = null;
 			this.work_time = 0;
 			this.reset_timer();
-			this.clear_table();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 			this.generated = true;
-			this.timer_is_true = true;
+			this.reset_answers();
+			this.timer_running = true;
+			this.n_runs++;
+		},
+		reset_answers() {
 			this.answer_inputs = {};
+		},
+		get_input_id(row, col) {
+			return "answer-input-" + row.toString() + "-" + col.toString();
 		},
 		check_all() {
 			let all_correct = true;
@@ -134,10 +158,10 @@ new Vue({
 				all_correct = all_correct && this.answer_inputs[k].answer_is_correct();
 			}
 
-			if (all_correct) 
+			if (all_correct)
 			{
 				this.reset_timer();
-				this.timer_is_true = false;
+				this.timer_running = false;
 				this.report_time();
 			}
 		},
@@ -153,9 +177,6 @@ new Vue({
 		},
 		get_root() {
 			return this;
-		},
-		clear_table: function() {
-			
 		}
 	}
 });
