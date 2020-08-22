@@ -9,6 +9,8 @@
 </head>
 <body>
   <div id="app">
+  <v-app>
+    <v-main>
 		<v-form>
 		<v-container>
 		<v-row>
@@ -26,7 +28,13 @@
         </v-col>
       </v-row>
       <v-row>
+		<v-col>
 				<v-btn @click="generate()">Start</v-btn>
+		</v-col>
+		<v-col>
+			<v-select :items="order_items" label="Traversal Order" v-model="order">
+			</v-select>
+        </v-col>
       </v-row>
       <v-row>
       <multiplication-table :root="get_root()" v-if="generated">
@@ -35,6 +43,8 @@
       </v-row>
     </v-container>
   </v-form>
+  </v-main>
+  </v-app>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>

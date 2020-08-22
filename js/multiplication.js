@@ -38,14 +38,41 @@ Vue.component('answer-input', {
 		answer_is_correct() {
 			return this.user_answer == this.data;
 		},
+
 		get_next() {
 			let row = this.row;
-			let col = this.col + 1;
-			if (col > this.root.table_len)
-			{
-				col = 2;
-				row++;
+			let col = this.col;
+			switch (this.root.order) {
+				case "Row":
+					col++;
+					if (col > this.root.table_len)
+					{
+						col = 2;
+						row++;
+					}
+					break;
+				case "Diagonal":
+					row++;
+					col++;
+					if (col > this.root.table_len || row > this.root.table_len)
+					{
+						let diag = row - col;
+						diag = (diag >= 0) ? -diag-1 : -diag;
+						if (diag < 0) {
+							row = 2;
+							col = row - diag;
+						}
+						else {
+							col = 2;
+							row = diag + col;
+						}
+					}
+					break;
+				case "Random":
+					console.log("Random");
+					break;
 			}
+			console.log("Order", this.root.order);
 			return document.getElementById(this.root.get_input_id(row, col));
 		},
 		check_answer() {
@@ -119,7 +146,9 @@ new Vue({
 		timer_id: 0,
 		generated: false,
 		answer_inputs: {},
-		n_runs: 0
+		n_runs: 0,
+		order_items: ["Row", "Diagonal", "Random"],
+		order: "Row"
 	},
 	computed: {
 
