@@ -49,7 +49,7 @@ Vue.component('problem', {
 	'<div ' + get_dynamic_style_attrs('fract_w_sign') +
 	'><sign v-if="i > 1 || data.signs[i-1] == \'-\'" ' +
 	' :data="data.signs[i-1]"></sign><fract :root="root" :data="data.fracts[i-1]"></fract>' +
-	'</div></template><div class="eq">=</div>' +
+	'</div><div></div></template><div class="eq">=</div>' +
 	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
@@ -162,7 +162,7 @@ Vue.component('answer-input', {
 			console.log("entered fraction:", this.fract);
 		}
 	},
-	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
+	template: '<div class="answer_container"><div></div><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
 		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
 		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
 });

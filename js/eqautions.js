@@ -41,7 +41,7 @@ function rand_sign()
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-  template: '<div class="equation">{{data.a}} <sign :data="prob.signs[0]"></sign>{{data.b}}' + '<div>x</div><div>=</div>{{data.c}}<sign :data="prob.signs[0]"></sign>{{data.d}}<div>x</div></div>'
+  template: '<div class="equation">{{data.a}}<span class="sign_1"><sign :data="prob.signs[0]"></sign></span><span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span><span class="sign_2"><sign :data="prob.signs[0]"></sign></span><span class="d">{{data.d}}</span><span class="x_2">x</span><span class="x_ans">x =</span></div>'
 })
 
 Vue.component('sign', {
