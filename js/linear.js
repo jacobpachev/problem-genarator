@@ -4,17 +4,20 @@ class Equation {
 		this.b = b;
 		this.c = c;
 		this.d = d;
+		this.x = new Fraction(0, this.a - this.c, this.d - this.b);
+		this.x.normalize();
+		console.log("Solution", this.x);
 	}
 	equals(a,b,c,d) {
 		return this.a == a && this.b == b && this.c == c && this.d == d;
 	}
 	obj_equals(other)
-    {
-        return this.equals(other.a,other.b,other.c,other.d);
-    }
+	{
+		return this.equals(other.a,other.b,other.c,other.d);
+	}
 };
 
-if (typeof exports !== "undefined") 
+if (typeof exports !== "undefined")
 {
 	exports.Equation = Equation;
 }
@@ -86,12 +89,6 @@ Vue.component('problem-parameters', {
           cols="12"
           md="2"
         >
-          <v-text-field
-            v-model="root.n_terms"
-            label="Number of terms"
-            type="number"
-            required
-          ></v-text-field>
         </v-col>
         </v-col>
       </v-row>
@@ -121,7 +118,7 @@ Vue.component('problem-list', {
 	</v-container>`,
 	methods: {
 		get_template: function() {
-	
+
 		}
 	}
 });
@@ -285,7 +282,7 @@ new Vue({
 				this.results[i]  = this.problems[i].answer_is_correct();
 				n_correct += this.results[i];
 			}
-			
+
 			if (n_correct == this.problems.length)
 			{
 				this.report_time();
