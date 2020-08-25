@@ -44,17 +44,21 @@ Vue.component('sign', {
 });
 
 Vue.component('problem', {
-	props: ['data', 'root'],
+	props: ['data', 'root', 'rownum'],
+	mounted() {
+		if (this.rownum == 1)
+			this.root.focus_on_row(1);
+	},
 	template: '<div class="problem_table"><template v-for="i in data.fracts.length">' +
 	'<div ' + get_dynamic_style_attrs('fract_w_sign') +
 	'><sign v-if="i > 1 || data.signs[i-1] == \'-\'" ' +
 	' :data="data.signs[i-1]"></sign><fract :root="root" :data="data.fracts[i-1]"></fract>' +
-	'</div><div></div></template><div class="eq">=</div>' +
-	'<answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
+	'</div></template><div class="eq">=</div>' +
+	'<answer-input :problem="data" :key="rownum"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
 Vue.component('problems', {
-	
+
 });
 Vue.component('problem-parameters', {
 	props: ['root'],
@@ -108,7 +112,7 @@ Vue.component('problem-list', {
 					<div class="problem_label">
 					Problem {{i}}
 					</div>
-						<problem :data="root.problems[i-1]" :key="root.gen_key(i)" :root="root.get_root()"></problem>
+						<problem :data="root.problems[i-1]" :rownum="i" :key="root.gen_key(i)" :root="root.get_root()"></problem>
 				</div>
 		</template>
 		<div v-if="root.timer_is_true">
@@ -120,7 +124,7 @@ Vue.component('problem-list', {
 	</v-container>`,
 	methods: {
 		get_template: function() {
-	
+
 		}
 	}
 });
@@ -134,8 +138,8 @@ Vue.component('answer-input', {
 		}
 	},
 	mounted() {
-	    this.num = this.denom = this.whole = "";
-	    console.log("Mounted input", this);
+		this.num = this.denom = this.whole = "";
+		console.log("Mounted input", this);
 	},
 	methods: {
 		handle_change: function() {
@@ -160,11 +164,18 @@ Vue.component('answer-input', {
 			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
+		},
+		get_id(suffix) {
+			console.log("vnode:", this.$vnode);
+			return "answer-input-" + this.$vnode.key + "-" + suffix;
 		}
+
 	},
-	template: '<div class="answer_container"><div></div><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
-		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
-		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
+	template: `<div class="answer_container"><div><input class="whole" v-model="whole"
+		:id="get_id('whole')" @input="handle_change()"></input></div>
+		<input class="numerator" v-model="num" :id="get_id('numerator')" @input="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>
+		</div><div><input class="denominator"
+		   :id="get_id('denominator')" v-model="denom" @input="handle_change()"></input></div></div>`
 });
 
 function pad(num, size)
@@ -255,7 +266,7 @@ new Vue({
 		results: [],
 		start_time: null,
 		solve_time: null,
-        timer_is_true: null,
+		timer_is_true: null,
 		work_time: 0,
 		timer_id: 0,
 		max_val_length: null,
@@ -285,7 +296,7 @@ new Vue({
 			this.results = results;
 			this.start_time = Date.now();
 			this.solve_time = null;
-            this.timer_is_true = true;
+			this.timer_is_true = true;
 			this.work_time = 0;
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
@@ -294,7 +305,14 @@ new Vue({
 			let max_val_length = this.max_val.toString().length;
 			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
 		},
-
+		focus_on_row(row_num) {
+			// TODO: abstract ID generation
+			let el = document.getElementById("answer-input-" + row_num + "-whole");
+			console.log("focus el:", el);
+			if (!el)
+				return;
+			el.focus();
+		},
 		reset_timer: function () {
 			if (this.timer_id)
 			{
