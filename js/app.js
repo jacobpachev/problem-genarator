@@ -306,8 +306,7 @@ new Vue({
 			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
 		},
 		focus_on_row(row_num) {
-			// TODO: abstract ID generation
-			let el = document.getElementById("answer-input-" + row_num + "-whole");
+			let el = this.gen_id("answer-input-" + row_num + "-whole")
 			console.log("focus el:", el);
 			if (!el)
 				return;
@@ -323,24 +322,30 @@ new Vue({
 		gen_key: function(pos) {
 			return this.start_time.toString() + "-" + pos;
 		},
+		gen_id: function(id) {
+			return(document.getElementById(id));
+		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
 		},
 		check_answers: function () {
 			let n_correct = 0;
+			let row = 0;
 			for (let i = 0; i < this.problems.length; i++)
 			{
 				this.results[i]  = this.problems[i].answer_is_correct();
 				n_correct += this.results[i];
+				row += this.results[i];
 			}
-
 			if (n_correct == this.problems.length)
 			{
 				this.report_time();
 				this.reset_timer();
                 this.timer_is_true = false;
 			}
-
+			console.log("Results", this.results[n_correct-1])
+			if (this.results[row-1] == true && this.results[row] == null)
+					this.focus_on_row(row+1);
 			console.log("Checking answers",this.results);
 		},
 		fix_styles_for_class(cl, props) {

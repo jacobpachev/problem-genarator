@@ -137,9 +137,9 @@ Vue.component('answer-input', {
 	},
 	methods: {
 		handle_change: function() {
-			this.eq = new Equation(a,b,c,d);
-			this.problem.update_user_answer(this.eq);
-			console.log("entered Equation:", this.eq);
+			this.fract = new Fraction(this.whole, this.num, this.denom);
+			this.problem.update_user_answer(this.fract);
+			console.log("entered Fraction:", this.eq);
 		}
 	},
 	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
