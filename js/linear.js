@@ -9,7 +9,7 @@ class Equation {
 		console.log("Solution", this.x);
 	}
 
-	
+
 };
 
 if (typeof exports !== "undefined")
@@ -39,7 +39,7 @@ function rand_sign()
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-  template: '<div class="equation">{{data.a}}<span class="sign_1"><sign :data="prob.signs[0]"></sign></span><span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span><span class="sign_2"><sign :data="prob.signs[0]"></sign></span><span class="d"></span><span class="x_2">x</span><span class="x_ans">x =</span><span>{{prob.update_user_answer(data.x)}}</span></div>'
+  template: '<div class="equation">{{data.a}} + <span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span></span><span class="d"></span><span class="x_2">x</span><span class="x_ans">x =</span><span></span></div>'
 })
 
 Vue.component('sign', {
@@ -50,8 +50,8 @@ Vue.component('sign', {
 
 Vue.component('problem', {
 	props: ['data', 'root'],
-	template: '<div class="problem_table"><template v-for="i in data.eqs.length">'  +
-	'<equation :root="root" :data="data.eqs[i]" :prob="data" ></equation></template><answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
+	template: '<div class="problem_table">'  +
+	'<equation :root="root" :data="data.eq" :prob="data" ></equation><answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
 
@@ -199,34 +199,20 @@ class Problem
 {
 	constructor (ctx)
 	{
-		this.eqs = [];
-		this.signs = [];
+		this.eq = rand_equation(ctx.max_val);
 		this.result = {};
 		this.ctx = ctx;
 		this.user_answer = null;
-		for (let i = 0; i < ctx.n_terms; i++)
-		{
-			this.eqs[i] = rand_equation(ctx.max_val);
-			this.signs[i] = rand_sign();
-		}
-		this.compute_answer();
 	}
+
 	update_user_answer(answer)
 	{
 		this.user_answer = answer;
 		this.ctx.check_answers();
 	}
-	compute_answer()
-	{
-		for(let i = 0; i < this.eqs.length; i++)
-		{
-			console.log("Answer",this.user_answer);
-			console.log("Equation",this.eqs);
-		}
-	}
 	answer_is_correct()
 	{
-		return this.user_answer && this.answer.obj_equals(this.user_answer);
+		return this.user_answer && this.eq.x.obj_equals(this.user_answer);
 	}
 }
 
@@ -241,7 +227,7 @@ new Vue({
 		results: [],
 		start_time: null,
 		solve_time: null,
-        timer_run: null,
+		timer_run: null,
 		work_time: 0,
 		timer_id: 0,
 		max_val_length: null,
@@ -270,7 +256,7 @@ new Vue({
 			this.results = results;
 			this.start_time = Date.now();
 			this.solve_time = null;
-            this.timer_run = true;
+			this.timer_run = true;
 			this.work_time = 0;
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
@@ -301,7 +287,7 @@ new Vue({
 			{
 				this.report_time();
 				this.reset_timer();
-                this.timer_run = false;
+				this.timer_run = false;
 			}
 
 			console.log("Checking answers",this.results);
