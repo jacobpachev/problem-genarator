@@ -39,7 +39,7 @@ function rand_sign()
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-  template: '<div class="equation">{{data.a}} + <span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span></span><span class="d"></span><span class="x_2">x</span><span class="x_ans">x =</span><span></span></div>'
+  template: '<div class="equation">{{data.a}} + <span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span></span><span class="d"> + {{data.d}}</span><span class="x_2">x</span><div class="x_ans">x =</div></div>'
 })
 
 Vue.component('sign', {
@@ -49,9 +49,13 @@ Vue.component('sign', {
 });
 
 Vue.component('problem', {
-	props: ['data', 'root'],
+	props: ['data', 'root','rownum'],
+	mounted() {
+		if (this.rownum == 1)
+			this.root.focus_on_row(1);
+	},
 	template: '<div class="problem_table">'  +
-	'<equation :root="root" :data="data.eq" :prob="data" ></equation><answer-input :problem="data"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
+	'<equation :root="root" :data="data.eq" :prob="data" ></equation><answer-input :problem="data" :key="rownum"></answer-input><div class="checkmark" v-if="data.answer_is_correct()">' +
 	'&#10003;</div></div>'
 });
 
@@ -101,7 +105,7 @@ Vue.component('problem-list', {
 					<div class="problem_label">
 					Problem {{i}}
 					</div>
-						<problem :data="root.problems[i-1]" :key="root.gen_key(i)" :root="root.get_root()"></problem>
+						<problem :data="root.problems[i-1]" :key="root.gen_key(i)" :root="root.get_root()" :rownum="i" ></problem>
 				</div>
 		</template>
 		<div v-if="root.timer_run">
@@ -153,11 +157,14 @@ Vue.component('answer-input', {
 			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
 			console.log("entered fraction:", this.fract);
+		},
+		get_id(suffix) {
+			return "answer-input-" + this.$vnode.key + "-" + suffix;
 		}
 	},
-	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
-		'<input class="numerator" v-model="num" @change="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>' +
-		'</div><div><input class="denominator" v-model="denom" @change="handle_change()"></input></div></div>'
+	template: `<div class="answer_container"><div><input class="whole" v-model="whole"` +  `:id="get_id('whole')" @input="handle_change()"></input></div>` +
+		`<input class="numerator" v-model="num" :id="get_id('numerator')" @input="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>` +
+		`</div><div><input class="denominator" v-model="denom" :id="get_id('denominator')" @input="handle_change()"></input></div></div>`
 });
 
 function pad(num, size)
@@ -220,8 +227,7 @@ new Vue({
 	el: '#app',
 	vuetify: new Vuetify(),
 	data: {
-		n_problems: 3,
-		n_terms: 2,
+		n_problems: 5,
 		max_val: 10,
 		problems: [],
 		results: [],
@@ -272,15 +278,27 @@ new Vue({
 		gen_key: function(pos) {
 			return this.start_time.toString() + "-" + pos;
 		},
+		focus_on_row(row_num) {
+			let el = this.gen_id("answer-input-" + row_num + "-whole");
+			console.log("focus el:", el);
+			if (!el)
+				return;
+			el.focus();
+		},
+		gen_id: function(id) {
+			return(document.getElementById(id));
+		},
 		report_time: function () {
 			this.solve_time = Date.now() - this.start_time;
 		},
 		check_answers: function () {
 			let n_correct = 0;
+			let row = 0;
 			for (let i = 0; i < this.problems.length; i++)
 			{
 				this.results[i]  = this.problems[i].answer_is_correct();
 				n_correct += this.results[i];
+				row += this.results[i];
 			}
 
 			if (n_correct == this.problems.length)
@@ -289,7 +307,9 @@ new Vue({
 				this.reset_timer();
 				this.timer_run = false;
 			}
-
+			console.log("Results", this.results[row])
+			if (this.results[row-1] == true && this.results[row] == null)
+				this.focus_on_row(row+1);
 			console.log("Checking answers",this.results);
 		},
 		get_root() {

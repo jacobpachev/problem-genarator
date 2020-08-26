@@ -173,7 +173,7 @@ Vue.component('answer-input', {
 	},
 	template: `<div class="answer_container"><div><input class="whole" v-model="whole"
 		:id="get_id('whole')" @input="handle_change()"></input></div>
-		<input class="numerator" v-model="num" :id="get_id('numerator')" @input="handle_change()"></input><div><hr class="fract_line_answer"></hr></span>
+		<input class="numerator" v-model="num" :id="get_id('numerator')" @input="handle_change()">< input><div><hr class="fract_line_answer"></hr></span>
 		</div><div><input class="denominator"
 		   :id="get_id('denominator')" v-model="denom" @input="handle_change()"></input></div></div>`
 });
