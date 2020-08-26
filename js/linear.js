@@ -8,13 +8,8 @@ class Equation {
 		this.x.normalize();
 		console.log("Solution", this.x);
 	}
-	equals(a,b,c,d) {
-		return this.a == a && this.b == b && this.c == c && this.d == d;
-	}
-	obj_equals(other)
-	{
-		return this.equals(other.a,other.b,other.c,other.d);
-	}
+
+	
 };
 
 if (typeof exports !== "undefined")
@@ -44,7 +39,7 @@ function rand_sign()
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-  template: '<div class="equation">{{data.a}}<span class="sign_1"><sign :data="prob.signs[0]"></sign></span><span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span><span class="sign_2"><sign :data="prob.signs[0]"></sign></span><span class="d">{{data.d}}</span><span class="x_2">x</span><span class="x_ans">x =</span></div>'
+  template: '<div class="equation">{{data.a}}<span class="sign_1"><sign :data="prob.signs[0]"></sign></span><span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span><span class="sign_2"><sign :data="prob.signs[0]"></sign></span><span class="d"></span><span class="x_2">x</span><span class="x_ans">x =</span><span>{{prob.update_user_answer(data.x)}}</span></div>'
 })
 
 Vue.component('sign', {
@@ -137,9 +132,27 @@ Vue.component('answer-input', {
 	},
 	methods: {
 		handle_change: function() {
-			this.fract = new Fraction(this.whole, this.num, this.denom);
+			let whole = this.whole;
+			let num = this.num;
+			let denom = this.denom;
+
+			if (!whole){
+			    whole = 0;
+			}
+			if (whole == "-"){
+			    whole = 0;
+			    num = -num;
+			}
+			if (!num && !denom){
+			    num = 0
+			    denom = 1
+			}
+			if (whole < 0){
+			    num = - num;
+			}
+			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
-			console.log("entered Fraction:", this.eq);
+			console.log("entered fraction:", this.fract);
 		}
 	},
 	template: '<div class="answer_container"><div><input class="whole" v-model="whole" @change="handle_change()"></input></div>' +
@@ -207,7 +220,8 @@ class Problem
 	{
 		for(let i = 0; i < this.eqs.length; i++)
 		{
-			console.log("Answer",this.user_answer)
+			console.log("Answer",this.user_answer);
+			console.log("Equation",this.eqs);
 		}
 	}
 	answer_is_correct()

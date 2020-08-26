@@ -73,7 +73,7 @@ Vue.component('answer-input', {
 					break;
 			}
 			console.log("Order", this.root.order);
-			return document.getElementById(this.root.get_input_id(row, col));
+            return document.getElementById(this.root.get_input_id(row, col));
 		},
 		check_answer() {
 			console.log("Checking answer:", this.user_answer);

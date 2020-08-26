@@ -306,7 +306,7 @@ new Vue({
 			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
 		},
 		focus_on_row(row_num) {
-			let el = this.gen_id("answer-input-" + row_num + "-whole")
+			let el = this.gen_id("answer-input-" + row_num + "-whole");
 			console.log("focus el:", el);
 			if (!el)
 				return;
