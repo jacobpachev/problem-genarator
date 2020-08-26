@@ -30,6 +30,14 @@ Vue.component('answer-input', {
 	},
 	mounted() {
 		this.root.answer_inputs[this.$vnode.key] = this;
+		if (this.row == 2 && this.col == 2)
+		{
+			let id = this.root.get_input_id(2,2);
+			console.log("first id:", id);
+			let el = document.getElementById(id);
+			if (el)
+				el.focus();
+		}
 	},
 	methods: {
 		get_cl() {
@@ -73,7 +81,7 @@ Vue.component('answer-input', {
 					break;
 			}
 			console.log("Order", this.root.order);
-            return document.getElementById(this.root.get_input_id(row, col));
+			return document.getElementById(this.root.get_input_id(row, col));
 		},
 		check_answer() {
 			console.log("Checking answer:", this.user_answer);
@@ -147,16 +155,17 @@ new Vue({
 		generated: false,
 		answer_inputs: {},
 		n_runs: 0,
-		order_items: ["Row", "Diagonal", "Random"],
+		order_items: ["Row", "Diagonal"],
 		order: "Row"
 	},
 	computed: {
-
 		pretty_solve_time: function() {
 			if (!this.solve_time)
 				return null;
 			return fmt_time(this.solve_time, true);
 		}
+	},
+	mounted() {
 	},
 	methods: {
 		generate: function () {

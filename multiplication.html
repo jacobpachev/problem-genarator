@@ -25,18 +25,18 @@
             required
           ></v-text-field>
         </v-col>
-        </v-col>
+			<v-col>
+				<v-select :items="order_items" label="Traversal Order" v-model="order">
+				</v-select>
+       </v-col>
+
       </v-row>
       <v-row>
 		<v-col>
 				<v-btn @click="generate()">Start</v-btn>
 		</v-col>
-		<v-col>
-			<v-select :items="order_items" label="Traversal Order" v-model="order">
-			</v-select>
-        </v-col>
-      </v-row>
-      <v-row>
+   </v-row>
+   <v-row>
       <multiplication-table :root="get_root()" v-if="generated" >
       </multiplication-table>
 
