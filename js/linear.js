@@ -29,8 +29,8 @@ function rand_equation (max_val)
 	let c = range_rand(max_val);
 	let d = range_rand(max_val);
 	b = (b == d) ? b+1: b;
-	a = (a==c) ? a+1: c;
-	return new Equation(range_rand(max_val), b, range_rand(max_val), d);
+	a = (a == c) ? a+1: a;
+	return new Equation(a, b, c, d);
 }
 
 function rand_sign()
