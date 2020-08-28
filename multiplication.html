@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <link href="multiplication.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<link rel="icon" href="https://cdn4.vectorstock.com/i/1000x1000/35/48/multiplication-button-or-x-icon-vector-10273548.jpg">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<link href="multiplication.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<title>Multiplication Table</title>
 </head>
 <body>
   <div id="app">
@@ -34,6 +36,11 @@
       <v-row>
 		<v-col>
 				<v-btn @click="generate()">Start</v-btn>
+		</v-col>
+		<v-col>
+		<div class="instructions" v-if="generated">
+		Light green indicates that the number entered is a full square.
+		</div>
 		</v-col>
    </v-row>
    <v-row>

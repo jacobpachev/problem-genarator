@@ -24,9 +24,12 @@ function range_rand(range) {
 
 function rand_equation (max_val)
 {
+	let a = range_rand(max_val);
 	let b = range_rand(max_val);
+	let c = range_rand(max_val);
 	let d = range_rand(max_val);
 	b = (b == d) ? b+1: b;
+	a = (a==c) ? a+1: c;
 	return new Equation(range_rand(max_val), b, range_rand(max_val), d);
 }
 

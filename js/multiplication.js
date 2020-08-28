@@ -41,7 +41,7 @@ Vue.component('answer-input', {
 	},
 	methods: {
 		get_cl() {
-			return "answer-input" + (this.answer_is_correct() ? " mark-correct" : "");
+			return "answer-input" + (this.answer_is_correct() && this.row != this.col ? " mark-correct" : this.answer_is_correct() && this.row == this.col ? " mark-correct-sq" : "");
 		},
 		answer_is_correct() {
 			return this.user_answer == this.data;

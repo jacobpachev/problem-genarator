@@ -6,7 +6,11 @@
 }
 
 .mark-correct {
-	background-color: rgb(8,250,50);
+	background-color: rgb(46, 199, 32);
+}
+
+.mark-correct-sq {
+	background-color: rgb(192, 255, 3);
 }
 
 td {
