@@ -1,15 +1,19 @@
 class Equation {
 	constructor (a,b,c,d) {
 		this.a = a;
-		this.b = b;
+		this.b = (this.rand_sign()==='-') ? - b: b;
 		this.c = c;
-		this.d = d;
+		this.d = (this.rand_sign()==='-') ? - d: d;
 		this.x = new Fraction(0, this.a - this.c, this.d - this.b);
 		this.x.normalize();
 		console.log("Solution", this.x);
+		console.log("b",this.b);
+		this.b = (this.b == 1)  ? '': this.b;
 	}
-
-
+	rand_sign () {
+		let rand = Math.random();
+		return rand >= 0.5 ? '-' : '+';
+	}
 };
 
 if (typeof exports !== "undefined")
@@ -33,16 +37,11 @@ function rand_equation (max_val)
 	return new Equation(a, b, c, d);
 }
 
-function rand_sign()
-{
-	let rand = Math.random();
-	return rand >= 0.5 ? '+' : '-';
-}
 
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-  template: '<div class="equation">{{data.a}} + <span class="b">{{data.b}}</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span></span><span class="d"> + {{data.d}}</span><span class="x_2">x</span><div class="x_ans">x =</div></div>'
+	template: `<div class="equation">{{data.a}} <span class="b" v-if="data.b < 0 && data.b != -1"> {{data.b}}</span><span class="b" v-if="data.b >0"> + {{data.b}}</span><span v-if="data.b ==-1 "> -</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span> <span class="d" v-if="data.d < 0 && data.d != -1"> {{data.d}}</span><span class="d" v-if="data.d >0"> + {{data.d}}</span><span v-if="data.d ==-1 "> -</span><span class="x_2">x</span><div class="x_ans">x =</div></div>`
 })
 
 Vue.component('sign', {
