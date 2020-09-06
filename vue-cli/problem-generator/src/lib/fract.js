@@ -1,4 +1,4 @@
-export class Fraction {
+class Fraction {
 	constructor (whole,numer,den) {
 		this.whole = whole;
 		this.numer = numer;
