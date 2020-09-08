@@ -8,7 +8,6 @@ class Equation {
 		this.x.normalize();
 		console.log("Solution", this.x);
 		console.log("b",this.b);
-		this.b = (this.b == 1)  ? '': this.b;
 	}
 	rand_sign () {
 		let rand = Math.random();
@@ -38,10 +37,23 @@ function rand_equation (max_val)
 }
 
 
+Vue.component('x-term', {
+	props: ['k'],
+	computed: {
+		display_x() {
+			let sign = (this.k > 0) ? '+' : '';
+			let k = (this.k != 1 && this.k != -1) ? this.k : "";
+			if (this.k == -1)
+				sign = "-";
+			return sign + k.toString() + "x";
+		}
+	},
+	template : '<span class="x">{{display_x}}</span>'
+});
 
 Vue.component('equation', {
 	props : ['data', 'root','prob'],
-	template: `<div class="equation">{{data.a}} <span class="b" v-if="data.b < 0 && data.b != -1"> {{data.b}}</span><span class="b" v-if="data.b >0"> + {{data.b}}</span><span v-if="data.b ==-1 "> -</span><span class="x_1">x</span><span class="eql">=</span><span class="c">{{data.c}}</span> <span class="d" v-if="data.d < 0 && data.d != -1"> {{data.d}}</span><span class="d" v-if="data.d >0"> + {{data.d}}</span><span v-if="data.d ==-1 "> -</span><span class="x_2">x</span><div class="x_ans">x =</div></div>`
+	template: `<div class="equation">{{data.a}} <span class="b"> <x-term :k="data.b"></x-term></span><span class="eql">=</span><span class="c">{{data.c}}</span> <span class="d" > <x-term :k="data.d"></x-term></span><div class="x_ans">x =</div></div>`
 })
 
 Vue.component('sign', {

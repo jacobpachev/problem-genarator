@@ -1,4 +1,4 @@
-export class Fraction {
+class Fraction {
 	constructor (whole,numer,den) {
 		this.whole = whole;
 		this.numer = numer;
@@ -44,7 +44,7 @@ export class Fraction {
 			this.reduce();
     }
 
-	neg() {
+	neg(other) {
 			this.whole = -this.whole;
 			this.numer = -this.numer;
 	}
@@ -64,8 +64,7 @@ export class Fraction {
 		this.extract_whole();
 		this.reduce();
 	}
-}
-
+};
 if (typeof exports !== "undefined")
 {
 	exports.Fraction = Fraction;

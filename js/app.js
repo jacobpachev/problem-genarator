@@ -301,12 +301,8 @@ new Vue({
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
 		},
-		fract_width: function () {
-			let max_val_length = this.max_val.toString().length;
-			return max_val_length * FRACT_INC_W + FRACT_BASE_W;
-		},
 		focus_on_row(row_num) {
-			let el = this.gen_id("answer-input-" + row_num + "-whole");
+			let el = this.gen_id(this.get_focus_on_row_id(row_num));
 			console.log("focus el:", el);
 			if (!el)
 				return;
@@ -341,7 +337,7 @@ new Vue({
 			{
 				this.report_time();
 				this.reset_timer();
-                this.timer_is_true = false;
+				this.timer_is_true = false;
 			}
 			console.log("Results", this.results[n_correct-1])
 			if (this.results[row-1] == true && this.results[row] == null)
