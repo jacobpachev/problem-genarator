@@ -1,6 +1,6 @@
 <template>
 <div class="problem_table">
-	<template v-for="i in data.fracts.length">
+	<template v-for="i in n_fracts">
 		<DynamicSpan cl="fract_w_sign" :key="get_key(i)" :root="root" :vars="{i,data}">
 			<Fract :root="root" :data="data.fracts[i-1]"
 				:showsign="i > 1 || data.signs[i-1] == '-'" :sign="data.signs[i-1]"/>
@@ -22,5 +22,10 @@ export default {
 	mixins: [Problem],
 	name: 'FractProblem',
 	components: {CheckMark, DynamicSpan, AnswerInput, Fract},
+	computed: {
+		n_fracts() {
+			return this.data.fracts ? this.data.fracts.length : 0;
+		}
+	}
 }
 </script>

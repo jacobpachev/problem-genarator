@@ -1,5 +1,4 @@
 import Exercise  from './Exercise.js';
-import {FractProblem} from '../lib/fract-problem';
 const FRACT_INC_W = 5;
 const FRACT_BASE_W = 5;
 const FRACT_GAP = 0;
@@ -8,9 +7,6 @@ const FRACT_PAD = 15;
 export default {
 	mixins: [Exercise],
 	methods: {
-		get_problem() {
-			return new FractProblem(this);
-		},
 		fix_styles() {
 			let fract_w = this.fract_width();
 			let props = { width: fract_w};

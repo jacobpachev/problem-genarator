@@ -1,4 +1,7 @@
 import {fmt_time} from '../lib/util';
+import {LinearEquationProblem} from '../lib/linear-equation-problem';
+import {FractProblem} from '../lib/fract-problem';
+
 
 export default {
 	name: 'Exercise',
@@ -16,6 +19,8 @@ export default {
 			work_time: 0,
 			timer_id: 0,
 			max_val_length: null,
+			mode: null,
+			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem}
 		};
 	},
 	computed: {
@@ -39,7 +44,11 @@ export default {
 
 			this.props_by_class[cl] = style_map;
 		},
-		generate: function () {
+		get_problem() {
+			return new this.problem_lookup[this.mode](this);
+		},
+		generate() {
+			console.log("generating: mode=", this.mode);
 			this.n_problems = parseInt(this.n_problems);
 			this.fix_styles();
 			let problems = [];
