@@ -1,7 +1,7 @@
 <template>
 	<div class="problem_table">
 		<LinearEquation :root="root" :eq="data.eq" />
-		<div class="x_ans">x =</div>
+		<span class="x_ans" >x =</span>
 		<AnswerInput :problem="data" :key="rownum" />
 		<CheckMark :problem="data" />
 	</div>
