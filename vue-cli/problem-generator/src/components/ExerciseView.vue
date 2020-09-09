@@ -39,8 +39,7 @@ export default {
 			modes: {
 				"fract" : {title: "Imporper Fractions", component: FractExercise},
 				"linear" : {title: "Linear Equations", component: LinearEquationExercise}
-			},
-			mode: "fract"
+			}
 		};
 	},
 	methods: {

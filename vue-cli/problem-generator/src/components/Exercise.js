@@ -19,7 +19,7 @@ export default {
 			work_time: 0,
 			timer_id: 0,
 			max_val_length: null,
-			mode: null,
+			mode_: "fract",
 			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem}
 		};
 	},
@@ -28,6 +28,15 @@ export default {
 			if (!this.solve_time)
 				return null;
 			return fmt_time(this.solve_time, true);
+		},
+		mode: {
+			get() {
+				return this.mode_;
+			},
+			set(mode) {
+				this.mode_ = mode;
+				this.generate();
+			}
 		}
 	},
 	methods: {
@@ -45,10 +54,10 @@ export default {
 			this.props_by_class[cl] = style_map;
 		},
 		get_problem() {
-			return new this.problem_lookup[this.mode](this);
+			return new this.problem_lookup[this.mode_](this);
 		},
 		generate() {
-			console.log("generating: mode=", this.mode);
+			console.log("generating: mode=", this.mode_);
 			this.n_problems = parseInt(this.n_problems);
 			this.fix_styles();
 			let problems = [];
