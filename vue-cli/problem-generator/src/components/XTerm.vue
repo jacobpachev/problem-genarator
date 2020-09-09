@@ -11,7 +11,7 @@ export default {
 			let k = (this.k != 1 && this.k != -1) ? this.k : "";
 			if (this.k == -1)
 				sign = "-";
-			return sign + k.toString() + "x";
+			return sign + " " + k.toString() + "x";
 		}
 	}
 }

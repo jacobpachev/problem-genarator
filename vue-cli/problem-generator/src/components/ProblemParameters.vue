@@ -27,6 +27,7 @@
           md="2"
         >
           <v-text-field
+            v-if="root.mode=='fract'"
             v-model="root.n_terms"
             label="Number of terms"
             type="number"
