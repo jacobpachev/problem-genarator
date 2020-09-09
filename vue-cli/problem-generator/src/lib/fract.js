@@ -44,7 +44,7 @@ class Fraction {
 			this.reduce();
     }
 
-	neg(other) {
+	neg() {
 			this.whole = -this.whole;
 			this.numer = -this.numer;
 	}
@@ -64,7 +64,8 @@ class Fraction {
 		this.extract_whole();
 		this.reduce();
 	}
-};
+}
+
 if (typeof exports !== "undefined")
 {
 	exports.Fraction = Fraction;
