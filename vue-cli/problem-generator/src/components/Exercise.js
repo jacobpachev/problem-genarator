@@ -1,7 +1,7 @@
 import {fmt_time} from '../lib/util';
 import {LinearEquationProblem} from '../lib/linear-equation-problem';
 import {FractProblem} from '../lib/fract-problem';
-
+import BinaryOperatorChart from './BinaryOperatorChart.vue';
 
 export default {
 	name: 'Exercise',
@@ -20,7 +20,7 @@ export default {
 			timer_id: 0,
 			max_val_length: null,
 			mode_: "fract",
-			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem}
+			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem, "binary_op": BinaryOperatorChart}
 		};
 	},
 	computed: {

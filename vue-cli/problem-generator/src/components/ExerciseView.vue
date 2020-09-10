@@ -6,7 +6,7 @@
 			</v-card>
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
-				<BinaryOperatorChart v-if="is_binary_op" :op="binary_op" :root="root" />
+				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
 				<template v-else v-for="i in root.problems.length">
 					<div class="problem_container" :key="root.gen_key(i)" >
 						<div class="problem_label">
@@ -29,7 +29,7 @@ import ProblemParameters from './ProblemParameters.vue';
 import Clock from './Clock.vue';
 import FractExercise from './FractExercise.js';
 import LinearEquationExercise from './LinearEquationExercise.js';
-import BinaryOperatorExericse from './BinaryOperatorExericse.js';
+import BinaryOperatorExercise from './BinaryOperatorExercise.js';
 import ExerciseProblem from './ExerciseProblem.vue';
 import BinaryOperatorChart from './BinaryOperatorChart.vue';
 

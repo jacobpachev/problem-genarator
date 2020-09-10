@@ -11,9 +11,10 @@
 </template>
 <script>
 import BinaryOperatorInput from './BinaryOperatorInput.vue';
+
 export default {
 	props: ["root", "op"],
-	components: {BinaryOperatorInput}.
+	components: {BinaryOperatorInput},
 	methods: {
 		apply_op(a,b) {
 			switch (this.op)
