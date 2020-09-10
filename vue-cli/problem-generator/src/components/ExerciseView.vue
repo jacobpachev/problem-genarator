@@ -59,10 +59,10 @@ export default {
 			return Object.keys(this.modes).map(k => {return {title: this.modes[k].title, value: k}});
 		},
 		is_binary_op_exercise() {
-			this.modes[this.mode()].component == BinaryOperatorExercise;
+			return(this.modes[this.mode()].component == BinaryOperatorExercise);
 		},
 		binary_op() {
-			this.modes[this.mode()].op;
+			return(this.modes[this.mode()].op);
 		}
 	}
 }
