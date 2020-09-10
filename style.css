@@ -30,7 +30,7 @@ input.denominator {
 .fract_line_answer {
 	position: absolute;
 	left: 30px;
-    top: 20px; 
+    top: 20px;
 	font-size: 14px;
 	width: 30px;
 	z-index: 9999999;
@@ -158,3 +158,23 @@ input.denominator {
 	bottom: 15px;
 	left: 20px;
 }
+
+.binary-operator-input {
+	position: relative;
+	width: 45px;
+	height: 30px;
+	border: 1px solid black;
+}
+
+.mark-correct {
+	background-color: rgb(46, 199, 32);
+}
+
+.mark-correct-sq {
+	background-color: rgb(192, 255, 3);
+}
+
+.binary-operator-table td {
+	width: 30px;
+}
+
