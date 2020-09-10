@@ -1,5 +1,7 @@
 <template>
-  <v-form><v-container><v-row><v-col
+  <v-form><v-container>
+  <template v-if="!root.is_binary_op_exercise">
+  <v-row><v-col
 		cols="12"
 		md="2"
         >
@@ -33,23 +35,22 @@
             type="number"
             required
           ></v-text-field>
+          </v-col>
+		</v-row>
+		</template>
+		<template v-if="root.is_binary_op_exercise">
         <v-text-field
-            v-if = "root.mode='binary_op'"
-            v-model="table_len_input"
+			@input="this.fix_parameters()"
+            v-model="root.table_len"
             label="Length of table"
             type="number"
             required
           ></v-text-field>
-        </v-col>
 			<v-col>
-				<v-select  v-if = "root.mode='binary_op'" :items="order_items" label="Traversal Order" v-model="order">
+				<v-select   :items="root.order_items" label="Traversal Order" v-model="root.order">
 				</v-select>
        </v-col>
-       <v-col>
-				<v-select  v-if = "root.mode='binary_op'" :items="order_items" label="Binary Operators" v-model="order">
-				</v-select>
-       </v-col>
-      </v-row>
+       </template>
       <v-row>
 				<v-btn @click="root.generate()">Start</v-btn>
       </v-row>

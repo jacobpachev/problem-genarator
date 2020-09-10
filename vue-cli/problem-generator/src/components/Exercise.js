@@ -1,12 +1,14 @@
 import {fmt_time} from '../lib/util';
 import {LinearEquationProblem} from '../lib/linear-equation-problem';
 import {FractProblem} from '../lib/fract-problem';
-import BinaryOperatorChart from './BinaryOperatorChart.vue';
 
 export default {
 	name: 'Exercise',
 	data() {
 		return {
+			table_len: 12,
+			table_len_input: "12",
+			order: "Row",
 			max_val: 10,
 			n_problems: 10,
 			n_terms: 3,
@@ -18,9 +20,11 @@ export default {
 			timer_on: null,
 			work_time: 0,
 			timer_id: 0,
+			generated: false,
 			max_val_length: null,
 			mode_: "fract",
-			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem, "binary_op": BinaryOperatorChart}
+			order_items: ["Row","Diagonal"],
+			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem, "binary_op": null}
 		};
 	},
 	computed: {
@@ -53,10 +57,17 @@ export default {
 
 			this.props_by_class[cl] = style_map;
 		},
+		
 		get_problem() {
-			return new this.problem_lookup[this.mode_](this);
+			let cl = this.problem_lookup[this.mode_];
+			if(!cl) 
+				return null;
+			
+			return new cl(this);
 		},
 		generate() {
+			if (this.fix_paramaters) 
+				this.fix_paramaters();
 			console.log("generating: mode=", this.mode_);
 			this.n_problems = parseInt(this.n_problems);
 			this.fix_styles();

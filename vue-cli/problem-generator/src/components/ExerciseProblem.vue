@@ -7,7 +7,7 @@
 			<LinearEquationProblem :data="data" :rownum="rownum" :root="root" />
 		</template>
 		<template v-if="mode=='binary_op'">
-			<BinaryOperatorChart :root="root" ops="" />
+			<BinaryOperatorChart :root="root" op="this.root.binary_op()" />
 		</template>
 	</div>
 </template>
