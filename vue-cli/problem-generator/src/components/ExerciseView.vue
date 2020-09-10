@@ -6,7 +6,8 @@
 			</v-card>
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
-				<template v-for="i in root.problems.length">
+				<BinaryOperatorChart v-if="is_binary_op" :op="binary_op" :root="root" />
+				<template v-else v-for="i in root.problems.length">
 					<div class="problem_container" :key="root.gen_key(i)" >
 						<div class="problem_label">
 							Problem {{i}}
@@ -28,17 +29,20 @@ import ProblemParameters from './ProblemParameters.vue';
 import Clock from './Clock.vue';
 import FractExercise from './FractExercise.js';
 import LinearEquationExercise from './LinearEquationExercise.js';
+import BinaryOperatorExericse from './BinaryOperatorExericse.js';
 import ExerciseProblem from './ExerciseProblem.vue';
+import BinaryOperatorChart from './BinaryOperatorChart.vue';
 
 export default {
 	name: 'ExerciseView',
-	mixins: [FractExercise, LinearEquationExercise],
-	components: {ProblemParameters, Clock, ExerciseProblem},
+	mixins: [FractExercise, LinearEquationExercise, BinaryOperatorExercise],
+	components: {ProblemParameters, Clock, ExerciseProblem, BinaryOperatorChart},
 	data() {
 		return {
 			modes: {
 				"fract" : {title: "Imporper Fractions", component: FractExercise},
-				"linear" : {title: "Linear Equations", component: LinearEquationExercise}
+				"linear" : {title: "Linear Equations", component: LinearEquationExercise},
+				"multi" : {title: "Multiplication", component: BinaryOperatorExercise, op: "*"}
 			}
 		};
 	},
@@ -53,6 +57,12 @@ export default {
 		},
 		mode_items() {
 			return Object.keys(this.modes).map(k => {return {title: this.modes[k].title, value: k}});
+		},
+		is_binary_op_exercise() {
+			this.modes[this.mode()].component == BinaryOperatorExercise;
+		},
+		binary_op() {
+			this.modes[this.mode()].op;
 		}
 	}
 }
