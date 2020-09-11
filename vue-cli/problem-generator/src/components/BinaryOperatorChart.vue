@@ -24,12 +24,14 @@ export default {
 					return a - b;
 				case '*':
 					return a * b;
+				case '**':
+					return Math.pow(a, b);
 			}
 		},
 		gen_key: function(i,j) {
 			return "binary-operator-chart-row-" + this.root.start_time.toString() + "-" + i + "-" + j;
 		},
 	}
-	
+
 }
 </script>

@@ -57,16 +57,16 @@ export default {
 
 			this.props_by_class[cl] = style_map;
 		},
-		
+
 		get_problem() {
 			let cl = this.problem_lookup[this.mode_];
-			if(!cl) 
+			if(!cl)
 				return null;
-			
+
 			return new cl(this);
 		},
 		generate() {
-			if (this.fix_paramaters) 
+			if (this.fix_paramaters)
 				this.fix_paramaters();
 			console.log("generating: mode=", this.mode_);
 			this.n_problems = parseInt(this.n_problems);
@@ -86,6 +86,7 @@ export default {
 			this.work_time = 0;
 			this.reset_timer();
 			this.timer_id = setInterval(() => { this.work_time = Date.now() - this.start_time; }, 1000);
+			this.generated = true;
 		},
 		focus_on_row(row_num) {
 			let el = this.gen_id("answer-input-" + row_num + "-whole");

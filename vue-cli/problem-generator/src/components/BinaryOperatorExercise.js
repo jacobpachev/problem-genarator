@@ -29,8 +29,7 @@ export default {
 			this.answer_inputs = {};
 		},
 		fix_paramaters() {
-			this.generated = true;
-			this.table_len = parseInt(this.table_len);
+			this.table_len = parseInt(this.table_len_input);
 			this.reset_answers();
 		},
 		gen_row_key(i) {
