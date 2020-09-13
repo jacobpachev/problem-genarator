@@ -26,6 +26,13 @@ export default {
 					return a * b;
 				case '**':
 					return Math.pow(a, b);
+				case 'sum_sq':
+					return a * a + b * b;
+				case 'table_sq':
+				{
+					let p = parseInt(a.toString() + b.toString());
+					return p * p;
+				}
 			}
 		},
 		gen_key: function(i,j) {

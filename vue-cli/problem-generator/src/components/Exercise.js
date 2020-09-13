@@ -6,12 +6,12 @@ export default {
 	name: 'Exercise',
 	data() {
 		return {
-			table_len: 12,
-			table_len_input: "12",
+			table_len: this.get_default_table_len(),
+			table_len_input: this.get_default_table_len(),
 			order: "Row",
-			max_val: 10,
-			n_problems: 5,
-			n_terms: 2,
+			max_val: this.get_default_max_val(),
+			n_problems: this.get_default_n_problems(),
+			n_terms: this.get_default_n_terms(),
 			props_by_class: {},
 			problems: [],
 			results: [],
@@ -39,6 +39,7 @@ export default {
 			},
 			set(mode) {
 				this.mode_ = mode;
+				this.reset_defaults();
 				this.generate();
 			}
 		}
@@ -46,6 +47,14 @@ export default {
 	methods: {
 		get_root() {
 			return this;
+		},
+		reset_defaults() {
+			for (let p of ["n_terms", "n_problems", "max_val", "table_len"])
+			{
+				this[p] = this["get_default_" + p]();
+			}
+
+			this.table_len_input = this.get_default_table_len();
 		},
 		fix_styles_for_class(cl, props) {
 			let style_map = {};
@@ -57,7 +66,37 @@ export default {
 
 			this.props_by_class[cl] = style_map;
 		},
+		get_default_n_terms() {
+			return 2;
+		},
+		get_default_n_problems() {
+			if (!this.mode_)
+				return 5;
 
+			switch (this.mode_)
+			{
+				case 'linear':
+					return 5;
+				case 'fract':
+					return 3;
+				default:
+					return 10;
+			}
+		},
+		get_default_table_len() {
+			switch(this.mode_)
+			{
+				case 'pow':
+					return 5;
+				case 'table_sq':
+					return 9;
+				default:
+					return 12;
+			}
+		},
+		get_default_max_val() {
+			return 10;
+		},
 		get_problem() {
 			let cl = this.problem_lookup[this.mode_];
 			if(!cl)
