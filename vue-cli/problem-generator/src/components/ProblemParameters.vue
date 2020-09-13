@@ -50,7 +50,10 @@
 				<v-select   :items="root.order_items" label="Traversal Order" v-model="root.order">
 				</v-select>
        </v-col>
+        Lighter green indicates a full square.
+        <v-row/>
        </template>
+       <v-col/>
       <v-row>
 				<v-btn @click="root.generate()">Start</v-btn>
       </v-row>

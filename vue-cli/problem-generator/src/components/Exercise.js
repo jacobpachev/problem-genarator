@@ -10,8 +10,8 @@ export default {
 			table_len_input: "12",
 			order: "Row",
 			max_val: 10,
-			n_problems: 10,
-			n_terms: 3,
+			n_problems: 5,
+			n_terms: 2,
 			props_by_class: {},
 			problems: [],
 			results: [],
@@ -22,9 +22,9 @@ export default {
 			timer_id: 0,
 			generated: false,
 			max_val_length: null,
-			mode_: "fract",
+			mode_: "linear",
 			order_items: ["Row","Diagonal"],
-			problem_lookup: {"fract": FractProblem, "linear": LinearEquationProblem, "binary_op": null}
+			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null}
 		};
 	},
 	computed: {

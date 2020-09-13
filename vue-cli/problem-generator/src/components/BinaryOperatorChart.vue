@@ -3,7 +3,7 @@
 		<tr :key="root.gen_row_key(i)" v-for="i in root.table_len">
 			<td :key="'cell-' + gen_key(i,j)" v-for="j in root.table_len">
 				<span v-if="i == 1 || j == 1">{{i == 1 ? j : i}}</span>
-				<BinaryOperatorInput :row="i" :col="j" :root="root" :key="gen_key(i,j)" v-else :data="apply_op(i,j)" />
+				<BinaryOperatorInput :row="i" :col="j" :root="root" :key="gen_key(i,j)" v-else :data="apply_op(i,j)" :op="op"/>
 			</td>
 		</tr>
 	</table>

@@ -167,11 +167,11 @@ input.denominator {
 }
 
 .mark-correct {
-	background-color: rgb(46, 199, 32);
+	background-color: rgb(4, 199, 52);
 }
 
 .mark-correct-sq {
-	background-color: rgb(192, 255, 3);
+	background-color: rgb(140, 222, 0);
 }
 
 .binary-operator-table td {

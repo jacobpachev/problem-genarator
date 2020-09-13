@@ -4,7 +4,7 @@
 <script>
 export default {
 	name: 'BinaryOperatorInput',
-	props: ["root", "row", "col", "data"],
+	props: ["root", "row", "col", "data", "op"],
 		data() {
 		return {
 			user_answer: ""
@@ -23,12 +23,15 @@ export default {
 	},
 	methods: {
 		get_cl() {
-			return "binary-operator-input" + (this.answer_is_correct() && this.row != this.col ? " mark-correct" : this.answer_is_correct() && this.row == this.col ? " mark-correct-sq" : "");
+			console.log("Op, " + this.op);
+			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer != "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
 		},
 		answer_is_correct() {
 			return this.user_answer == this.data;
 		},
-
+		is_full_sq(n) {
+			return Math.sqrt(n) % 1 === 0
+		},
 		get_next() {
 			let row = this.row;
 			let col = this.col;

@@ -40,8 +40,8 @@ export default {
 	data() {
 		return {
 			modes: {
-				"fract" : {title: "Imporper Fractions", component: FractExercise},
 				"linear" : {title: "Linear Equations", component: LinearEquationExercise},
+				"fract" : {title: "Imporper Fractions", component: FractExercise},
 				"multi" : {title: "Multiplication", component: BinaryOperatorExercise, op: "*"},
 				"add" : {title: "Addition", component: BinaryOperatorExercise, op: "+"},
 				"sub" : {title: "Subtraction", component: BinaryOperatorExercise, op: "-"},
