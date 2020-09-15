@@ -1,11 +1,15 @@
 <template v-if="root.generated">
 	<table class = "binary-operator-table">
-		<tr :key="root.gen_row_key(i)" v-for="i in root.table_len">
-			
-			<td :key="'cell-' + gen_key(i,j)" v-for="j in root.table_len">
-				<span v-if=" (i == 1 || j == 1) && op != 'table_sq'">{{i == 1  ? j : i}}</span>
-				<span v-else-if = "(i == 1 || j == 1) && op == 'table_sq'">{{i == 1  ? j-1 : i-1}}</span>
-				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" v-else :data="apply_op(i,j)" :op="op"/>
+	<tr>
+		<td>&nbsp;</td>
+		<template>
+			<td :key="'header-'+gen_key(i)" v-for="i in table_range">{{i}}</td>
+		</template>
+	</tr>
+		<tr :key="root.gen_row_key(i)" v-for="i in table_range">
+			<td>{{i}}</td>
+			<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
+				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
 			</td>
 		</tr>
 	</table>
@@ -17,7 +21,30 @@ import BinaryOperatorInput from './BinaryOperatorInput.vue';
 export default {
 	props: ["root", "op"],
 	components: {BinaryOperatorInput},
+	computed: {
+		chart() {
+			return this;
+		},
+		table_range() {
+			let start = this.range_start();
+			return Array.apply(null, Array(this.root.table_len + 1 - start)).map((v,i) => i + start);
+		}
+	},
 	methods: {
+		range_start() {
+			switch (this.op)
+			{
+				default:
+					return 0;
+				case '*':
+					if (this.root.table_len < 7)
+						return 0;
+					return 2;
+				case '**':
+				case 'sum_sq':
+					return 2;
+			}
+		},
 		apply_op(a,b) {
 			switch (this.op)
 			{
