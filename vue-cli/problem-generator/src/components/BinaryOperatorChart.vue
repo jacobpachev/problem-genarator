@@ -60,7 +60,7 @@ export default {
 					return a * a + b * b;
 				case 'table_sq':
 				{
-					let p = parseInt((a-1).toString() + (b-1).toString());
+					let p = parseInt(a.toString() + b.toString());
 					return p * p;
 				}
 			}
