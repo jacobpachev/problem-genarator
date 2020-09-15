@@ -1,3 +1,4 @@
+
 <template v-if="root.generated">
 	<table class = "binary-operator-table">
 
@@ -10,6 +11,7 @@
 		<tr :key="root.gen_row_key(i)" v-for="i in table_range">
 			<td>{{i}}</td>
 			<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
+				<Hint class="hint" v-if="root.hint" :root="root" :op="op" :i="i" :j="j" />
 				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
 			</td>
 		</tr>
@@ -18,10 +20,11 @@
 
 <script>
 import BinaryOperatorInput from './BinaryOperatorInput.vue';
+import Hint from './Hint.vue';
 
 export default {
 	props: ["root", "op"],
-	components: {BinaryOperatorInput},
+	components: {BinaryOperatorInput,Hint},
 	computed: {
 		chart() {
 			return this;

@@ -25,7 +25,7 @@ export default {
 			mode_: "linear",
 			order_items: ["Row","Diagonal"],
 			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null},
-			range: 0
+			hint: false
 		};
 	},
 	computed: {
