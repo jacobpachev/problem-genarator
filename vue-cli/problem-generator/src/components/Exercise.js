@@ -24,7 +24,8 @@ export default {
 			max_val_length: null,
 			mode_: "linear",
 			order_items: ["Row","Diagonal"],
-			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null}
+			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null},
+			range: 0
 		};
 	},
 	computed: {

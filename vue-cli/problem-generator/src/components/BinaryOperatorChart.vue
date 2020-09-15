@@ -1,10 +1,9 @@
 <template v-if="root.generated">
 	<table class = "binary-operator-table">
-		<tr :key="root.gen_row_key(i)" v-for="i in root.table_len">
-			
-			<td :key="'cell-' + gen_key(i,j)" v-for="j in root.table_len">
-				<span v-if=" (i == 1 || j == 1) && op != 'table_sq'">{{i == 1  ? j : i}}</span>
-				<span v-else-if = "(i == 1 || j == 1) && op == 'table_sq'">{{i == 1  ? j-1 : i-1}}</span>
+		<span style="visibility:hidden" v-if="op=='table_sq'">{{root.range = 0}}</span>
+		<tr :key="root.gen_row_key(i)" v-for="i in (0,root.table_len)">
+			<td :key="'cell-' + gen_key(i,j)" v-for="j in (0,root.table_len)">
+				<span v-if=" (i == 1 || j == 1) ">{{i == 1  ? j : i}}</span>
 				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" v-else :data="apply_op(i,j)" :op="op"/>
 			</td>
 		</tr>
@@ -33,7 +32,7 @@ export default {
 					return a * a + b * b;
 				case 'table_sq':
 				{
-					let p = parseInt((a-1).toString() + (b-1).toString());
+					let p = parseInt(a.toString() + b.toString());
 					return p * p;
 				}
 			}
