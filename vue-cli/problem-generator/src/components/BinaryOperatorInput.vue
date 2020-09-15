@@ -4,7 +4,7 @@
 <script>
 export default {
 	name: 'BinaryOperatorInput',
-	props: ["root", "row", "col", "data", "op"],
+	props: ["root", "row", "col", "data", "op", "chart"],
 		data() {
 		return {
 			user_answer: ""
@@ -12,9 +12,9 @@ export default {
 	},
 	mounted() {
 		this.root.answer_inputs[this.$vnode.key] = this;
-		if (this.row == 2 && this.col == 2)
+		if (this.row == this.chart.range_start() && this.col == this.chart.range_start())
 		{
-			let id = this.root.get_input_id(2,2);
+			let id = this.root.get_input_id(this.chart.range_start(), this.chart.range_start());
 			console.log("first id:", id);
 			let el = document.getElementById(id);
 			if (el)
@@ -41,9 +41,10 @@ export default {
 					col++;
 					if (col > this.root.table_len)
 					{
-						col = 2;
+						col = this.chart.range_start();
 						row++;
 					}
+					console.log("row:", row, "col:", col);
 					break;
 				case "Diagonal":
 					row++;
@@ -53,11 +54,11 @@ export default {
 						let diag = row - col;
 						diag = (diag >= 0) ? -diag-1 : -diag;
 						if (diag < 0) {
-							row = 2;
+							row = this.chart.range_start();
 							col = row - diag;
 						}
 						else {
-							col = 2;
+							col = this.chart.range_start();
 							row = diag + col;
 						}
 					}
