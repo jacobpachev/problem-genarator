@@ -3,9 +3,8 @@
 		<tr :key="root.gen_row_key(i)" v-for="i in root.table_len">
 			
 			<td :key="'cell-' + gen_key(i,j)" v-for="j in root.table_len">
-				<span style="visibility:hidden">{{i = op == "table_sq" ? i-1: i}}</span>
-				<span style="visibility:hidden">{{ j = op == "table_sq" ? j-1: j}}</span>
-				<span v-if=" (i == 1 || j == 1)">{{i == 1  ? j : i}}</span>
+				<span v-if=" (i == 1 || j == 1) && op != 'table_sq'">{{i == 1  ? j : i}}</span>
+				<span v-else-if = "(i == 1 || j == 1) && op == 'table_sq'">{{i == 1  ? j-1 : i-1}}</span>
 				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" v-else :data="apply_op(i,j)" :op="op"/>
 			</td>
 		</tr>
@@ -34,7 +33,7 @@ export default {
 					return a * a + b * b;
 				case 'table_sq':
 				{
-					let p = parseInt(a.toString() + b.toString());
+					let p = parseInt((a-1).toString() + (b-1).toString());
 					return p * p;
 				}
 			}
