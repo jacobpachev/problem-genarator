@@ -178,7 +178,9 @@ input.denominator {
 	width: 30px;
 }
 .hint {
-	position: relative;
-
+	position: fixed;
+	width: 55px;
+	height: 30px;
+	border: 1px solid black;
 }
 
