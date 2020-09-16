@@ -177,8 +177,9 @@ input.denominator {
 .binary-operator-table td {
 	width: 30px;
 }
-.hint {
-	position: fixed;
+#hint-id {
+	position: relative;
+	left: 800px;
 	width: 55px;
 	height: 30px;
 	border: 1px solid black;

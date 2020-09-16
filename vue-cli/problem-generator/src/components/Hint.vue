@@ -1,5 +1,6 @@
 <template>
-	<div v-if="inited()" class="hint">
+	<div id="hint-id" v-if="inited()">
+		{{this.animate(this.pos)}}
 		<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
 		<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
 		<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
@@ -7,6 +8,7 @@
 	</div>
 </template>
 <script>
+
 import Pow from './Pow.vue';
 
 export default {
@@ -17,7 +19,8 @@ export default {
 		return {
 			a: null,
 			b: null,
-			el: 'hint'
+			timer: null,
+			pos: null
 		}
 	},
 	mounted() {
@@ -25,13 +28,18 @@ export default {
 		this.root.hint = this;
 	},
 	methods: {
-		init_el() {
-			
-			this.el = this.root.get_id(this.el);
+		animate(pos) {
+			this.timer = setInterval(function() {
+				pos ++;
+				document.getElementById('hint-id').style.top = pos + 'px';
+				if(pos >= 500) 
+					this.clear_animation();
+		}, 100);
 		},
-		start_animation() {
-			this.init_el();
-			this.el.styles.top = 15 + "px";
+		clear_animation() {
+			clearInterval(this.timer);
+			this.pos = 0;
+			console.log("Clearing");
 		},
 		get_square_base() {
 			let res = this.b.toString();
