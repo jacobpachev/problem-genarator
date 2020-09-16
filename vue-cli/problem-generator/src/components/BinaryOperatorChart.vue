@@ -1,21 +1,21 @@
-
-<template v-if="root.generated">
-	<table class = "binary-operator-table">
-
-	<tr>
-		<td>&nbsp;</td>
-		<template>
-			<td :key="'header-'+gen_key(i)" v-for="i in table_range">{{i}}</td>
-		</template>
-	</tr>
-		<tr :key="root.gen_row_key(i)" v-for="i in table_range">
-			<td>{{i}}</td>
-			<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
-				<Hint class="hint" v-if="root.hint" :root="root" :op="op" :i="i" :j="j" />
-				<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
-			</td>
+<template>
+	<div v-if="root.generated">
+		<Hint class="hint" :root="root" :op="op" />
+		<table class = "binary-operator-table">
+		<tr>
+			<td>&nbsp;</td>
+			<template>
+				<td :key="'header-'+gen_key(i)" v-for="i in table_range">{{i}}</td>
+			</template>
 		</tr>
-	</table>
+			<tr :key="root.gen_row_key(i)" v-for="i in table_range">
+				<td>{{i}}</td>
+				<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
+					<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
+				</td>
+			</tr>
+		</table>
+	</div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ import Hint from './Hint.vue';
 
 export default {
 	props: ["root", "op"],
-	components: {BinaryOperatorInput,Hint},
+	components: {BinaryOperatorInput, Hint},
 	computed: {
 		chart() {
 			return this;

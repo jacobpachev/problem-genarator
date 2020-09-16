@@ -1,5 +1,5 @@
 <template>
-	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="number" v-model="user_answer" @input="check_answer" @focus="root.hint = true" @focusout="root.hint=false">
+	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="number" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()">
 </template>
 <script>
 export default {
@@ -22,6 +22,16 @@ export default {
 		}
 	},
 	methods: {
+		set_hint() {
+			if (!this.root.hint)
+				return;
+			this.root.hint.update(this.row, this.col);
+		},
+		clear_hint() {
+			if (!this.root.hint)
+				return;
+			this.root.hint.update(null, null);
+		},
 		get_cl() {
 			console.log("Op, " + this.op);
 			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer != "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
