@@ -178,10 +178,18 @@ input.denominator {
 	width: 30px;
 }
 #hint-id {
-	position: relative;
-	left: 800px;
+	position: fixed;
+	left: 50px;
+	top: 100px;
 	width: 55px;
 	height: 30px;
+	background-color: blue;
+	color: white;
+	font-weight: bold;
+	opacity: 0.5;
+	z-index: 9999;
 	border: 1px solid black;
+	text-align: center;
+	padding: 3px 0px;
 }
 
