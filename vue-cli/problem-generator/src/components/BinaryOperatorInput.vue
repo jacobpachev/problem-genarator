@@ -85,6 +85,8 @@ export default {
 			if (this.answer_is_correct())
 			{
 				this.root.check_all();
+				if (this.root.hint)
+					this.root.hint.clear_animation();
 				let el = this.get_next();
 				if (el)
 					el.focus();
