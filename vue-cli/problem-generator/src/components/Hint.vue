@@ -17,9 +17,13 @@ import Star from './Star.vue';
 
 const INIT_TOP = 0;
 const INIT_LEFT = 20;
+const INIT_STAR_TOP = 0;
+const INIT_STAR_LEFT = 20;
 const FRAME_RATE = 30;
 const FRAME_STEP = 1;
+const STAR_FRAME_STEP = 2;
 const FINAL_TOP = 400;
+const FINAL_STAR_LEFT = 400;
 
 export default {
 	name: 'Hint',
@@ -44,18 +48,54 @@ export default {
 		reset_pos() {
 			this.pos = {top: INIT_TOP, left: INIT_LEFT};
 		},
+		reset_star_pos() {
+			this.star_pos = {top: INIT_STAR_TOP, left: INIT_STAR_LEFT};
+		},
 		should_stop_animate() {
 			return this.pos.top >= FINAL_TOP;
 		},
-		animate_sync_pos() {
-			let el = document.getElementById('hint-id');
-			let star_el = document.getElementById('star');
-			if (!el || !star_el)
+		animate_sync_element(id, pos)
+		{
+			let el = document.getElementById(id);
+			if (!el)
 				return;
-			el.style.top = this.pos.top + 'px';
-			el.style.left = this.pos.left + 'px';
-			star_el.style.top = this.star_pos.top + 'px';
-			star_el.style.left = this.star_pos.left + 'px';
+
+			el.style.top = pos.top + 'px';
+			el.style.left = pos.left + 'px';
+		},
+		animate_sync_pos() {
+			this.animate_sync_element('hint-id', this.pos);
+		},
+		animate_star_sync_pos() {
+			console.log("star:", this.star_pos);
+			this.animate_sync_element('star', this.star_pos);
+		},
+		animate_star() {
+			if (this.star_timer)
+				return;
+			this.reset_star_pos();
+			this.star = true;
+			let delay = 1000 / FRAME_RATE;
+
+			this.star_timer = setInterval(() => {
+				if (!this.star)
+					return;
+
+				this.star_pos.left += STAR_FRAME_STEP;
+				this.animate_star_sync_pos();
+
+				if (this.should_stop_animate_star())
+					this.clear_star_animation();
+			}, delay);
+		},
+		should_stop_animate_star() {
+			return this.star_pos.left >= FINAL_STAR_LEFT;
+		},
+		clear_star_animation() {
+			clearInterval(this.star_timer);
+			this.star_timer = null;
+			this.reset_star_pos();
+			this.star = false;
 		},
 		animate() {
 			if (this.timer)
@@ -65,17 +105,11 @@ export default {
 			this.timer = setInterval(() => {
 				this.pos.top += FRAME_STEP;
 				this.animate_sync_pos();
-				
+
 				if (this.should_stop_animate()) {
 					this.clear_animation();
-					this.star = true;
 				}
 		}, delay);
-		this.star_timer = setInterval(() => {
-			if(this.star) {
-					this.star_pos.left += FRAME_STEP;
-			}
-		}, delay*2);
 		},
 		clear_animation() {
 			if (!this.timer)

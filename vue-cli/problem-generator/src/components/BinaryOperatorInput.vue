@@ -86,7 +86,10 @@ export default {
 			{
 				this.root.check_all();
 				if (this.root.hint)
+				{
 					this.root.hint.clear_animation();
+					this.root.hint.animate_star();
+				}
 				let el = this.get_next();
 				if (el)
 					el.focus();
