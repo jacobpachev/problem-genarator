@@ -1,5 +1,5 @@
 <template>
-	<div v-if="root.generated">
+	<div v-if="root.generated" class='input'>
 		<Hint class="hint" :root="root" :op="op" />
 		<table class = "binary-operator-table">
 		<tr>

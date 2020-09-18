@@ -1,8 +1,9 @@
+
 <template>
 	<v-app>
 		<v-container absolute>
-			<v-card>
-				<v-select v-model="mode" :items="mode_items" item-text="title" item-value="value"></v-select>
+			<v-card class='input'>
+				<v-select  v-model="mode" :items="mode_items" item-text="title" item-value="value"></v-select>
 			</v-card>
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
@@ -15,7 +16,7 @@
 						<ExerciseProblem :key="get_problem_key(i)" :mode="mode" :data="root.problems[i-1]" :rownum="i" :root="root.get_root()" />
 					</div>
 				</template>
-				<Clock v-if="root.timer_on" :time="root.work_time" />
+				<Clock class='clock' v-if="root.timer_on" :time="root.work_time" />
 				<div class="solve-time" v-if="root.pretty_solve_time">
 					Solved in {{root.pretty_solve_time}} seconds.
 				</div>

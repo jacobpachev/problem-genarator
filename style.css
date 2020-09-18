@@ -179,8 +179,9 @@ input.denominator {
 }
 #hint-id {
 	position: fixed;
-	left: 50px;
-	top: 100px;
+	left: 20px;
+	top: -2px;
+	bottom: 5px;
 	width: 55px;
 	height: 30px;
 	background-color: blue;
@@ -192,4 +193,8 @@ input.denominator {
 	text-align: center;
 	padding: 3px 0px;
 }
-
+.input,.solve-time,.clock {
+	position: relative;
+	left: 100px;
+	
+}

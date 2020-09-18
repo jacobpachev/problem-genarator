@@ -1,31 +1,39 @@
 <template>
-	<div id="hint-id" v-if="inited()">
-		<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
-		<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
-		<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
-		<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
-	</div>
+		<div v-if="inited()">
+			<div id="hint-id">
+				<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
+				<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
+				<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
+				<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+			</div>
+			<Star v-if="this.star"/>
+		</div>
+
 </template>
 <script>
 
 import Pow from './Pow.vue';
+import Star from './Star.vue';
 
-const INIT_TOP = 100;
-const INIT_LEFT = 50;
+const INIT_TOP = 0;
+const INIT_LEFT = 20;
 const FRAME_RATE = 30;
 const FRAME_STEP = 1;
-const FINAL_TOP = 500;
+const FINAL_TOP = 400;
 
 export default {
 	name: 'Hint',
-	components: {Pow},
+	components: {Pow,Star},
 	props: ['root', 'op'],
 	data() {
 		return {
 			a: null,
 			b: null,
 			timer: null,
-			pos: { top: null, left: null}
+			star_timer: null,
+			star: false,
+			pos: { top: null, left: null},
+			star_pos: { top: null, left: null}
 		}
 	},
 	mounted() {
@@ -41,12 +49,13 @@ export default {
 		},
 		animate_sync_pos() {
 			let el = document.getElementById('hint-id');
-
-			if (!el)
+			let star_el = document.getElementById('star');
+			if (!el || !star_el)
 				return;
-
 			el.style.top = this.pos.top + 'px';
 			el.style.left = this.pos.left + 'px';
+			star_el.style.top = this.star_pos.top + 'px';
+			star_el.style.left = this.star_pos.left + 'px';
 		},
 		animate() {
 			if (this.timer)
@@ -56,9 +65,17 @@ export default {
 			this.timer = setInterval(() => {
 				this.pos.top += FRAME_STEP;
 				this.animate_sync_pos();
-				if (this.should_stop_animate())
+				
+				if (this.should_stop_animate()) {
 					this.clear_animation();
+					this.star = true;
+				}
 		}, delay);
+		this.star_timer = setInterval(() => {
+			if(this.star) {
+					this.star_pos.left += FRAME_STEP;
+			}
+		}, delay*2);
 		},
 		clear_animation() {
 			if (!this.timer)
