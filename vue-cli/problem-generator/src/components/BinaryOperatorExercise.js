@@ -12,7 +12,6 @@ export default {
 		},
 		check_all() {
 			let all_correct = true;
-			console.log("answer inputs:", this.answer_inputs);
 			for (let k in this.answer_inputs)
 			{
 				all_correct = all_correct && this.answer_inputs[k].answer_is_correct();

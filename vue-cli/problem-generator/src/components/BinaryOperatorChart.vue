@@ -1,6 +1,6 @@
 <template>
 	<div v-if="root.generated" class='input'>
-		<Hint class="hint" :root="root" :op="op" />
+		<Hint class="hint" id="hint-id" :root="root" :op="op" :top="0" :left="20" />
 		<table class = "binary-operator-table">
 		<tr>
 			<td>&nbsp;</td>
