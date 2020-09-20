@@ -199,6 +199,25 @@ input.denominator {
 	text-align: center;
 	padding: 3px 0px;
 }
+
+.star-counter {
+	position: fixed;
+	left: 10px;
+	top: 20px;
+	background-color: rgb(128, 192, 192);
+	color: rgb(255, 0, 80);
+	width: 60px;
+	height: 30px;
+	text-align: center;
+	padding: 5px 0px;
+}
+
+.star-counter-icon {
+	position: absolute;
+	left: -5px;
+	top: 5px;
+}
+
 .input,.solve-time,.clock {
 	position: relative;
 	left: 100px;

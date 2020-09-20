@@ -6,7 +6,7 @@
 				<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
 				<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
 			</div>
-			<Star id="star" v-if="show_star" :root="root" :top="200" :left="20"/>
+			<Star id="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
 		</div>
 
 </template>
@@ -31,23 +31,38 @@ export default {
 			b: null,
 			timer: null,
 			show_star: false,
+			star_counter: 1
 		}
 	},
 	mounted() {
 		this.root.hint = this;
 	},
+	computed: {
+		cur_left() { return this.pos.left},
+		cur_top() { return this.pos.top}
+	},
 	methods: {
+		star_key() {
+			return "star-key-" + this.start_counter;
+		},
 		should_stop() {
 			return this.pos.top >= FINAL_TOP;
 		},
 		run_frame_step() {
 			this.pos.top += FRAME_STEP;
 		},
+		stop_star() {
+			this.show_star = false;
+			this.root.stop_star();
+		},
 		on_start() {
+			this.star_counter++;
+			let cur_star_counter = this.star_counter;
+
 			setTimeout(() => {
-				if (this.timer)
-					this.show_star = false;
-			}, 2000);
+				if (cur_star_counter == this.star_counter)
+					this.stop_star();
+			}, 3000);
 		},
 		get_square_base() {
 			let res = this.b.toString();
@@ -67,14 +82,15 @@ export default {
 			}
 		},
 		handle_success() {
+			let was_running = this.timer;
 			this.stop();
 			this.reset();
-			this.show_star = true;
-			console.log("Root in success", this.root);
-			if (this.root.star)
-				this.root.star.animate();
-			else
-				this.root.animate_star_on_mount = true;
+			if (was_running)
+			{
+				this.show_star = true;
+				this.root.stop_star();
+				this.root.animate_star();
+			}
 		},
 		update(a,b) {
 			this.a = a;

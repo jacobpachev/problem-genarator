@@ -1,12 +1,14 @@
 <template>
-<span id="star">
-	<v-icon color="yellow">mdi-star</v-icon>
-</span>
+<div id="star">
+	<svg height="105" width="250" viewBox="0 0 210 500">
+		<polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:rgb(224,224,0);stroke-width:0;"/>
+	</svg>
+</div>
 </template>
 <script>
 import Animated from './Animated.js';
 
-const FINAL_LEFT = 400;
+const FINAL_TOP = 20;
 
 export default {
 	name: 'Star',
@@ -24,10 +26,12 @@ export default {
 	},
 	methods: {
 		should_stop() {
-			this.pos.left >= FINAL_LEFT;
+			return this.pos.top <= FINAL_TOP;
 		},
 		run_frame_step() {
-			this.pos.left += 2;
+			this.pos.top -= 2;
+		},
+		on_stop() {
 		}
 	}
 }

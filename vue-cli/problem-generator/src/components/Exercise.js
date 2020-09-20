@@ -106,6 +106,8 @@ export default {
 			return new cl(this);
 		},
 		generate() {
+			if (this.reset_on_generate)
+				this.reset_on_generate();
 			if (this.fix_paramaters)
 				this.fix_paramaters();
 			console.log("generating: mode=", this.mode_);

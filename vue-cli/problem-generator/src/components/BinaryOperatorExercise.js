@@ -3,7 +3,8 @@ export default {
 	mixins: [Exercise],
 	data() {
 		return {
-			answer_inputs: {}
+			answer_inputs: {},
+			n_stars: 0
 		}
 	},
 	methods: {
@@ -26,6 +27,7 @@ export default {
 		},
 		reset_answers() {
 			this.answer_inputs = {};
+			this.n_stars = 0;
 		},
 		fix_paramaters() {
 			this.table_len = parseInt(this.table_len_input);
@@ -33,6 +35,25 @@ export default {
 		},
 		gen_row_key(i) {
 			return "answer-row-" + i;
+		},
+		reset_on_generate() {
+			if (this.root.hint)
+				this.root.hint.stop();
+		},
+		animate_star() {
+			this.n_stars++;
+			if (this.star)
+			{
+				this.star.animate();
+				return;
+			}
+
+			this.animate_star_on_mount = true;
+		},
+		stop_star() {
+			this.animate_on_mount = false;
+			if (this.star)
+				this.star.stop();
 		}
 	}
 }

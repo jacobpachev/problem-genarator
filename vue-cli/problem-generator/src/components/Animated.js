@@ -19,6 +19,8 @@ export default {
 				this.on_start();
 
 			this.reset();
+			this.sync_element();
+			console.log("Animated ", this.id, " reset to ", this.pos);
 			this.timer = setInterval(() => {
 				this.run_frame_step();
 				this.sync_element();
@@ -37,6 +39,7 @@ export default {
 			this.pos.left = this.left;
 		},
 		stop() {
+			console.trace("stopping ", this.id);
 			if (!this.timer)
 				return;
 
