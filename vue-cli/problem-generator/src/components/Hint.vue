@@ -6,84 +6,63 @@
 				<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
 				<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
 			</div>
-			<Star v-if="this.star"/>
+			<Star id="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
 		</div>
 
 </template>
 <script>
 
+import Animated from './Animated.js';
+
 import Pow from './Pow.vue';
 import Star from './Star.vue';
 
-const INIT_TOP = 0;
-const INIT_LEFT = 20;
-const FRAME_RATE = 30;
 const FRAME_STEP = 1;
 const FINAL_TOP = 400;
 
 export default {
 	name: 'Hint',
-	components: {Pow,Star},
+	mixins: [Animated],
+	components: {Pow, Star},
 	props: ['root', 'op'],
 	data() {
 		return {
 			a: null,
 			b: null,
 			timer: null,
-			star_timer: null,
-			star: false,
-			pos: { top: null, left: null},
-			star_pos: { top: null, left: null}
+			show_star: false,
+			star_counter: 1
 		}
 	},
 	mounted() {
-		console.log("Hint is mounted");
 		this.root.hint = this;
 	},
+	computed: {
+		cur_left() { return this.pos.left},
+		cur_top() { return this.pos.top}
+	},
 	methods: {
-		reset_pos() {
-			this.pos = {top: INIT_TOP, left: INIT_LEFT};
+		star_key() {
+			return "star-key-" + this.start_counter;
 		},
-		should_stop_animate() {
+		should_stop() {
 			return this.pos.top >= FINAL_TOP;
 		},
-		animate_sync_pos() {
-			let el = document.getElementById('hint-id');
-			let star_el = document.getElementById('star');
-			if (!el || !star_el)
-				return;
-			el.style.top = this.pos.top + 'px';
-			el.style.left = this.pos.left + 'px';
-			star_el.style.top = this.star_pos.top + 'px';
-			star_el.style.left = this.star_pos.left + 'px';
+		run_frame_step() {
+			this.pos.top += FRAME_STEP;
 		},
-		animate() {
-			if (this.timer)
-				return;
-			this.reset_pos();
-			let delay = 1000 / FRAME_RATE;
-			this.timer = setInterval(() => {
-				this.pos.top += FRAME_STEP;
-				this.animate_sync_pos();
-				
-				if (this.should_stop_animate()) {
-					this.clear_animation();
-					this.star = true;
-				}
-		}, delay);
-		this.star_timer = setInterval(() => {
-			if(this.star) {
-					this.star_pos.left += FRAME_STEP;
-			}
-		}, delay*2);
+		stop_star() {
+			this.show_star = false;
+			this.root.stop_star();
 		},
-		clear_animation() {
-			if (!this.timer)
-				return;
-			clearInterval(this.timer);
-			this.timer = null;
-			this.reset_pos();
-			console.log("Clearing");
+		on_start() {
+			this.star_counter++;
+			let cur_star_counter = this.star_counter;
+
+			setTimeout(() => {
+				if (cur_star_counter == this.star_counter)
+					this.stop_star();
+			}, 3000);
 		},
 		get_square_base() {
 			let res = this.b.toString();
@@ -100,6 +79,17 @@ export default {
 					return false;
 				default:
 					return true;
+			}
+		},
+		handle_success() {
+			let was_running = this.timer;
+			this.stop();
+			this.reset();
+			if (was_running)
+			{
+				this.show_star = true;
+				this.root.stop_star();
+				this.root.animate_star();
 			}
 		},
 		update(a,b) {
