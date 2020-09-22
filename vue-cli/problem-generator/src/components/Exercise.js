@@ -25,7 +25,8 @@ export default {
 			mode_: "linear",
 			order_items: ["Row","Diagonal"],
 			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null},
-			hint: null
+			hint: null,
+			cur_row: null
 		};
 	},
 	computed: {
@@ -136,6 +137,7 @@ export default {
 			if (!el)
 				return;
 			el.focus();
+			this.cur_row = row_num;
 		},
 		reset_timer: function () {
 			if (this.timer_id)

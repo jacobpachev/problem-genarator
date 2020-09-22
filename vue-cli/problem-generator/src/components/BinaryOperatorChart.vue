@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<StarCounter :root="root" />
 		<div v-if="root.generated" class='input'>
-			<Hint class="hint" id="hint-id" :root="root" :op="op" :top="0" :left="20" />
 			<table class = "binary-operator-table">
 			<tr>
 				<td>&nbsp;</td>
@@ -23,12 +21,10 @@
 
 <script>
 import BinaryOperatorInput from './BinaryOperatorInput.vue';
-import Hint from './Hint.vue';
-import StarCounter from './StarCounter.vue';
 
 export default {
 	props: ["root", "op"],
-	components: {BinaryOperatorInput, StarCounter, Hint},
+	components: {BinaryOperatorInput},
 	computed: {
 		chart() {
 			return this;
