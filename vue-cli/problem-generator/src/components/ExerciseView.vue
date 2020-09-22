@@ -8,7 +8,7 @@
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
 				<template v-if="has_stars">
-					<Hint class="hint" id="hint-id" :root="root" :op="op" :top="0" :left="20" />
+					<Hint class="hint" id="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
 					<StarCounter :root="root" />
 				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
@@ -61,6 +61,12 @@ export default {
 	methods: {
 		get_problem_key(i) {
 			return 'problem-' + this.mode + '-' + i;
+		},
+		get_cur_problem() {
+			if (!this.cur_row)
+				return null;
+
+			return this.problems[this.cur_row];
 		}
 	},
 	computed: {
@@ -79,6 +85,7 @@ export default {
 					return false;
 			}
 		},
+
 		mode_items() {
 			return Object.keys(this.modes).map(k => {return {title: this.modes[k].title, value: k}});
 		},

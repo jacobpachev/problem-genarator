@@ -16,6 +16,11 @@ export class Problem
 	{
 		return this.user_answer && this.answer.obj_equals(this.user_answer);
 	}
+
+	is(name)
+	{
+		return this.constructor.name === name;
+	}
 }
 
 if (typeof exports !== "undefined")

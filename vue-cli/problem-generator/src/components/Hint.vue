@@ -1,10 +1,17 @@
 <template>
 		<div v-if="inited()">
 			<div id="hint-id">
-				<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
-				<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
-				<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
-				<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+				<template v-if="problem">
+					<template v-if="problem.is('FractProblem')">
+						<FractProblemStatement :root="root" :data="problem"/>
+					</template>
+				</template>
+				<template v-else>
+					<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
+					<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
+					<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
+					<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+				</template>
 			</div>
 			<Star id="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
 		</div>
@@ -16,6 +23,7 @@ import Animated from './Animated.js';
 
 import Pow from './Pow.vue';
 import Star from './Star.vue';
+import FractProblemStatement from './FractProblemStatement.vue';
 
 const FRAME_STEP = 1;
 const FINAL_TOP = 400;
@@ -23,8 +31,8 @@ const FINAL_TOP = 400;
 export default {
 	name: 'Hint',
 	mixins: [Animated],
-	components: {Pow, Star},
-	props: ['root', 'op'],
+	components: {Pow, Star, FractProblemStatement},
+	props: ['root', 'op', 'problem'],
 	data() {
 		return {
 			a: null,
