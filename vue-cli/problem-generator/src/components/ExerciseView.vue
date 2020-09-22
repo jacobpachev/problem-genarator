@@ -7,6 +7,10 @@
 			</v-card>
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
+				<template v-if="has_stars">
+					<Hint class="hint" id="hint-id" :root="root" :op="op" :top="0" :left="20" />
+					<StarCounter :root="root" />
+				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
 				<template v-else v-for="i in root.problems.length">
 					<div class="problem_container" :key="root.gen_key(i)" >
@@ -33,11 +37,13 @@ import LinearEquationExercise from './LinearEquationExercise.js';
 import BinaryOperatorExercise from './BinaryOperatorExercise.js';
 import ExerciseProblem from './ExerciseProblem.vue';
 import BinaryOperatorChart from './BinaryOperatorChart.vue';
+import Hint from './Hint.vue';
+import StarCounter from './StarCounter.vue';
 
 export default {
 	name: 'ExerciseView',
 	mixins: [FractExercise, LinearEquationExercise, BinaryOperatorExercise],
-	components: {ProblemParameters, Clock, ExerciseProblem, BinaryOperatorChart},
+	components: {ProblemParameters, Clock, ExerciseProblem, BinaryOperatorChart, Hint, StarCounter},
 	data() {
 		return {
 			modes: {
@@ -60,6 +66,18 @@ export default {
 	computed: {
 		root() {
 			return this;
+		},
+		has_stars() {
+			if (this.is_binary_op_exercise)
+				return true;
+
+			switch (this.mode)
+			{
+				case "fract":
+					return true;
+				default:
+					return false;
+			}
 		},
 		mode_items() {
 			return Object.keys(this.modes).map(k => {return {title: this.modes[k].title, value: k}});

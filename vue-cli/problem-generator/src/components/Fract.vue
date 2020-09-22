@@ -14,6 +14,7 @@ import DynamicSpan from './DynamicSpan.vue';
 import Sign from './Sign.vue';
 
 export default {
+	name: 'Fract',
 	props : ['data', 'root', 'showsign', 'sign'],
 	components: { DynamicSpan, Sign},
 
