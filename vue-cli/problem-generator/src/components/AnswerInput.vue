@@ -1,9 +1,10 @@
 <template>
 	<div class="answer_container"><div><input class="whole" v-model="whole"
-			:id="get_id('whole')" @input="handle_change()"/></div>
-		<input class="numerator" v-model="num" :id="get_id('numerator')" @input="handle_change()"/><div><hr class="fract_line_answer"/>
+			:id="get_id('whole')" @input="handle_change()" @focus="handle_focus()"/></div>
+		<input class="numerator" v-model="num" :id="get_id('numerator')"
+			@input="handle_change()" @focus="handle_focus()"/><div><hr class="fract_line_answer"/>
 		</div><div><input class="denominator"
-			:id="get_id('denominator')" v-model="denom" @input="handle_change()" />
+			:id="get_id('denominator')" v-model="denom" @input="handle_change()" @focus="handle_focus()"/>
 			</div>
 	</div>
 </template>
@@ -11,18 +12,23 @@
 import { Fraction } from '../lib/fract';
 
 export default {
-	props: ['problem'],
+	props: ['problem', 'root'],
 	data: function() { return {
-		num: "",
-		denom: "",
-		whole: "",
-		fract: null
+			num: "",
+			denom: "",
+			whole: "",
+			fract: null,
+			prev_problem: null
 		}
 	},
 	mounted() {
 		this.num = this.denom = this.whole = "";
-		console.log("Mounted input", this);
-		console.log("problem:", this.problem);
+	},
+	watch: {
+		problem(new_val, old_val) {
+			console.log("problem changed from ", old_val, " to ", new_val);
+			this.prev_problem = old_val;
+		}
 	},
 	methods: {
 		handle_change() {
@@ -50,7 +56,30 @@ export default {
 
 			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
-			console.log("entered fraction:", this.fract);
+		},
+		get_hint() {
+			if (!this.root || !this.root.hint)
+				return null;
+
+			return this.root.hint;
+		},
+		handle_focus() {
+			console.log("problem:", this.problem, "prev problem", this.prev_problem);
+			if (this.problem && this.problem === this.prev_problem)
+				return;
+
+			let hint = this.get_hint();
+			console.log("answer input focus hint", hint);
+			if (!hint)
+				return;
+
+			hint.stop();
+			hint.animate();
+		},
+		handle_focus_out() {
+			let hint = this.get_hint();
+			if (!hint)
+				return;
 		},
 		get_id(suffix) {
 			console.log("vnode:", this.$vnode);

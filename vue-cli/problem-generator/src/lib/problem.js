@@ -19,6 +19,7 @@ export class Problem
 
 	is(name)
 	{
+		console.log("problem type:",  this.constructor.name);
 		return this.constructor.name === name;
 	}
 }

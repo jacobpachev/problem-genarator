@@ -93,7 +93,6 @@ input.denominator {
 .fract_w_sign {
 	position: relative;
 	display: inline-block;
-	width: 50px;
 	height: 40px;
 }
 
@@ -183,21 +182,30 @@ input.denominator {
 	z-index: 9999;
 }
 
+.hint_fract_container {
+	text-align: center;
+	position: absolute;
+	left: -10px;
+}
+
+.hint_op_container {
+	text-align: center;
+	padding: 5px 10px;
+}
+
 #hint-id {
 	position: fixed;
 	left: 20px;
 	top: -2px;
 	bottom: 5px;
-	width: 55px;
-	height: 30px;
+	width: 100px;
+	height: 40px;
 	background-color: blue;
 	color: white;
 	font-weight: bold;
 	opacity: 0.5;
 	z-index: 9999;
 	border: 1px solid black;
-	text-align: center;
-	padding: 3px 0px;
 }
 
 .star-counter {

@@ -3,14 +3,18 @@
 			<div id="hint-id">
 				<template v-if="problem">
 					<template v-if="problem.is('FractProblem')">
-						<FractProblemStatement :root="root" :data="problem"/>
+						<div class="hint_fract_container">
+							<FractProblemStatement :root="root" :data="problem"/>
+						</div>
 					</template>
 				</template>
 				<template v-else>
-					<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
-					<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
-					<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
-					<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+					<div class="hint_op_container">
+						<span v-if="can_render_direct()">{{this.a}}&nbsp;{{this.op}}&nbsp;{{this.b}}</span>
+						<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
+						<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
+						<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+					</div>
 				</template>
 			</div>
 			<Star id="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
@@ -39,7 +43,7 @@ export default {
 			b: null,
 			timer: null,
 			show_star: false,
-			star_counter: 1
+			star_counter: 1,
 		}
 	},
 	mounted() {
@@ -106,7 +110,7 @@ export default {
 			this.animate();
 		},
 		inited() {
-			return this.a !== null && this.b !== null;
+			return this.problem || (this.a !== null && this.b !== null);
 		}
 	}
 

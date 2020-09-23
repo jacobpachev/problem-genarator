@@ -66,7 +66,7 @@ export default {
 			if (!this.cur_row)
 				return null;
 
-			return this.problems[this.cur_row];
+			return this.problems[this.cur_row - 1];
 		}
 	},
 	computed: {
