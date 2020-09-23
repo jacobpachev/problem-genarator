@@ -39,7 +39,6 @@ export default {
 			this.pos.left = this.left;
 		},
 		stop() {
-			console.trace("stopping ", this.id);
 			if (!this.timer)
 				return;
 
