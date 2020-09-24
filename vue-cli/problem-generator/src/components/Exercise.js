@@ -65,7 +65,6 @@ export default {
 			{
 				style_map[p] = props[p] + "px";
 			}
-
 			this.props_by_class[cl] = style_map;
 		},
 		get_default_n_terms() {

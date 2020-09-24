@@ -1,6 +1,6 @@
 <template>
 <div id="star">
-	<svg height="105" width="250" viewBox="0 0 210 500">
+	<svg height="75" width="250" viewBox="0 0 210 500">
 		<polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:rgb(224,224,0);stroke-width:0;"/>
 	</svg>
 </div>

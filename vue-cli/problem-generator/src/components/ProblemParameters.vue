@@ -6,6 +6,7 @@
 		md="2"
         >  
           <v-text-field
+			class="terms"
             v-model="root.n_problems"
             label="Number of problems"
             type="number"
@@ -17,6 +18,7 @@
           md="2"
         >
           <v-text-field
+			class="terms"
             v-model="root.max_val"
             label="Maximum value"
             type="number"
@@ -29,6 +31,7 @@
           md="2"
         >
           <v-text-field
+			class="terms"
             v-if="root.mode=='fract'"
             v-model="root.n_terms"
             label="Number of terms"
@@ -40,6 +43,7 @@
 		</template>
 		<template v-if="root.is_binary_op_exercise">
         <v-text-field
+			class="terms"
             @input="root.generated=false"
             v-model="root.table_len_input"
             label="Length of table"

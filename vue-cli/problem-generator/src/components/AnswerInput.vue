@@ -18,7 +18,7 @@ export default {
 			denom: "",
 			whole: "",
 			fract: null,
-			prev_problem: null
+			anim_problem: null
 		}
 	},
 	mounted() {
@@ -27,7 +27,7 @@ export default {
 	watch: {
 		problem(new_val, old_val) {
 			console.log("problem changed from ", old_val, " to ", new_val);
-			this.prev_problem = old_val;
+			this.anim_problem = old_val;
 		}
 	},
 	methods: {
@@ -64,8 +64,7 @@ export default {
 			return this.root.hint;
 		},
 		handle_focus() {
-			console.log("problem:", this.problem, "prev problem", this.prev_problem);
-			if (this.problem && this.problem === this.prev_problem)
+			if (this.problem && this.problem === this.anim_problem)
 				return;
 
 			let hint = this.get_hint();
@@ -75,6 +74,7 @@ export default {
 
 			hint.stop();
 			hint.animate();
+			this.anim_problem = this.problem;
 		},
 		handle_focus_out() {
 			let hint = this.get_hint();

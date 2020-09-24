@@ -2,7 +2,7 @@
 <template>
 	<v-app>
 		<v-container absolute>
-			<v-card class='input'>
+			<v-card class='terms'>
 				<v-select  v-model="mode" :items="mode_items" item-text="title" item-value="value"></v-select>
 			</v-card>
 			<div>
