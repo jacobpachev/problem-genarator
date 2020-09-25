@@ -8,7 +8,7 @@
 			<div>
 				<ProblemParameters :mode="mode" :root="root"/>
 				<template v-if="has_stars">
-					<Hint class="hint" id="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
+					<Hint animateid="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
 					<StarCounter :root="root" />
 				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
