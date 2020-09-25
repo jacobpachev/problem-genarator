@@ -101,6 +101,7 @@ export default {
 				this.root.stop_star();
 				this.root.animate_star();
 			}
+			console.log("Handling success");
 		},
 		update(a,b) {
 			this.a = a;

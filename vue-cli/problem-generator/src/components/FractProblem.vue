@@ -3,7 +3,7 @@
 	<FractProblemStatement :root="root" :data="data" />
 	<div class="eq">=</div>
 	<AnswerInput :problem="data" :key="rownum" :root="root" />
-	<CheckMark :problem="data" />
+	<CheckMark :problem="data" :root="root"/>
 </div>
 </template>
 <script>

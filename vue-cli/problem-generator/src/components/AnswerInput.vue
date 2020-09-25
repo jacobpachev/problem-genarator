@@ -82,7 +82,6 @@ export default {
 				return;
 		},
 		get_id(suffix) {
-			console.log("vnode:", this.$vnode);
 			return "answer-input-" + this.$vnode.key + "-" + suffix;
 		}
 	}

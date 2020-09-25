@@ -169,10 +169,11 @@ export default {
 				this.reset_timer();
 				this.timer_on = false;
 			}
-			console.log("Results", this.results[n_correct-1])
-			if (this.results[row-1] == true && this.results[row] == null)
-					this.focus_on_row(row+1);
-			console.log("Checking answers",this.results);
+			if (this.results[row-1] == true && this.results[row] == null) {
+				if (this.hint) 
+					this.hint.handle_success();
+				this.focus_on_row(row+1);
+            }
 		},
 	}
 }

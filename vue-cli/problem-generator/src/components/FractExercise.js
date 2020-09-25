@@ -29,7 +29,6 @@ export default {
 			if (!props)
 				return "";
 			let style = Object.keys(props).map(k => k + ":" + props[k]).join(";");
-			console.log("style:", style);
 			return style;
 		},
 		fract_width: function () {
