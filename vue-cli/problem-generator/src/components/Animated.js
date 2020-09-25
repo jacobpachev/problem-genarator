@@ -1,5 +1,5 @@
 export default {
-	props: ["id", "left", "top"],
+	props: ["animateid", "left", "top"],
 	data() {
 		return {
 			pos : {top: null, left: null},
@@ -47,7 +47,7 @@ export default {
 		},
 		sync_element()
 		{
-			let el = document.getElementById(this.id);
+			let el = document.getElementById(this.animateid);
 			if (!el)
 				return;
 
