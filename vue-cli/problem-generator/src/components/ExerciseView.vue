@@ -2,11 +2,11 @@
 <template>
 	<v-app>
 		<v-container absolute>
-			<v-card class='terms'>
-				<v-select  v-model="mode" :items="mode_items" item-text="title" item-value="value"></v-select>
-			</v-card>
-			<div>
+			<div class='mode-selection'>
+				<v-select  v-model="mode" label="Select exercise type" :items="mode_items" item-text="title" item-value="value"></v-select>
 				<ProblemParameters :mode="mode" :root="root"/>
+			</div>
+			<div>
 				<template v-if="has_stars">
 					<Hint animateid="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
 					<StarCounter :root="root" />
@@ -80,6 +80,7 @@ export default {
 			switch (this.mode)
 			{
 				case "fract":
+				case "linear":
 					return true;
 				default:
 					return false;
