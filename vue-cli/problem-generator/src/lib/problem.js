@@ -19,8 +19,22 @@ export class Problem
 
 	is(name)
 	{
-		console.log("problem type:",  this.constructor.name);
-		return this.constructor.name === name;
+		console.log("problem type:",  this.ctx.mode);
+		let type = "Unknown";
+
+		switch (this.ctx.mode)
+		{
+			case "linear":
+				type = "LinearEquationProblem";
+				break;
+			case "fract":
+				type = "FractProblem";
+				break;
+			default:
+				break;
+		}
+
+		return type == name;
 	}
 }
 
