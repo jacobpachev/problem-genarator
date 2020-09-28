@@ -3,7 +3,12 @@
 			<DynamicSpan :id="animateid" cl="hint" :root="root">
 				<template v-if="problem">
 					<template v-if="problem.is('FractProblem')">
-							<FractProblemStatement :root="root" :data="problem"/>
+						<FractProblemStatement :root="root" :data="problem"/>
+					</template>
+					<template v-if="problem.is('LinearEquationProblem')">
+						<div class="hint-equation-wrap">
+							<LinearEquation :root="root" :eq="problem.eq"/>
+						</div>
 					</template>
 				</template>
 				<template v-else>
@@ -25,6 +30,7 @@ import Animated from './Animated.js';
 import Pow from './Pow.vue';
 import Star from './Star.vue';
 import FractProblemStatement from './FractProblemStatement.vue';
+import LinearEquation from './LinearEquation.vue';
 import DynamicSpan from './DynamicSpan.vue';
 
 const FRAME_STEP = 1;
@@ -33,7 +39,7 @@ const FINAL_TOP = 400;
 export default {
 	name: 'Hint',
 	mixins: [Animated],
-	components: {Pow, Star, FractProblemStatement, DynamicSpan},
+	components: {Pow, Star, FractProblemStatement, DynamicSpan, LinearEquation},
 	props: ['root', 'op', 'problem', 'animateid'],
 	data() {
 		return {
@@ -59,7 +65,22 @@ export default {
 			return this.pos.top >= FINAL_TOP;
 		},
 		run_frame_step() {
-			this.pos.top += FRAME_STEP;
+			let mode = this.root.mode;
+			let frame_step = FRAME_STEP;
+
+			switch (mode)
+			{
+				case "linear":
+					frame_step = 0.5;
+					break;
+				case "fract":
+					frame_step = 0.3;
+					break;
+				default:
+					break;
+			}
+
+			this.pos.top += frame_step;
 		},
 		stop_star() {
 			this.show_star = false;

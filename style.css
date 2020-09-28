@@ -148,6 +148,14 @@ input.denominator {
 .equation {
 	display: inline-block;
 	position: relative;
+	top: 0px;
+}
+
+.equation-wrap {
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+	position: relative;
 	top: -15px;
 }
 
@@ -229,4 +237,13 @@ input.denominator {
 	top: 5px;
 }
 
+.mode-selection {
+	position: relative;
+	left: 20px;
+}
 
+.hint-equation-wrap {
+	position: relative;
+	top: 7px;
+	left: 3px;
+}

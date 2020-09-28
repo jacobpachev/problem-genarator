@@ -1,8 +1,10 @@
 <template>
 	<div class="problem_table">
-		<LinearEquation :root="root" :eq="data.eq" />
+		<div class="equation-wrap">
+			<LinearEquation :root="root" :eq="data.eq" />
+		</div>
 		<span class="x_ans" >x =</span>
-		<AnswerInput :problem="data" :key="rownum" />
+		<AnswerInput :problem="data" :key="rownum" :root="root" />
 		<CheckMark :problem="data" />
 	</div>
 </template>
