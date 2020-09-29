@@ -43,7 +43,6 @@
 		</template>
 		<template v-if="root.is_binary_op_exercise">
         <v-text-field
-			class="terms"
             @input="root.generated=false"
             v-model="root.table_len_input"
             label="Length of table"

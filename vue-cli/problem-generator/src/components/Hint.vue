@@ -17,6 +17,7 @@
 						<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
 						<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
 						<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
+						<span v-else-if="op == 'trig'"></span>
 					</div>
 				</template>
 				<Star animateid="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
@@ -107,6 +108,7 @@ export default {
 				case 'sum_sq':
 				case 'table_sq':
 				case '**':
+				case 'trig':
 					return false;
 				default:
 					return true;

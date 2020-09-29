@@ -55,6 +55,7 @@ export default {
 				"pow" : {title: "Powers", component: BinaryOperatorExercise, op: "**"},
 				"sum_sq" : {title: "Sum of Squares", component: BinaryOperatorExercise, op: "sum_sq"},
 				"table_sq" : {title: "Table of Squares", component: BinaryOperatorExercise, op: "table_sq"},
+				"trig" : {title: "Trignometric Problems", component: BinaryOperatorExercise, op: "trig"}
 			}
 		};
 	},

@@ -35,8 +35,9 @@ export default {
 			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer != "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
 		},
 		answer_is_correct() {
+			let eps = 0.10;
 			return typeof this.user_answer !== "undefined" && this.user_answer.length &&
-				this.user_answer == this.data;
+			Math.abs(this.user_answer - this.data) <= eps;
 		},
 		is_full_sq(n) {
 			return Math.sqrt(n) % 1 === 0

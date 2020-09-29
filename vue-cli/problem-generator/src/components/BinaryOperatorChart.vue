@@ -11,7 +11,8 @@
 				<tr :key="root.gen_row_key(i)" v-for="i in table_range">
 					<td>{{i}}</td>
 					<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
-						<BinaryOperatorInput  :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
+						<BinaryOperatorInput v-if="root.mode!='trig'" :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
+						<BinaryOperatorInput v-else :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(rand_funct,j)" :op="op" :chart="chart"/>
 					</td>
 				</tr>
 			</table>
@@ -32,6 +33,10 @@ export default {
 		table_range() {
 			let start = this.range_start();
 			return Array.apply(null, Array(this.root.table_len + 1 - start)).map((v,i) => i + start);
+		},
+		rand_funct() {
+			let rand = Math.random();
+			return rand >= 0.5 ? 'cos' : 'sin';
 		}
 	},
 	methods: {
@@ -67,6 +72,13 @@ export default {
 					let p = parseInt(a.toString() + b.toString());
 					return p * p;
 				}
+				case 'trig':
+				{
+					a = (a == 'sin') ? Math.sin(b) : Math.cos(b);
+					console.log(a);
+					return a;
+				}
+					
 			}
 		},
 		gen_key: function(i,j) {
