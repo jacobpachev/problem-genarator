@@ -26,7 +26,8 @@ export default {
 			order_items: ["Row","Diagonal"],
 			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "binary_op": null},
 			hint: null,
-			cur_row: null
+			cur_row: null,
+			float_eps: 0.01
 		};
 	},
 	computed: {
@@ -91,6 +92,8 @@ export default {
 					return 5;
 				case 'table_sq':
 					return 9;
+				case 'trig':
+					return 16;
 				default:
 					return 12;
 			}
@@ -170,7 +173,7 @@ export default {
 				this.timer_on = false;
 			}
 			if (this.results[row-1] == true && this.results[row] == null) {
-				if (this.hint) 
+				if (this.hint)
 					this.hint.handle_success();
 				this.focus_on_row(row+1);
             }
