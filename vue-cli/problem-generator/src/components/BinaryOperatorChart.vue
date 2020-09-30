@@ -5,14 +5,13 @@
 			<tr>
 				<td>&nbsp;</td>
 				<template>
-					<td :key="'header-'+gen_key(i)" v-for="i in table_range">{{i}}</td>
+					<td :key="'header-'+gen_key(b)" v-for="b in col_range">{{b}}</td>
 				</template>
 			</tr>
-				<tr :key="root.gen_row_key(i)" v-for="i in table_range">
-					<td>{{i}}</td>
-					<td :key="'cell-' + gen_key(i,j)" v-for="j in table_range">
-						<BinaryOperatorInput v-if="root.mode!='trig'" :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(i,j)" :op="op" :chart="chart"/>
-						<BinaryOperatorInput v-else :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(rand_funct,j)" :op="op" :chart="chart"/>
+				<tr :key="root.gen_row_key(a)" v-for="(a,i) in row_range">
+					<td>{{a}}</td>
+					<td :key="'cell-' + gen_key(i,j)" v-for="(b,j) in col_range">
+						<BinaryOperatorInput :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(a,b)" :op="op" :chart="chart" :a="a" :b="b"/>
 					</td>
 				</tr>
 			</table>
@@ -30,13 +29,26 @@ export default {
 		chart() {
 			return this;
 		},
+		row_range() {
+			if (this.op != "trig")
+				return this.table_range;
+
+			return ["sin", "cos", "tan", "cot", "sec", "csc"];
+		},
+		col_range() {
+			if (this.op != "trig")
+				return this.table_range;
+
+			return this.table_range.map((x) => {
+				let cycle = Math.floor(x / 4);
+				let phase = x % 4;
+				let offset_map = [0, 30, 45, 60];
+				return cycle * 90 + offset_map[phase];
+			});
+		},
 		table_range() {
 			let start = this.range_start();
 			return Array.apply(null, Array(this.root.table_len + 1 - start)).map((v,i) => i + start);
-		},
-		rand_funct() {
-			let rand = Math.random();
-			return rand >= 0.5 ? 'cos' : 'sin';
 		}
 	},
 	methods: {
@@ -73,13 +85,38 @@ export default {
 					return p * p;
 				}
 				case 'trig':
-				{
-					a = (a == 'sin') ? Math.sin(b) : Math.cos(b);
-					console.log(a);
-					return a;
-				}
-					
+					return this.apply_trig_op(a, b);
+
 			}
+		},
+		apply_trig_op(f_name, x) {
+			let f = null;
+			x *= Math.PI / 180;
+			switch (f_name)
+			{
+				case "sin":
+					f = Math.sin;
+					break;
+				case "cos":
+					f = Math.cos;
+					break;
+				case "tan":
+					f = (x) => { let c = Math.cos(x); return c ? Math.sin(x) / c : Infinity ;};
+					break;
+				case "cot":
+					f = (x) => { let s = Math.sin(x); return s ? Math.cos(x) / s : Infinity ;};
+					break;
+				case "csc":
+					f = (x) => { let s = Math.sin(x); return s ? 1 / s : Infinity ;};
+					break;
+				case "sec":
+					f = (x) => { let c = Math.cos(x); return c ? 1 / c : Infinity ;};
+					break;
+				default:
+					throw "Unsupported trig function " + f_name;
+			}
+
+			return f(x);
 		},
 		gen_key: function(i,j) {
 			return "binary-operator-chart-row-" + this.root.start_time.toString() + "-" + i + "-" + j;

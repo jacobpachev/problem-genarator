@@ -1,10 +1,13 @@
 <template>
-	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="number" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()">
+	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()">
 </template>
 <script>
+
+const FLOAT_INF = 1e10;
+
 export default {
 	name: 'BinaryOperatorInput',
-	props: ["root", "row", "col", "data", "op", "chart"],
+	props: ["root", "row", "col", "data", "op", "chart", "a", "b"],
 		data() {
 		return {
 			user_answer: ""
@@ -20,11 +23,20 @@ export default {
 				el.focus();
 		}
 	},
+	computed: {
+		input_type() {
+			switch (this.op)
+			{
+				case "trig": return "text";
+				default: return "number";
+			}
+		}
+	},
 	methods: {
 		set_hint() {
 			if (!this.root.hint)
 				return;
-			this.root.hint.update(this.row, this.col);
+			this.root.hint.update(this.a, this.b);
 		},
 		clear_hint() {
 			if (!this.root.hint)
@@ -32,12 +44,23 @@ export default {
 			this.root.hint.update(null, null);
 		},
 		get_cl() {
-			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer != "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
+			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer !== "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
 		},
 		answer_is_correct() {
-			let eps = 0.10;
-			return typeof this.user_answer !== "undefined" && this.user_answer.length &&
-			Math.abs(this.user_answer - this.data) <= eps;
+			if (typeof this.user_answer === "undefined" || !this.user_answer.length)
+				return false;
+
+			console.log("user answer", this.user_answer, "real answer", this.data, "eps", this.root.float_eps);
+			if (this.op != "trig")
+				return this.user_answer == this.data;
+
+			if (this.user_answer.toLowerCase().startsWith("inf") && (this.data == Infinity ||
+						Math.abs(this.data) > FLOAT_INF))
+				return true;
+
+			let res = Math.abs(this.user_answer - this.data) <= this.root.float_eps;
+			console.log("check answer res", res);
+			return res;
 		},
 		is_full_sq(n) {
 			return Math.sqrt(n) % 1 === 0
