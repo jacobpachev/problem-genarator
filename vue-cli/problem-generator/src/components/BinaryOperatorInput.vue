@@ -1,5 +1,5 @@
 <template>
-	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()">
+	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()"/>
 </template>
 <script>
 

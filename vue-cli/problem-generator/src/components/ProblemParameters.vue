@@ -53,8 +53,16 @@
 				<v-select class='trav-order'  :items="root.order_items" label="Traversal Order" v-model="root.order">
 				</v-select>
        </v-col>
-        Lighter green indicates a full square.
-   
+		<div class="instrutions">
+			Quick, solve the problem before the parachute falls!
+			Earn as many stars as you can!
+			<v-col>
+			Lighter green indicates a full square.
+			</v-col>
+			<v-col>
+				<span v-if="root.mode == 'trig'">Be precise within 0.01</span>
+			</v-col>
+		</div>
        </template>
        <v-col/>
       <v-row>

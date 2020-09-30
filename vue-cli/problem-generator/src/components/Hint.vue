@@ -17,7 +17,17 @@
 						<span v-else-if="op == '**' "><Pow :a="a" :b="b" /></span>
 						<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
 						<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
-						<span v-else-if="op == 'trig'">{{this.a}}({{this.b}}<sup></sup>)</span>
+						<span v-else-if="op == 'trig'">{{this.a}}({{this.b}}<sup>&#8728;</sup>)</span>
+						<div class="parachute">
+							<svg xmlns="http://www.w3.org/2000/svg">
+							<path d="M10,50 a1,1 0 0,1 100,0" fill="red" stroke="red" stroke-width="0"/>
+							<line x1="70" y1="150" x2="108" y2="50" stroke="black" />
+							<line x1="12" y1="50" x2="60" y2="150" stroke="black" />
+
+							<line x1="40" y1="50" x2="60" y2="150" stroke="black" />
+							<line x1="80" y1="50" x2="70" y2="150" stroke="black" />
+							</svg>
+						</div>
 					</div>
 				</template>
 				<Star animateid="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>

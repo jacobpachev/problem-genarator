@@ -12,6 +12,7 @@
 					<td>{{a}}</td>
 					<td :key="'cell-' + gen_key(i,j)" v-for="(b,j) in col_range">
 						<BinaryOperatorInput :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(a,b)" :op="op" :chart="chart" :a="a" :b="b"/>
+						<span class="sq-root" v-if="show_sq">&#8730;</span>
 					</td>
 				</tr>
 			</table>
@@ -49,6 +50,11 @@ export default {
 		table_range() {
 			let start = this.range_start();
 			return Array.apply(null, Array(this.root.table_len + 1 - start)).map((v,i) => i + start);
+		},
+		show_sq() {
+			if(this.op == "trig") 
+				return true;
+			return false;
 		}
 	},
 	methods: {
