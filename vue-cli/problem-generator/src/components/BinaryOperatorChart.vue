@@ -52,8 +52,8 @@ export default {
 			return Array.apply(null, Array(this.root.table_len + 1 - start)).map((v,i) => i + start);
 		},
 		show_sq() {
-			if(this.op == "trig") 
-				return true;
+			if(this.op == "trig")
+				return false;
 			return false;
 		}
 	},

@@ -135,7 +135,7 @@ export default {
 		},
 		focus_on_row(row_num) {
 			let el = this.gen_id("answer-input-" + row_num + "-whole");
-			console.log("focus el:", el);
+			console.trace("focus el:", el, "row_num=", row_num);
 			if (!el)
 				return;
 			el.focus();
