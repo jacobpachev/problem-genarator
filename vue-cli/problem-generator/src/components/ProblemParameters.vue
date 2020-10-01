@@ -4,7 +4,7 @@
   <v-row><v-col
 		cols="12"
 		md="2"
-        >  
+        >
           <v-text-field
 			class="terms"
             v-model="root.n_problems"
@@ -60,7 +60,7 @@
 			Lighter green indicates a full square.
 			</v-col>
 			<v-col>
-				<span v-if="root.mode == 'trig'">Be precise within 0.01</span>
+				<span v-if="root.mode == 'trig'">Enter the answer within {{root.float_eps}} precison</span>
 			</v-col>
 		</div>
        </template>

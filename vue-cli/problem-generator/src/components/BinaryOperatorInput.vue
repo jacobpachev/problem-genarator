@@ -17,7 +17,7 @@ export default {
 		this.root.answer_inputs[this.$vnode.key] = this;
 		if (this.row == this.chart.range_start() && this.col == this.chart.range_start())
 		{
-			let id = this.root.get_input_id(this.chart.range_start(), this.chart.range_start());
+			let id = this.root.get_input_id(0, 0);
 			let el = document.getElementById(id);
 			if (el)
 				el.focus();
@@ -73,7 +73,7 @@ export default {
 					col++;
 					if (col > this.root.table_len)
 					{
-						col = this.chart.range_start();
+						col = 0;
 						row++;
 					}
 					break;
@@ -85,11 +85,11 @@ export default {
 						let diag = row - col;
 						diag = (diag >= 0) ? -diag-1 : -diag;
 						if (diag < 0) {
-							row = this.chart.range_start();
+							row = 0;
 							col = row - diag;
 						}
 						else {
-							col = this.chart.range_start();
+							col = 0;
 							row = diag + col;
 						}
 					}
