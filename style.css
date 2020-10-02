@@ -253,7 +253,7 @@ input.denominator {
 }
 
 .parachute {
-	position: relative;
-	top: -180px;
-	left: -15px;
+	position: absolute;
+	top: -145px;
+	left: -5px;
 }

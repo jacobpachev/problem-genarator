@@ -1,9 +1,12 @@
 <template>
-	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer" @input="check_answer" @focus="set_hint()" @focusout="clear_hint()"/>
+	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer"
+	@input="handle_input" @focus="set_hint()" @focusout="clear_hint()"/>
 </template>
 <script>
 
 const FLOAT_INF = 1e10;
+const SQRT_KEY = "^";
+const SQRT_SYM = "\u221a";
 
 export default {
 	name: 'BinaryOperatorInput',
@@ -102,6 +105,16 @@ export default {
 					break;
 			}
 			return document.getElementById(this.root.get_input_id(row, col));
+		},
+		handle_input(e) {
+			switch (e.data)
+			{
+				case SQRT_KEY:
+					this.user_answer = this.user_answer.replace(SQRT_KEY, SQRT_SYM);
+					break;
+			}
+
+			this.check_answer();
 		},
 		check_answer() {
 			if (this.answer_is_correct())
