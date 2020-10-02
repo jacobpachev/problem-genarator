@@ -30,6 +30,9 @@ export default {
 				case "trig": return "text";
 				default: return "number";
 			}
+		},
+		table_end() {
+			return this.root.table_len - this.chart.range_start()
 		}
 	},
 	methods: {
@@ -71,7 +74,7 @@ export default {
 			switch (this.root.order) {
 				case "Row":
 					col++;
-					if (col > this.root.table_len)
+					if (col > this.table_end)
 					{
 						col = 0;
 						row++;
@@ -80,7 +83,7 @@ export default {
 				case "Diagonal":
 					row++;
 					col++;
-					if (col > this.root.table_len || row > this.root.table_len)
+					if (col > this.table_end || row > this.table_end)
 					{
 						let diag = row - col;
 						diag = (diag >= 0) ? -diag-1 : -diag;
