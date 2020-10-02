@@ -12,7 +12,6 @@
 					<td>{{a}}</td>
 					<td :key="'cell-' + gen_key(i,j)" v-for="(b,j) in col_range">
 						<BinaryOperatorInput :row="i" :col="j" :root="root" :key="gen_key(i,j)" :data="apply_op(a,b)" :op="op" :chart="chart" :a="a" :b="b"/>
-						<span class="sq-root" v-if="show_sq">&#8730;</span>
 					</td>
 				</tr>
 			</table>
