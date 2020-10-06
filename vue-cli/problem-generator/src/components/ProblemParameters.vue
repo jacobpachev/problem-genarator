@@ -65,9 +65,6 @@
 		</div>
        </template>
        <v-col/>
-      <v-row>
-				<v-btn @click="root.generate()">Start</v-btn>
-      </v-row>
     </v-container>
   </v-form>
 </template>
