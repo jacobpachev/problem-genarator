@@ -220,7 +220,7 @@ input.denominator {
 
 .star-counter {
 	position: fixed;
-	left: 120px;
+	left: 10px;
 	top: 22px;
 	background-color: rgb(128, 192, 192);
 	color: rgb(255, 0, 80);

@@ -16,7 +16,7 @@
 			<div>
 				<template v-if="has_stars">
 					<Hint animateid="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
-					<StarCounter v-if="root.timer_on" :root="root" />
+					<StarCounter v-if="show_star_counter" :root="root" />
 				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
 				<template v-else v-for="i in root.problems.length">
@@ -79,6 +79,9 @@ export default {
 		}
 	},
 	computed: {
+		show_star_counter() {
+			return true;
+		},
 		root() {
 			return this;
 		},
