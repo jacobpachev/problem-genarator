@@ -4,6 +4,8 @@ host=asksasha.com
 dest_dir=/home/math/web/
 set -x -e
 git_root=$(git rev-parse --show-toplevel)
+cd $git_root/vue-cli/problem-generator
+npm run build
 cd $git_root
 rsync -ravz vue-cli/problem-generator/dist/  $host:$dest_dir || true
 rsync -ravz style.css $host:$dest_dir/

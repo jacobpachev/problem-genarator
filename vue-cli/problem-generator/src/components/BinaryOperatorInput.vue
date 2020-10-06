@@ -1,6 +1,6 @@
 <template>
 	<input  :class="get_cl()" :id="root.get_input_id(row,col)" type="input_type" v-model="user_answer"
-	@input="handle_input" @focus="set_hint()" @focusout="clear_hint()"/>
+	@input="handle_input" @focus="set_hint()" @focusout="clear_hint()" inputmode="decimal" />
 </template>
 <script>
 

@@ -1,25 +1,36 @@
-class Stack { 
-	constructor() 
-	{ 
-		this.operand = [];
-		this.operin = [];
-	} 
-	 
-	push(element,arr) 
-	{ 
-		arr.push(element); 
+export class Stack {
+	constructor()
+	{
+		this.arr = [];
 	}
-	
-	pop(arr) 
-	{ 
-		if (arr.length == 0) 
-			return "Underflow"; 
-		return arr.pop(); 
-	} 
-	
-	peek(arr) 
-	{ 
-		return arr[arr.length - 1]; 
-	} 
-  
-} 
+
+	push(el)
+	{
+		this.arr.push(el);
+	}
+
+	clear()
+	{
+		this.arr = [];
+	}
+
+	empty()
+	{
+		return this.arr.length == 0;
+	}
+
+	pop()
+	{
+		if (this.empty())
+			throw "Stack is empty";
+		return this.arr.pop();
+	}
+
+	peek()
+	{
+		if (this.empty())
+			throw "Stack is empty";
+		return this.arr[this.arr.length - 1];
+	}
+
+}
