@@ -1,9 +1,9 @@
 <template>
 	<div class="answer_container"><div><input class="whole" v-model="whole"
-			:id="get_id('whole')" @input="handle_change()" @focus="handle_focus()"/></div>
+			:id="get_id('whole')" @input="handle_change()" @focus="handle_focus()" inputmode="decimal" /></div>
 		<input class="numerator" v-model="num" :id="get_id('numerator')"
-			@input="handle_change()" @focus="handle_focus()"/><div><hr class="fract_line_answer"/>
-		</div><div><input class="denominator"
+			@input="handle_change()" @focus="handle_focus()" inputmode="decimal"/><div><hr class="fract_line_answer"/>
+		</div><div><input class="denominator" inputmode="decimal"
 			:id="get_id('denominator')" v-model="denom" @input="handle_change()" @focus="handle_focus()"/>
 			</div>
 	</div>

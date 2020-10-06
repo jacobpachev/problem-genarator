@@ -3,10 +3,10 @@
 	<v-app>
 		<v-container absolute>
 		<div class="exercise-container">
-			<div class='mode-selection' v-if="!root.timer_on">
+			<v-card v-if="!root.timer_on">
 				<v-select  v-model="mode" label="Select exercise type" :items="mode_items" item-text="title" item-value="value"></v-select>
 				<ProblemParameters :mode="mode" :root="root"/>
-			</div>
+			</v-card>
 			<v-col>
 			<v-col>
 				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
