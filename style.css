@@ -257,3 +257,8 @@ input.denominator {
 	top: -145px;
 	left: -5px;
 }
+
+.exercise-container {
+	position: absolute;
+	left: 160px;
+}

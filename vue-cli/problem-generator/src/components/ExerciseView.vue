@@ -2,14 +2,21 @@
 <template>
 	<v-app>
 		<v-container absolute>
-			<div class='mode-selection'>
+		<div class="exercise-container">
+			<div class='mode-selection' v-if="!root.timer_on">
 				<v-select  v-model="mode" label="Select exercise type" :items="mode_items" item-text="title" item-value="value"></v-select>
 				<ProblemParameters :mode="mode" :root="root"/>
 			</div>
+			<v-col>
+			<v-col>
+				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
+				<v-btn @click="root.generate()" v-else>Restart</v-btn>
+			</v-col>
+			</v-col>
 			<div>
 				<template v-if="has_stars">
 					<Hint animateid="hint-id" :root="root" :op="binary_op" :problem="get_cur_problem()" :top="0" :left="20" />
-					<StarCounter :root="root" />
+					<StarCounter v-if="root.timer_on" :root="root" />
 				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
 				<template v-else v-for="i in root.problems.length">
@@ -25,6 +32,7 @@
 					Solved in {{root.pretty_solve_time}} seconds.
 				</div>
 			</div>
+		</div>
 		</v-container>
 	</v-app>
 </template>
