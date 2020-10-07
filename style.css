@@ -112,6 +112,12 @@ input.denominator {
 	display: inline-block;
 }
 
+.solve-time {
+	position: fixed;
+	top: 70px;
+	left: 600px;
+}
+
 .eq {
 	width: 20px;
 	height: 20px;
@@ -204,7 +210,6 @@ input.denominator {
 
 .hint {
 	position: fixed;
-	left: 20px;
 	top: -2px;
 	width: 100px;
 	bottom: 5px;
@@ -220,7 +225,7 @@ input.denominator {
 
 .star-counter {
 	position: fixed;
-	left: 10px;
+	left: 130px;
 	top: 22px;
 	background-color: rgb(128, 192, 192);
 	color: rgb(255, 0, 80);
@@ -260,5 +265,5 @@ input.denominator {
 
 .exercise-container {
 	position: absolute;
-	left: 160px;
+	left: 200px;
 }

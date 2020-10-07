@@ -30,6 +30,7 @@
 				<Clock class='clock' v-if="root.timer_on" :time="root.work_time" />
 				<div class="solve-time" v-if="root.pretty_solve_time">
 					Solved in {{root.pretty_solve_time}} seconds.
+					<span class="finish-stars">You earned {{root.n_stars}} stars</span>
 				</div>
 			</div>
 		</div>
