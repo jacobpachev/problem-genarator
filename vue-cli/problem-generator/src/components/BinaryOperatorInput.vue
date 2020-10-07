@@ -4,9 +4,9 @@
 </template>
 <script>
 
+import {SQRT_KEY, SQRT_SYM, Expr} from '../lib/expr.js';
+
 const FLOAT_INF = 1e10;
-const SQRT_KEY = "^";
-const SQRT_SYM = "\u221a";
 
 export default {
 	name: 'BinaryOperatorInput',
