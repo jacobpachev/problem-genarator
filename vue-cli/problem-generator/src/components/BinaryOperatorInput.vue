@@ -4,7 +4,7 @@
 </template>
 <script>
 
-import {SQRT_KEY, SQRT_SYM, Expr} from '../lib/expr.js';
+import {SQRT_KEY, SQRT_SYM} from '../lib/expr.js';
 
 const FLOAT_INF = 1e10;
 

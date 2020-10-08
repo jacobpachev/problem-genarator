@@ -17,6 +17,7 @@ export class Expr
 
 	eval()
 	{
+		console.log(prec_map);
 	}
 
 	next_token()

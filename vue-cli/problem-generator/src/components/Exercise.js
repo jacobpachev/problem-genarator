@@ -43,7 +43,6 @@ export default {
 			set(mode) {
 				this.mode_ = mode;
 				this.reset_defaults();
-				this.generate();
 			}
 		}
 	},
@@ -108,12 +107,17 @@ export default {
 
 			return new cl(this);
 		},
+		stop() {
+			this.generated = false;
+			this.reset_timer();
+			this.timer_on = false;
+			this.solve_time = null;
+		},
 		generate() {
 			if (this.reset_on_generate)
 				this.reset_on_generate();
 			if (this.fix_paramaters)
 				this.fix_paramaters();
-			console.log("generating: mode=", this.mode_);
 			this.n_problems = parseInt(this.n_problems);
 			this.fix_styles();
 			let problems = [];
