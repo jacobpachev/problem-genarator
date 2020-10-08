@@ -22,10 +22,17 @@ export class Expr
 
 	next_token()
 	{
+		console.log("Remaining:", this.expr_str.substr(this.parse_pos));
 		let start_number = null;
 		for (let i = this.parse_pos; i < this.expr_str.length; i++)
 		{
 			let c = this.expr_str[i];
+			let handle_token_found = (new_pos) => {
+				let res = this.expr_str.substr(start_number, i - start_number);
+				console.log("start_number ", start_number, "i", i);
+				this.parse_pos = new_pos;
+				return res;
+			};
 			switch (c)
 			{
 				case ' ':
@@ -33,15 +40,15 @@ export class Expr
 				case '\n':
 				case '\r':
 					if (start_number)
-					{
-						let res = this.expr_str.substr(start_number, i);
-						this.parse_pos = i + 1;
-						return res;
-					}
-					continue;
+						return handle_token_found(i + 1);
+
+					break;
 				case '/':
 				case SQRT_SYM:
 				case '-':
+					if (start_number)
+						return handle_token_found(i);
+
 					this.parse_pos = i + 1;
 					return c;
 			}
