@@ -40,8 +40,19 @@ export default {
 			if (this.root.hint)
 				this.root.hint.stop();
 		},
+		n_stars_inc() {
+			switch(this.root.mode)
+			{
+				default:
+					return 1;
+				case 'linear':
+					return 3;
+				case 'fract':
+					return 5;
+			}
+		},
 		animate_star() {
-			this.n_stars++;
+			this.n_stars += this.n_stars_inc();
 			if (this.star)
 			{
 				this.star.animate();

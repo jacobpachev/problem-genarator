@@ -22,7 +22,6 @@ export class Expr
 
 	next_token()
 	{
-		console.log("Remaining:", this.expr_str.substr(this.parse_pos));
 		let start_number = null;
 		for (let i = this.parse_pos; i < this.expr_str.length; i++)
 		{
@@ -51,12 +50,15 @@ export class Expr
 
 					this.parse_pos = i + 1;
 					return c;
+				default:
+					this.parse_pos = i + 1;
+					return c;
 			}
-
 			if ((c >= '0' && c <= '9') || c == '.')
 			{
-				if (start_number === null)
+				if (start_number === null) 
 					start_number = this.parse_pos + i;
+				
 			}
 		}
 

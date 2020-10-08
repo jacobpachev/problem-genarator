@@ -8,7 +8,7 @@
 <script>
 import Animated from './Animated.js';
 
-const FINAL_TOP = 20;
+const FINAL_TOP = 23;
 
 export default {
 	name: 'Star',
