@@ -10,7 +10,7 @@
 			<v-col>
 			<v-col>
 				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
-				<v-btn @click="root.generate()" v-else>Restart</v-btn>
+				<v-btn @click="root.stop()" v-else>New Exercise</v-btn>
 			</v-col>
 			</v-col>
 			<div>

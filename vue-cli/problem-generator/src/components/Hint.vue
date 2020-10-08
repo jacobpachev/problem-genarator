@@ -22,7 +22,7 @@
 				</template>
 				<Star animateid="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
 					<div class="parachute">
-						<svg xmlns="http://www.w3.org/2000/svg">
+						<svg xmlns="http://www.w3.org/2000/svg" width="180">
 						<path d="M10,50 a1,1 0 0,1 100,0" fill="red" stroke="red" stroke-width="0"/>
 						<line x1="70" y1="150" x2="108" y2="50" stroke="black" />
 						<line x1="12" y1="50" x2="60" y2="150" stroke="black" />
