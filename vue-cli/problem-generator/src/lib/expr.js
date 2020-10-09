@@ -50,14 +50,13 @@ export class Expr
 
 					this.parse_pos = i + 1;
 					return c;
-				default:
-					this.parse_pos = i + 1;
-					return c;
 			}
 			if ((c >= '0' && c <= '9') || c == '.')
 			{
 				if (start_number === null) 
 					start_number = this.parse_pos + i;
+				this.parse_pos = i + 1;
+				return c;
 				
 			}
 		}
