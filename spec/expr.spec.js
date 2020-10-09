@@ -2,11 +2,17 @@ import { Expr, SQRT_SYM } from  "../vue-cli/problem-generator/src/lib/expr";
 
 describe("Expression test suite", function() {
   it("check basic expression operations", function() {
-		let e = new Expr("-" + SQRT_SYM + "3 / 2");
-		let token = null;
-		while ((token = e.next_token()))
+		let test_exprs = ["-" + SQRT_SYM + "3 / 2", "-" + SQRT_SYM + "18 / 2"];
+
+		for (let expr_str of test_exprs)
 		{
-			console.log("token: " + token);
+			console.log("Expr: ", expr_str);
+			let e = new Expr(expr_str);
+			let token = null;
+			while ((token = e.next_token()))
+			{
+				console.log("token: " + token);
+			}
 		}
   });
 });
