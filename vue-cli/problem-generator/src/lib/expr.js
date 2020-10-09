@@ -29,6 +29,7 @@ export class Expr
 	{
 		for (;;)
 		{
+			console.log(token);
 		}
 	}
 

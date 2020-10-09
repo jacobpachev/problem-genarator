@@ -19,7 +19,7 @@
 					<StarCounter v-if="show_star_counter" :root="root" />
 				</template>
 				<BinaryOperatorChart v-if="is_binary_op_exercise" :op="binary_op" :root="root" />
-				<template v-else v-for="i in root.problems.length">
+				<template v-else-if="root.generated" v-for="i in root.problems.length">
 					<div class="problem_container" :key="root.gen_key(i)" >
 						<div class="problem_label">
 							Problem {{i}}
