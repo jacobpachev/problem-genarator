@@ -3,7 +3,7 @@ import {Stack} from './stack';
 export const SQRT_KEY = "^";
 export const SQRT_SYM = "\u221a";
 
-const prec_map = {SQRT_SYM : 1, '/' : 2, '-' : 1};
+const prec_map = {SQRT_SYM : 3, '/' : 2, '-' : 1};
 
 function is_operator(token)
 {
@@ -25,11 +25,41 @@ export class Expr
 		this.val_stack.push(token);
 	}
 
+	apply_op(op)
+	{
+		let a = null, b = null;
+
+		switch(op)
+		{
+			case SQRT_SYM:
+				a = this.val_stack.pop();
+				this.val_stack.push(Math.sqrt(a));
+				break;
+			case '-':
+				a = this.val_stack.pop();
+				this.val_stack.push(-a);
+				break;
+			case '/':
+				b = this.val_stack.pop();
+				a = this.val_stack.pop();
+				this.val_stack.push(a / b );
+				break;
+
+		}
+	}
+
 	process_operator(token)
 	{
 		for (;;)
 		{
-			console.log(token);
+			if (this.op_stack.empty())
+			{
+				break;
+			}
+
+			const op = this.op_stack.peek();
+			if (prec_map[token] >= prec_map[op])
+				this.apply_op(this.op_stack_pop());
 		}
 	}
 
