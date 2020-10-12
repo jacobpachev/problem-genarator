@@ -6,13 +6,8 @@ describe("Expression test suite", function() {
 
 		for (let expr_str of test_exprs)
 		{
-			console.log("Expr: ", expr_str);
 			let e = new Expr(expr_str);
-			let token = null;
-			while ((token = e.next_token()))
-			{
-				console.log("token: " + token);
-			}
+			console.log("Expr: ", expr_str, " = ", e.eval());
 		}
   });
 });

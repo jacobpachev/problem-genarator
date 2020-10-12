@@ -3,7 +3,7 @@ import {Stack} from './stack';
 export const SQRT_KEY = "^";
 export const SQRT_SYM = "\u221a";
 
-const prec_map = {SQRT_SYM : 1, '/' : 2, '-' : 1};
+const prec_map = {SQRT_SYM : 3, '/' : 2, '-' : 1};
 
 function is_operator(token)
 {
@@ -22,15 +22,50 @@ export class Expr
 
 	process_number(token)
 	{
-		this.val_stack.push(token);
+		console.log(`Pushing ${token} to value stack`);
+		this.val_stack.push(parseFloat(token));
+	}
+
+	apply_op(op)
+	{
+		let a = null, b = null;
+
+		switch(op)
+		{
+			case SQRT_SYM:
+				a = this.val_stack.pop();
+				this.val_stack.push(Math.sqrt(a));
+				break;
+			case '-':
+				a = this.val_stack.pop();
+				this.val_stack.push(-a);
+				break;
+			case '/':
+				b = this.val_stack.pop();
+				a = this.val_stack.pop();
+				this.val_stack.push(a / b );
+				break;
+		}
 	}
 
 	process_operator(token)
 	{
 		for (;;)
 		{
-			console.log(token);
+			if (this.op_stack.empty())
+			{
+				break;
+			}
+
+			const op = this.op_stack.peek();
+			console.log(`Checking token=${token} vs op=${op}, op stack: ${this.op_stack.arr} val stack: ${this.val_stack.arr}`);
+			if (prec_map[token] <= prec_map[op])
+				this.apply_op(this.op_stack.pop());
+			else
+				break;
 		}
+
+		this.op_stack.push(token);
 	}
 
 	process_token(token)
@@ -46,6 +81,9 @@ export class Expr
 
 	eval()
 	{
+		this.op_stack.clear();
+		this.val_stack.clear();
+
 		for (;;)
 		{
 			let token = this.next_token();
@@ -55,6 +93,17 @@ export class Expr
 
 			this.process_token(token);
 		}
+
+		for (;;)
+		{
+			if (this.op_stack.empty())
+				break;
+
+			let op = this.op_stack.pop();
+			this.apply_op(op);
+		}
+
+		return this.val_stack.peek();
 	}
 
 	next_token()
