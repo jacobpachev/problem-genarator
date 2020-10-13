@@ -4,7 +4,7 @@
 </template>
 <script>
 
-import {SQRT_KEY, SQRT_SYM} from '../lib/expr.js';
+import {SQRT_KEY, SQRT_SYM, Expr} from '../lib/expr.js';
 
 const FLOAT_INF = 1e10;
 
@@ -64,7 +64,19 @@ export default {
 						Math.abs(this.data) > FLOAT_INF))
 				return true;
 
-			let res = Math.abs(this.user_answer - this.data) <= this.root.float_eps;
+			let val = null;
+			try
+			{
+				console.log("Checking ", this.user_answer);
+				let expr = new Expr(this.user_answer);
+				val = expr.eval();
+			}
+			catch (e)
+			{
+				return false;
+			}
+
+			let res = Math.abs(val - this.data) <= this.root.float_eps;
 			console.log("check answer res", res);
 			return res;
 		},

@@ -131,7 +131,7 @@ export class Expr
 				case '/':
 				case SQRT_SYM:
 				case '-':
-					if (start_number)
+					if (start_number !== null)
 						return handle_token_found(i);
 
 					this.parse_pos = i + 1;
@@ -144,7 +144,7 @@ export class Expr
 			}
 		}
 
-		if (start_number)
+		if (start_number !== null)
 		{
 			this.parse_pos = this.expr_str.length;
 			return this.expr_str.substr(start_number, this.expr_str.length - start_number);
