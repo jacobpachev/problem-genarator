@@ -3,7 +3,8 @@ import {Stack} from './stack';
 export const SQRT_KEY = "^";
 export const SQRT_SYM = "\u221a";
 
-const prec_map = {SQRT_SYM : 3, '/' : 2, '-' : 1};
+let prec_map = { '/' : 2, '-' : 1};
+prec_map[SQRT_SYM] = 3;
 
 function is_operator(token)
 {
