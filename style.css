@@ -267,3 +267,8 @@ input.denominator {
 	position: absolute;
 	left: 200px;
 }
+
+.trig-instructions {
+	position: relative;
+	left: 33px;
+}

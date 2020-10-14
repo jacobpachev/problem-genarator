@@ -11,6 +11,7 @@
 			<v-col>
 				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
 				<v-btn @click="root.stop()" v-else>New Exercise</v-btn>
+				<span v-if="root.mode == 'trig'" class="trig-instructions">Answer in decimal or with fractions(example: √3/2). Type ^ for square root symbol.</span>
 			</v-col>
 			</v-col>
 			<div>
