@@ -60,8 +60,7 @@
 			</v-row>
 		</template>
 		<div class="instrutions">
-			Quick, solve the problem before the parachute falls!
-			Earn as many stars as you can!
+			Solve the problem before the parachute falls to earn stars.
 			Lighter green indicates a full square.
 				<span v-if="root.mode == 'trig'">Enter the answer within {{root.float_eps}} precison</span>
 		</div>
