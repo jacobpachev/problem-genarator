@@ -22,14 +22,14 @@ export class Stack {
 	pop()
 	{
 		if (this.empty())
-			throw "Stack is empty";
+			throw "Stack is empty in pop";
 		return this.arr.pop();
 	}
 
 	peek()
 	{
 		if (this.empty())
-			throw "Stack is empty";
+			throw "Stack is empty in peek()";
 		return this.arr[this.arr.length - 1];
 	}
 
