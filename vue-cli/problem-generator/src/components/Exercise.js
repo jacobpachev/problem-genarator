@@ -57,6 +57,7 @@ export default {
 			}
 
 			this.table_len_input = this.get_default_table_len();
+			this.generated = false;
 		},
 		fix_styles_for_class(cl, props) {
 			let style_map = {};
