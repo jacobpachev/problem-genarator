@@ -18,6 +18,7 @@
 						<span v-else-if="op == 'sum_sq' "><Pow :a="a" b="2" />&nbsp;+&nbsp;<Pow :a="b" b="2"/></span>
 						<span v-else-if="op == 'table_sq'"><Pow :a="get_square_base()" b="2" /></span>
 						<span v-else-if="op == 'trig'">{{this.a}}({{this.b}}<sup>&#8728;</sup>)</span>
+						<span v-else-if="op == 'log'">log<sub>{{this.a}}</sub>({{this.b}})</span>
 					</div>
 				</template>
 				<Star animateid="star" v-if="show_star" :key="star_key()" :root="root" :top="cur_top" :left="cur_left"/>
@@ -87,6 +88,8 @@ export default {
 				case "fract":
 					frame_step = 0.3;
 					break;
+				case "log":
+					frame_step = 0.25;
 				default:
 					break;
 			}
@@ -118,6 +121,7 @@ export default {
 				case 'sum_sq':
 				case 'table_sq':
 				case '**':
+				case 'log':
 				case 'trig':
 					return false;
 				default:

@@ -55,19 +55,20 @@ export default {
 		answer_is_correct() {
 			if (typeof this.user_answer === "undefined" || !this.user_answer.length)
 				return false;
-
-			console.log("user answer", this.user_answer, "real answer", this.data, "eps", this.root.float_eps);
-			if (this.op != "trig")
-				return this.user_answer == this.data;
-
+			if (this.user_answer.toLowerCase() == "nan" && isNaN(this.data)) 
+				return true;
+			if (this.user_answer.toLowerCase() == "-inf" && (this.data == -Infinity))
+				return true;
 			if (this.user_answer.toLowerCase().startsWith("inf") && (this.data == Infinity ||
 						Math.abs(this.data) > FLOAT_INF))
 				return true;
-
+			console.log("user answer", this.user_answer, "real answer", this.data, "eps", this.root.float_eps);
+			if (this.op != "trig" && this.op != "log") {
+				return this.user_answer == this.data;
+			}
 			let val = null;
 			try
 			{
-				console.log("Checking ", this.user_answer);
 				let expr = new Expr(this.user_answer);
 				val = expr.eval();
 			}
@@ -77,7 +78,6 @@ export default {
 			}
 
 			let res = Math.abs(val - this.data) <= this.root.float_eps;
-			console.log("check answer res", res);
 			return res;
 		},
 		is_full_sq(n) {
