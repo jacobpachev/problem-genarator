@@ -71,6 +71,9 @@ export default {
 					return 2;
 			}
 		},
+		get_base_log(a,b) {
+			return Math.log(b) / Math.log(a);
+		},
 		apply_op(a,b) {
 			switch (this.op)
 			{
@@ -91,7 +94,8 @@ export default {
 				}
 				case 'trig':
 					return this.apply_trig_op(a, b);
-
+				case 'log':
+					return (this.get_base_log(a,b));
 			}
 		},
 		apply_trig_op(f_name, x) {

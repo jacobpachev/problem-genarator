@@ -113,9 +113,9 @@ input.denominator {
 }
 
 .solve-time {
-	position: fixed;
-	top: 70px;
-	left: 600px;
+	position: relative;
+	top: -470px;
+	left: 180px;
 }
 
 .eq {
