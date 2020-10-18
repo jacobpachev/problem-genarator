@@ -90,6 +90,7 @@ export default {
 					break;
 				case "log":
 					frame_step = 0.25;
+					break;
 				default:
 					break;
 			}

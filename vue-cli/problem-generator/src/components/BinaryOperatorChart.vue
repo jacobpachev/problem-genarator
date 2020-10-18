@@ -68,6 +68,7 @@ export default {
 					return 2;
 				case '**':
 				case 'sum_sq':
+				case 'log':
 					return 2;
 			}
 		},
