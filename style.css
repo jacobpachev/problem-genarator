@@ -184,6 +184,14 @@ input.denominator {
 	background-color: rgb(140, 222, 0);
 }
 
+.mark-hot {
+	background-color: rgb(252, 98, 3);
+}
+
+.mark-cold {
+	background-color: rgb(7, 245, 241);
+}
+
 .binary-operator-table td {
 	width: 30px;
 }

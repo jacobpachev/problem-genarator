@@ -12,6 +12,7 @@
 				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
 				<v-btn @click="root.stop()" v-else>New Exercise</v-btn>
 				<span v-if="root.mode == 'trig'" class="trig-instructions">Answer in decimal or with fractions(example: √3/2). Type ^ for square root symbol.</span>
+				<span v-if=" this.timer_on" class="log-instructions">The box turns orange if you are overshooting and blue if you are undershooting.</span>
 			</v-col>
 			</v-col>
 			<div>

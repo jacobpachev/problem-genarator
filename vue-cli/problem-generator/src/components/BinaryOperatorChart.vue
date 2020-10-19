@@ -36,9 +36,13 @@ export default {
 			return ["sin", "cos", "tan", "cot", "sec", "csc"];
 		},
 		col_range() {
-			if (this.op != "trig")
+			if (this.op != "trig" && this.op != "log")
 				return this.table_range;
-
+			else if(this.op == "log") {
+				return this.table_range.map((x) => {
+					return 2**x;
+				});
+			}
 			return this.table_range.map((x) => {
 				let cycle = Math.floor(x / 4);
 				let phase = x % 4;

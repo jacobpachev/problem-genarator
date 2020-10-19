@@ -50,7 +50,13 @@ export default {
 			this.root.hint.update(null, null);
 		},
 		get_cl() {
-			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer !== "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : "");
+			return "binary-operator-input" + (this.answer_is_correct() && !this.is_full_sq(this.user_answer) && this.user_answer !== "" ? " mark-correct" : this.answer_is_correct() && this.is_full_sq(this.user_answer)  ? " mark-correct-sq" : this.is_hot() ? " mark-hot" : this.is_cold() && this.user_answer !== "" ? " mark-cold" : "");
+		},
+		is_hot() {
+			return(this.user_answer - this.data <= this.data * 0.3 && this.user_answer > this.data);
+		},
+		is_cold() {
+			return(this.data - this.user_answer <= this.data * 0.3 && this.user_answer < this.data);
 		},
 		answer_is_correct() {
 			if (typeof this.user_answer === "undefined" || !this.user_answer.length)
