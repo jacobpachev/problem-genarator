@@ -12,7 +12,7 @@
 				<v-btn @click="root.generate()" v-if='!root.timer_on'>Start</v-btn>
 				<v-btn @click="root.stop()" v-else>New Exercise</v-btn>
 				<span v-if="root.mode == 'trig'" class="trig-instructions">Answer in decimal or with fractions(example: √3/2). Type ^ for square root symbol.</span>
-				<span v-if=" this.timer_on" class="log-instructions">The box turns orange if you are overshooting and blue if you are undershooting.</span>
+				<span v-if=" this.timer_on && root.is_binary_op_exercise" class="log-instructions">The box turns orange if you are overshooting and blue if you are undershooting.</span>
 			</v-col>
 			</v-col>
 			<div>
@@ -45,6 +45,7 @@ import ProblemParameters from './ProblemParameters.vue';
 import Clock from './Clock.vue';
 import FractExercise from './FractExercise.js';
 import LinearEquationExercise from './LinearEquationExercise.js';
+import ExprExercise from './ExprExercise.js'
 import BinaryOperatorExercise from './BinaryOperatorExercise.js';
 import ExerciseProblem from './ExerciseProblem.vue';
 import BinaryOperatorChart from './BinaryOperatorChart.vue';
@@ -53,13 +54,14 @@ import StarCounter from './StarCounter.vue';
 
 export default {
 	name: 'ExerciseView',
-	mixins: [FractExercise, LinearEquationExercise, BinaryOperatorExercise],
+	mixins: [FractExercise, LinearEquationExercise,ExprExercise, BinaryOperatorExercise],
 	components: {ProblemParameters, Clock, ExerciseProblem, BinaryOperatorChart, Hint, StarCounter},
 	data() {
 		return {
 			modes: {
 				"linear" : {title: "Linear Equations", component: LinearEquationExercise},
 				"fract" : {title: "Imporper Fractions", component: FractExercise},
+				"expr": {title: "Expression Problems", component: ExprExercise},
 				"multi" : {title: "Multiplication", component: BinaryOperatorExercise, op: "*"},
 				"add" : {title: "Addition", component: BinaryOperatorExercise, op: "+"},
 				"sub" : {title: "Subtraction", component: BinaryOperatorExercise, op: "-"},

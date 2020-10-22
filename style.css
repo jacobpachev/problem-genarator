@@ -36,6 +36,32 @@ input.denominator {
 	z-index: 9999999;
 }
 
+.expr-line {
+	position: absolute;
+	top: 22px;
+	font-size: 14px;
+	width: 60px;
+	z-index: 9999999;
+}
+
+.num-b {
+	position: relative;
+	bottom: 24px;
+	left: 35px;
+}
+
+.denom-a {
+	position: relative;
+	bottom: 24px;
+	
+}
+
+.denom-b {
+	position: relative;
+	bottom: 48px;
+	left: 35px;
+}
+
 .problem_table {
 	position: relative;
 	display: block;
@@ -43,6 +69,14 @@ input.denominator {
 }
 
 .fraction {
+	position: absolute;
+	top: 0px;
+	left: 20px;
+	height: 40px;
+	width: 40px;
+}
+
+.expr {
 	position: absolute;
 	top: 0px;
 	left: 20px;
@@ -132,7 +166,7 @@ input.denominator {
 	z-index: 99999;
 	display: inline-block;
 	position: relative;
-	left: 20px;
+	left: 100px;
 }
 
 .checkmark {

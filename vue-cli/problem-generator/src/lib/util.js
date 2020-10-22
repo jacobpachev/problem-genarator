@@ -1,6 +1,6 @@
 import {Fraction} from './fract';
 import {LinearEquation} from './linear-equation';
-import {Expr} from './expression';
+import {Expression} from './expression';
 
 export function range_rand(range) {
 	return Math.floor(Math.random() * range) + 1;
@@ -25,11 +25,15 @@ export function rand_linear_equation(max_val)
 	return new LinearEquation(a, b, c, d);
 }
 
-export function rand_linear_equation(max_val)
+export function rand_expression(max_val)
 {
 	let a = range_rand(max_val);
 	let b = range_rand(max_val);
-	return new Expr(a, b);
+	let c = range_rand(max_val);
+	let d = range_rand(max_val);
+	b = (b == d) ? b+1: b;
+	a = (a == c) ? a+1: a;
+	return new Expression(a, b, c, d);
 }
 
 export function rand_sign()
