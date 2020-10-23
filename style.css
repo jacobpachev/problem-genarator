@@ -40,7 +40,7 @@ input.denominator {
 	position: absolute;
 	top: 22px;
 	font-size: 14px;
-	width: 60px;
+	width: 80px;
 	z-index: 9999999;
 }
 
@@ -60,6 +60,58 @@ input.denominator {
 	position: relative;
 	bottom: 48px;
 	left: 35px;
+}
+
+.const-a {
+	position: relative;
+	top: 10px;
+	left: 120px; 
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+	display: block;
+}
+
+.pow-a {
+	position: relative;
+	bottom: 40px;
+	left: 150px; 
+	width: 15px;
+	height: 15px;
+	border: 1px solid black;
+	display: block;
+}
+
+.var-a {
+	position: relative;
+	bottom: 10px;
+	left: 140px;
+}
+
+.const-b {
+	position: relative;
+	bottom: 50px;
+	left: 170px; 
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+	display: block;
+}
+
+.pow-b {
+	position: relative;
+	bottom: 100px;
+	left: 200px; 
+	width: 15px;
+	height: 15px;
+	border: 1px solid black;
+	display: block;
+}
+
+.var-b {
+	position: relative;
+	bottom: 68px;
+	left: 190px;
 }
 
 .problem_table {
@@ -82,6 +134,12 @@ input.denominator {
 	left: 20px;
 	height: 40px;
 	width: 40px;
+}
+
+.expr-eq {
+	position: relative;
+	bottom: 85px;
+	left: 85px;
 }
 
 .problem_container {

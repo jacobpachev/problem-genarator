@@ -3,19 +3,19 @@
 		<div class="expression-wrap">
 			<Expr :root="root" :expr="data.expr" />
 		</div>
-		<AnswerInput :problem="data" :key="rownum" :root="root" />
+		<ExprAnswerInput :problem="data" :key="rownum" :root="root" />
 		<CheckMark :problem="data" />
 	</div>
 </template>
 <script>
 import Expr from './Expr.vue';
-import AnswerInput from './AnswerInput.vue';
+import ExprAnswerInput from './ExprAnswerInput.vue';
 import CheckMark from './CheckMark.vue';
 import Problem from './Problem';
 
 export default {
 	mixins: [Problem],
 	name: 'ExprProblem',
-	components: {Expr, CheckMark, AnswerInput}
+	components: {Expr, CheckMark, ExprAnswerInput}
 }
 </script>
