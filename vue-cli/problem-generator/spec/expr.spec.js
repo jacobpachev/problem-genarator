@@ -1,4 +1,4 @@
-import { Expr, SQRT_SYM } from  "../vue-cli/problem-generator/src/lib/expr";
+import { Expr, SQRT_SYM } from  "../src/lib/expr";
 
 describe("Expression test suite", function() {
   it("check basic expression operations", function() {

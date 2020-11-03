@@ -1,5 +1,6 @@
 import {Problem} from './problem';
 import {interval_rand} from './util';
+import { simplify } from 'mathjs';
 
 export class ExprProblem extends Problem
 {
@@ -8,13 +9,19 @@ export class ExprProblem extends Problem
 		super(ctx);
 		this.ctx = ctx;
 		this.expr = this.gen_expr();
-		this.result = {};
+		this.init_result();
 		this.user_answer = null;
+		console.log("simplified:", simplify("4*a^2*b^-3*a^6/(2*b^-7*c^7)").toString());
+	}
+
+	init_result()
+	{
+		this.result = simplify(this.expr).toString();
 	}
 
 	answer_is_correct()
 	{
-		return this.user_answer && this.expr.ans == (this.user_answer);
+		return this.user_answer && this.result == this.user_answer;
 	}
 
 	gen_expr()
