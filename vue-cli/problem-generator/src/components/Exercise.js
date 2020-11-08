@@ -1,7 +1,7 @@
 import {fmt_time} from '../lib/util';
 import {LinearEquationProblem} from '../lib/linear-equation-problem';
 import {FractProblem} from '../lib/fract-problem';
-import {ExprProblem} from '../lib/expr-problem';
+import {PowerRatioExprProblem} from '../lib/expr-problem';
 
 
 export default {
@@ -26,7 +26,8 @@ export default {
 			max_val_length: null,
 			mode_: "linear",
 			order_items: ["Row","Diagonal"],
-			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem, "expr": ExprProblem, "binary_op": null},
+			problem_lookup: {"linear": LinearEquationProblem, "fract": FractProblem,
+				"power_ratio_expr": PowerRatioExprProblem, "binary_op": null},
 			hint: null,
 			cur_row: null,
 			float_eps: 0.01

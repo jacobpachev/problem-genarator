@@ -1,6 +1,7 @@
 import {Problem} from './problem';
 import {interval_rand} from './util';
-import { simplify } from 'mathjs';
+import {Fraction} from './fract';
+import { simplify, parse } from 'mathjs';
 
 export class ExprProblem extends Problem
 {
@@ -8,20 +9,14 @@ export class ExprProblem extends Problem
 	{
 		super(ctx);
 		this.ctx = ctx;
-		this.expr = this.gen_expr();
-		this.init_result();
+		this.expr = { str: this.gen_expr()};
+		this.expr.tex = parse(this.expr.str).toTex();
 		this.user_answer = null;
-		console.log("simplified:", simplify("4*a^2*b^-3*a^6/(2*b^-7*c^7)").toString());
-	}
-
-	init_result()
-	{
-		this.result = simplify(this.expr).toString();
 	}
 
 	answer_is_correct()
 	{
-		return this.user_answer && this.result == this.user_answer;
+		return this.user_answer && simplify(this.result + "-(" + this.user_answer + ")").toString() === "0";
 	}
 
 	gen_expr()
@@ -47,19 +42,64 @@ export class ExprProblem extends Problem
 			s += this.get_var_by_ind(i) + "^" + interval_rand(-this.ctx.max_val, this.ctx.max_val);
 		}
 
-		return interval_rand(-this.ctx.max_val, this.ctx.max_val) + " * " + s;
+		let k = interval_rand(-this.ctx.max_val, this.ctx.max_val);
+
+		if (Math.abs(k) < 2)
+			k = this.ctx.max_val - 1;
+
+		return { k, var_expr: s };
 	}
 }
 
-export class RatioPowerExprProblem extends ExprProblem
+export class PowerRatioExprProblem extends ExprProblem
 {
 	constructor(ctx)
 	{
 		super(ctx);
 	}
 
+	dump_tree(expr_tree)
+	{
+		console.log("Data:", expr_tree);
+		if (!expr_tree.args)
+			return;
+		console.log("Children:");
+		for (let arg of expr_tree.args)
+		{
+			this.dump_tree(arg);
+		}
+	}
+
+	find_mul_num_arg(tree)
+	{
+		console.log("searching", tree);
+		if (typeof tree.args === "undefined")
+			return null;
+
+		for (let arg of tree.args)
+		{
+			if (typeof arg.value !== "undefined" && tree.fn === "multiply")
+				return arg.value;
+
+			let val = this.find_mul_num_arg(arg);
+			if (val)
+				return val;
+		}
+
+		return null;
+	}
+
 	gen_expr()
 	{
-		return this.gen_term() + "/(" + this.gen_term() + ")";
+		let numer = this.gen_term() ;
+		let denom = this.gen_term();
+		let k_fract = new Fraction(0, numer.k, denom.k);
+		k_fract.reduce();
+
+		this.result = k_fract.numer + " * " + simplify(numer.var_expr + "/("
+			+ denom.var_expr + ")").toString() + "/" + k_fract.den;
+
+		return k_fract.numer + " * " + numer.var_expr + "/(" + k_fract.den + " * "
+			+ denom.var_expr + ")";
 	}
 }
