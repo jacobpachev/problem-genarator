@@ -1,10 +1,10 @@
 <template>
 	<div class="problem_table">
 		<div class="expression-wrap">
-			<Expr :root="root" :expr="data.expr" />
+			<Expr :root="root" :expr="data.expr" :parent="self" />
 		</div>
-		<ExprAnswerInput :problem="data" :key="rownum" :root="root" />
-		<CheckMark :problem="data" />
+		<ExprAnswerInput :problem="data" :key="rownum" :root="root" :parent="self" />
+		<CheckMark :problem="data"/>
 	</div>
 </template>
 <script>
@@ -16,6 +16,19 @@ import Problem from './Problem';
 export default {
 	mixins: [Problem],
 	name: 'ExprProblem',
-	components: {Expr, CheckMark, ExprAnswerInput}
+	components: {Expr, CheckMark, ExprAnswerInput},
+	data() {
+		return {
+			answer: ""
+		}
+	},
+	computed: {
+		self() {
+			return this;
+		},
+	},
+	methods: {
+	}
+
 }
 </script>

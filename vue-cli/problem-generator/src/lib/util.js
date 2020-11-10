@@ -2,6 +2,11 @@ import {Fraction} from './fract';
 import {LinearEquation} from './linear-equation';
 import {Expression} from './expression';
 
+export function interval_rand(start, end)
+{
+	return start + range_rand(end - start);
+}
+
 export function range_rand(range) {
 	return Math.floor(Math.random() * range) + 1;
 }

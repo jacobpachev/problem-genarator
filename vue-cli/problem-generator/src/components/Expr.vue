@@ -1,19 +1,33 @@
 <template>
-<div class="expr"><ExprTerm class="num-a" :showplus="false" :k="expr.a" term="a" :rand="range_rand(root.max_val)" /> <ExprTerm class="num-b"         :k="expr.b" :showplus="true" term="b" :rand="range_rand(root.max_val)" /> <hr class="expr-line"/><ExprTerm class="denom-a"  :showplus="false" :k="expr.c" term="a" :rand="range_rand(root.max_val)"/>  <ExprTerm class="denom-b" :showplus="true" :k="expr.d" term="b" :rand="range_rand(root.max_val)" /> <span class="expr-eq">=</span></div>
+<div>
+ <vue-mathjax :formula="'$$' + expr.tex + '=' + to_tex(answer) + '$$'"></vue-mathjax>
+</div>
 </template>
 <script>
-
-import ExprTerm from './ExprTerm.vue';
+import {VueMathjax} from "vue-mathjax";
+import {parse} from "mathjs";
 
 export default {
 	name : 'Expr',
-	props: ['root', 'expr'],
-	components: {ExprTerm},
+	components: {"vue-mathjax": VueMathjax},
+	props: ['root', 'expr', 'parent'],
+	computed: {
+		answer() {
+			return this.parent.answer;
+		}
+	},
+	mounted() {
+	},
 	methods: {
-		range_rand(range) {
-			return Math.floor(Math.random() * range) + 2;
+		to_tex(expr_str) {
+			try {
+				return expr_str ? parse(expr_str).toTex() : "";
+			}
+			catch (e) {
+				return "";
+			}
 		}
 	}
-	
+
 }
 </script>

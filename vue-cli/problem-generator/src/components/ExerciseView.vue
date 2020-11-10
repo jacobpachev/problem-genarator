@@ -61,7 +61,7 @@ export default {
 			modes: {
 				"linear" : {title: "Linear Equations", component: LinearEquationExercise},
 				"fract" : {title: "Imporper Fractions", component: FractExercise},
-				"expr": {title: "Expression Problems", component: ExprExercise},
+				"power_ratio_expr": {title: "Power Ratio Problems", component: ExprExercise, mode: "power_ratio"},
 				"multi" : {title: "Multiplication", component: BinaryOperatorExercise, op: "*"},
 				"add" : {title: "Addition", component: BinaryOperatorExercise, op: "+"},
 				"sub" : {title: "Subtraction", component: BinaryOperatorExercise, op: "-"},
