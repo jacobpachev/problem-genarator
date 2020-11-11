@@ -1,6 +1,7 @@
 <template>
 <div>
-	<input  placeholder="Enter answer here" v-model="answer" class="expr-answer-input" ></input>
+	<input  placeholder="Enter answer here" v-model="answer"
+		class="expr-answer-input" :id="parent.get_id()"></input>
 </div>
 </template>
 <script>
