@@ -44,75 +44,6 @@ input.denominator {
 	z-index: 9999999;
 }
 
-.num-b {
-	position: relative;
-	bottom: 24px;
-	left: 35px;
-}
-
-.denom-a {
-	position: relative;
-	bottom: 24px;
-	
-}
-
-.denom-b {
-	position: relative;
-	bottom: 48px;
-	left: 35px;
-}
-
-.const-a {
-	position: relative;
-	top: 10px;
-	left: 120px; 
-	width: 20px;
-	height: 20px;
-	border: 1px solid black;
-	display: block;
-}
-
-.pow-a {
-	position: relative;
-	bottom: 40px;
-	left: 150px; 
-	width: 15px;
-	height: 15px;
-	border: 1px solid black;
-	display: block;
-}
-
-.var-a {
-	position: relative;
-	bottom: 10px;
-	left: 140px;
-}
-
-.const-b {
-	position: relative;
-	bottom: 50px;
-	left: 170px; 
-	width: 20px;
-	height: 20px;
-	border: 1px solid black;
-	display: block;
-}
-
-.pow-b {
-	position: relative;
-	bottom: 100px;
-	left: 200px; 
-	width: 15px;
-	height: 15px;
-	border: 1px solid black;
-	display: block;
-}
-
-.var-b {
-	position: relative;
-	bottom: 68px;
-	left: 190px;
-}
 
 .problem_table {
 	position: relative;
@@ -233,8 +164,29 @@ input.denominator {
 	display: inline-block;
 }
 
+.expr-checkmark {
+	position: relative;
+	left: 350px;
+	bottom: 50px;
+}
+
+::placeholder {
+	font-size: 14px;
+	height: 20px;
+}
+
+.expr-answer-input {
+	position: absolute;
+	top: -25px;
+	right: 150px;
+	width: 120px;
+	height: 25px;
+	border: 1px solid black;
+	display: block;
+}
+
 .fract_line_bar {
-	heigth: 0px;
+	height: 0px;
 	border: 1px solid black;
 	width: 100%;
 	position: relative;

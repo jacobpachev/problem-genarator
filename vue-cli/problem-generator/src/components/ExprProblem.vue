@@ -1,10 +1,10 @@
 <template>
 	<div class="problem_table">
+        <ExprAnswerInput :problem="data" :key="rownum" :root="root" :parent="self" />
 		<div class="expression-wrap">
 			<Expr :root="root" :expr="data.expr" :parent="self" />
 		</div>
-		<ExprAnswerInput :problem="data" :key="rownum" :root="root" :parent="self" />
-		<CheckMark :problem="data"/>
+		<CheckMark class="expr-checkmark" :problem="data"/>
 	</div>
 </template>
 <script>

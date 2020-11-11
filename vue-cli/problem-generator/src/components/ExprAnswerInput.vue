@@ -1,6 +1,6 @@
 <template>
 <div>
-	<input v-model="answer"></input>
+	<input  placeholder="Enter answer here" v-model="answer" class="expr-answer-input" ></input>
 </div>
 </template>
 <script>
