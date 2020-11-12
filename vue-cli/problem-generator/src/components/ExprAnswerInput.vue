@@ -12,7 +12,7 @@ export default {
 		answer: {
 			set(new_answer) {
 				this.parent.answer = new_answer;
-				this.parent.data.user_answer = new_answer;
+				this.parent.data.update_user_answer(new_answer);
 				console.log(this.parent.data.result);
 				this.parent.answer_is_correct = this.parent.data.answer_is_correct();
 			},

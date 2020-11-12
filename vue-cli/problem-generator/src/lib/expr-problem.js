@@ -82,8 +82,7 @@ export class ExprProblem extends Problem
 		let s = "";
 		let res = {vars: {}};
 
-		// n_terms is really the number of variables in a term here
-		for (let i = 0; i < this.ctx.n_terms; i++)
+		for (let i = 0; i < this.ctx.n_vars; i++)
 		{
 			if (s.length)
 				s += "*";

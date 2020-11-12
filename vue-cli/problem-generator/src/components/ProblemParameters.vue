@@ -33,9 +33,17 @@
         >
           <v-text-field
 			class="terms"
-            v-if="root.mode=='fract'"
+            v-if="root.has_terms"
             v-model="root.n_terms"
             label="Number of terms"
+            type="number"
+            required
+          ></v-text-field>
+          <v-text-field
+			class="terms"
+            v-if="root.has_vars"
+            v-model="root.n_vars"
+            label="Number of variables"
             type="number"
             required
           ></v-text-field>

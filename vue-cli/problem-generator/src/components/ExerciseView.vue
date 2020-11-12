@@ -99,17 +99,29 @@ export default {
 			{
 				case "fract":
 				case "linear":
+				case "power_ratio_expr":
 					return true;
 				default:
 					return false;
 			}
 		},
-
 		mode_items() {
 			return Object.keys(this.modes).map(k => {return {title: this.modes[k].title, value: k}});
 		},
 		is_binary_op_exercise() {
 			return(this.modes[this.mode].component == BinaryOperatorExercise);
+		},
+		has_vars() {
+			return this.mode.endsWith("_expr");
+		},
+		has_terms() {
+			switch (this.mode)
+			{
+				case "fract":
+					return true;
+				default:
+					return false;
+			}
 		},
 		binary_op() {
 			return(this.modes[this.mode].op);

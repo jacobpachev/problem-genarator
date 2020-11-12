@@ -14,6 +14,7 @@ export default {
 			max_val: this.get_default_max_val(),
 			n_problems: this.get_default_n_problems(),
 			n_terms: this.get_default_n_terms(),
+			n_vars: this.get_default_n_vars(),
 			props_by_class: {},
 			problems: [],
 			results: [],
@@ -74,8 +75,17 @@ export default {
 		get_default_n_terms() {
 			return 2;
 		},
+		is_expr() {
+			return this.mode_.endsWith("_expr");
+		},
+		get_default_n_vars() {
+			return 3;
+		},
 		get_default_n_problems() {
 			if (!this.mode_)
+				return 5;
+
+			if (this.is_expr())
 				return 5;
 
 			switch (this.mode_)
@@ -142,12 +152,22 @@ export default {
 			this.generated = true;
 		},
 		focus_on_row(row_num) {
-			let el = this.gen_id("answer-input-" + row_num + "-whole");
-			console.trace("focus el:", el, "row_num=", row_num);
+			let focus_id = this.get_focus_on_row_id(row_num);
+			console.log("Focusing on ", focus_id);
+			let el = this.get_id(focus_id);
 			if (!el)
 				return;
 			el.focus();
 			this.cur_row = row_num;
+		},
+				get_focus_on_row_id(row_num) {
+			if (this.mode.endsWith("_expr"))
+				return "expr-answer-" + row_num;
+			switch (this.mode)
+			{
+				default:
+					return "answer-input-" + row_num + "-whole";
+			}
 		},
 		reset_timer: function () {
 			if (this.timer_id)
@@ -159,7 +179,7 @@ export default {
 		gen_key: function(pos) {
 			return this.start_time.toString() + "-" + pos;
 		},
-		gen_id: function(id) {
+		get_id: function(id) {
 			return(document.getElementById(id));
 		},
 		report_time: function () {
