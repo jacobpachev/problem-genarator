@@ -17,6 +17,11 @@ export class Problem
 		return this.user_answer && this.answer.obj_equals(this.user_answer);
 	}
 
+	is_expr()
+	{
+		return this.ctx.mode.endsWith("_expr");
+	}
+
 	is(name)
 	{
 		console.log("problem type:",  this.ctx.mode);

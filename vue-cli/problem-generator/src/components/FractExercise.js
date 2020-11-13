@@ -37,9 +37,6 @@ export default {
 		},
 		hint_width: function() {
 			return this.n_terms * HINT_INC_W + HINT_BASE_W;
-		},
-		get_focus_on_row_id(row_num) {
-			return "answer-input-" + row_num + "-whole";
 		}
 	}
 }

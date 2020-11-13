@@ -5,7 +5,8 @@ export default {
 	properties: ["type"],
 	methods: {
 		get_focus_on_row_id(row_num) {
-			return "answer-input-" + row_num + "-whole";
+			console.log("focus on row:", row_num);
+			return "expr-answer-" + row_num;
 		}
 	}
 }

@@ -321,3 +321,11 @@ input.denominator {
 	position: relative;
 	left: 33px;
 }
+
+.expr-challenge {
+	display: inline-block;
+}
+
+.expr-answer {
+	display: inline-block;
+}

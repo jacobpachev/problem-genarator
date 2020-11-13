@@ -2,7 +2,7 @@
 	<div class="problem_table">
         <ExprAnswerInput :problem="data" :key="rownum" :root="root" :parent="self" />
 		<div class="expression-wrap">
-			<Expr :root="root" :expr="data.expr" :parent="self" />
+			<Expr :root="root" :expr="data.expr" :parent="self" :mode:="mode"/>
 		</div>
 		<CheckMark class="expr-checkmark" :problem="data"/>
 	</div>
@@ -16,6 +16,7 @@ import Problem from './Problem';
 export default {
 	mixins: [Problem],
 	name: 'ExprProblem',
+	props: ["rownum", "mode"],
 	components: {Expr, CheckMark, ExprAnswerInput},
 	data() {
 		return {
@@ -28,6 +29,9 @@ export default {
 		},
 	},
 	methods: {
+		get_id() {
+			return "expr-answer-" + this.rownum;
+		}
 	}
 
 }

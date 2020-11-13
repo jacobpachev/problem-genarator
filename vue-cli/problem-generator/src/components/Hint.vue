@@ -10,6 +10,11 @@
 							<LinearEquation :root="root" :eq="problem.eq"/>
 						</div>
 					</template>
+					<template v-if="problem.is_expr()">
+						<div class="hint-equation-wrap">
+							Expression
+						</div>
+					</template>
 				</template>
 				<template v-else>
 					<div class="hint_op_container">
