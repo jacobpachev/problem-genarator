@@ -10,9 +10,10 @@
 </template>
 <script>
 import { Fraction } from '../lib/fract';
+import  BaseAnswerInput from './BaseAnswerInput.js';
 
 export default {
-	props: ['problem', 'root'],
+	mixins: [BaseAnswerInput],
 	data: function() { return {
 			num: "",
 			denom: "",
@@ -56,30 +57,6 @@ export default {
 
 			this.fract = new Fraction(whole, num, denom);
 			this.problem.update_user_answer(this.fract);
-		},
-		get_hint() {
-			if (!this.root || !this.root.hint)
-				return null;
-
-			return this.root.hint;
-		},
-		handle_focus() {
-			if (this.problem && this.problem === this.anim_problem)
-				return;
-
-			let hint = this.get_hint();
-			console.log("answer input focus hint", hint);
-			if (!hint)
-				return;
-
-			hint.stop();
-			hint.animate();
-			this.anim_problem = this.problem;
-		},
-		handle_focus_out() {
-			let hint = this.get_hint();
-			if (!hint)
-				return;
 		},
 		get_id(suffix) {
 			return "answer-input-" + this.$vnode.key + "-" + suffix;
