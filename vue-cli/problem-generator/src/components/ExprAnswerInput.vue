@@ -1,12 +1,17 @@
 <template>
 <div>
 	<input  placeholder="Enter answer here" v-model="answer"
-		class="expr-answer-input" :id="parent.get_id()"></input>
+		class="expr-answer-input" :id="parent.get_id()" @focus="handle_focus()"></input>
 </div>
 </template>
 <script>
+import BaseAnswerInput from './BaseAnswerInput.js';
+
 export default {
 	props: ["parent"],
+	mixins: [BaseAnswerInput],
+	methods: {
+	},
 	computed:
 	{
 		answer: {

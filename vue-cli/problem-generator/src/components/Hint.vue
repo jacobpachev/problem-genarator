@@ -12,7 +12,7 @@
 					</template>
 					<template v-if="problem.is_expr()">
 						<div class="hint-equation-wrap">
-							Expression
+							<vue-mathjax :formula="'$$' + problem.expr.tex + '$$'"/>
 						</div>
 					</template>
 				</template>
@@ -49,6 +49,7 @@ import Star from './Star.vue';
 import FractProblemStatement from './FractProblemStatement.vue';
 import LinearEquation from './LinearEquation.vue';
 import DynamicSpan from './DynamicSpan.vue';
+import {VueMathjax} from "vue-mathjax";
 
 const FRAME_STEP = 1;
 const FINAL_TOP = 400;
@@ -56,7 +57,8 @@ const FINAL_TOP = 400;
 export default {
 	name: 'Hint',
 	mixins: [Animated],
-	components: {Pow, Star, FractProblemStatement, DynamicSpan, LinearEquation},
+	components: {Pow, Star, FractProblemStatement, DynamicSpan, LinearEquation,
+		"vue-mathjax" : VueMathjax},
 	props: ['root', 'op', 'problem', 'animateid'],
 	data() {
 		return {

@@ -23,7 +23,7 @@ export default {
 			console.log("Animated id ", this.animateid, " reset to ", this.pos);
 			this.timer = setInterval(() => {
 				this.run_frame_step();
-                if (this.animateid == 'star') 
+                if (this.animateid == 'star')
 					console.log("Position", this.pos, "Id", this.animateid);
 				this.sync_element();
 
