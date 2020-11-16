@@ -58,7 +58,7 @@ export default {
 				this.star.animate();
 				return;
 			}
-
+			console.log("Animating star");
 			this.animate_star_on_mount = true;
 		},
 		stop_star() {

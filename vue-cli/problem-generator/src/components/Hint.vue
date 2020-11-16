@@ -144,6 +144,7 @@ export default {
 				this.root.stop_star();
 				this.root.animate_star();
 			}
+			console.log("Was running = ", was_running);
 			console.log("Handling success");
 		},
 		update(a,b) {
