@@ -1,6 +1,6 @@
 <template>
 		<div v-if="inited()">
-			<DynamicSpan :id="animateid" cl="hint" :root="root">
+			<DynamicSpan :id="animateid" :cl="hint_cl()" :root="root">
 				<template v-if="problem">
 					<template v-if="problem.is('FractProblem')">
 						<FractProblemStatement :root="root" :data="problem"/>
@@ -77,6 +77,14 @@ export default {
 		cur_top() { return this.pos.top}
 	},
 	methods: {
+		hint_cl() {
+			switch(this.root.mode) {
+				default:
+					return "hint";
+				case "power_ratio_expr":
+					return "power-ratio-expr-hint";
+			}
+		},
 		star_key() {
 			return "star-key-" + this.start_counter;
 		},
@@ -93,6 +101,7 @@ export default {
 					frame_step = 0.5;
 					break;
 				case "fract":
+				case "power_ratio_expr":
 					frame_step = 0.3;
 					break;
 				case "log":

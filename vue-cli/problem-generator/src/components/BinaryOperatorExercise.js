@@ -48,6 +48,7 @@ export default {
 				case 'linear':
 					return 3;
 				case 'fract':
+				case 'power_ratio_expr':
 					return 5;
 			}
 		},
