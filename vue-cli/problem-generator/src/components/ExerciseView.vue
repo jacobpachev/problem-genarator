@@ -64,6 +64,7 @@ export default {
 				"power_ratio_expr": {title: "Power Ratio Problems", component: ExprExercise, mode: "power_ratio"},
 				"multi" : {title: "Multiplication", component: BinaryOperatorExercise, op: "*"},
 				"add" : {title: "Addition", component: BinaryOperatorExercise, op: "+"},
+				"Division" : {title: "Division", component: BinaryOperatorExercise, op: "/"},
 				"sub" : {title: "Subtraction", component: BinaryOperatorExercise, op: "-"},
 				"pow" : {title: "Powers", component: BinaryOperatorExercise, op: "**"},
 				"sum_sq" : {title: "Sum of Squares", component: BinaryOperatorExercise, op: "sum_sq"},

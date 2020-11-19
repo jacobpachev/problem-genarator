@@ -69,20 +69,21 @@ export default {
 						Math.abs(this.data) > FLOAT_INF))
 				return true;
 			console.log("user answer", this.user_answer, "real answer", this.data, "eps", this.root.float_eps);
-			if (this.op != "trig" && this.op != "log") {
+			if (this.op != "trig" && this.op != "log" && this.op != "/") {
 				return this.user_answer == this.data;
 			}
 			let val = null;
-			try
-			{
-				let expr = new Expr(this.user_answer);
-				val = expr.eval();
+			if(this.op != "/") {
+				try
+				{
+					let expr = new Expr(this.user_answer);
+					val = expr.eval();
+				}
+				catch (e)
+				{
+					return false;
+				}
 			}
-			catch (e)
-			{
-				return false;
-			}
-
 			let res = Math.abs(val - this.data) <= this.root.float_eps;
 			return res;
 		},

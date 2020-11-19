@@ -66,6 +66,8 @@ export default {
 			{
 				default:
 					return 0;
+				case '/':
+					return 1;
 				case '*':
 					if (this.root.table_len < 7)
 						return 0;
@@ -101,6 +103,8 @@ export default {
 					return this.apply_trig_op(a, b);
 				case 'log':
 					return (this.get_base_log(a,b));
+				case '/':
+					return (a / b);
 			}
 		},
 		apply_trig_op(f_name, x) {
