@@ -58,10 +58,31 @@ export default {
 		is_cold() {
 			return(this.data - this.user_answer <= this.data * 0.3 && this.user_answer < this.data);
 		},
+		direct_answer_cmp() {
+			switch (this.op)
+			{
+				case "trig":
+				case "log":
+				case "/":
+					return false;
+				default:
+					return true;
+			}
+		},
+		eval_answer() {
+			switch (this.op)
+			{
+				case "trig":
+				case "log":
+					return true;
+				default:
+					return false;
+			}
+		},
 		answer_is_correct() {
 			if (typeof this.user_answer === "undefined" || !this.user_answer.length)
 				return false;
-			if (this.user_answer.toLowerCase() == "nan" && isNaN(this.data)) 
+			if (this.user_answer.toLowerCase() == "nan" && isNaN(this.data))
 				return true;
 			if (this.user_answer.toLowerCase() == "-inf" && (this.data == -Infinity))
 				return true;
@@ -69,11 +90,13 @@ export default {
 						Math.abs(this.data) > FLOAT_INF))
 				return true;
 			console.log("user answer", this.user_answer, "real answer", this.data, "eps", this.root.float_eps);
-			if (this.op != "trig" && this.op != "log" && this.op != "/") {
+			if (this.direct_answer_cmp()) {
 				return this.user_answer == this.data;
 			}
-			let val = null;
-			if(this.op != "/") {
+			let val = this.user_answer;
+
+			if (this.eval_answer())
+			{
 				try
 				{
 					let expr = new Expr(this.user_answer);
@@ -84,6 +107,7 @@ export default {
 					return false;
 				}
 			}
+
 			let res = Math.abs(val - this.data) <= this.root.float_eps;
 			return res;
 		},
