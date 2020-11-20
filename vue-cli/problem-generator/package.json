@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "babel-node spec/run.js"
+    "test": "babel-node spec/run.js",
+    "deploy": "../../scripts/deploy-vue-cli",
+    "update": "../../scripts/update"
   },
   "dependencies": {
     "@babel/cli": "^7.12.1",
