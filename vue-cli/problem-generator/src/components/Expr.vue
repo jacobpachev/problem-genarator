@@ -1,7 +1,7 @@
 <template>
 <div>
 	<div class="expr-challenge">
-		<vue-mathjax :formula="'$$' + expr.tex + '=$$'"></vue-mathjax>
+		<vue-mathjax :formula=" '$$' + expr.tex + '=$$'"></vue-mathjax>
 	</div>
 	<div class="expr-answer">
 		<vue-mathjax :formula="'$$' + to_tex(answer) + '$$'"></vue-mathjax>

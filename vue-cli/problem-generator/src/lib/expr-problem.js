@@ -3,7 +3,7 @@ import {interval_rand} from './util';
 import {Fraction} from './fract';
 import { simplify, parse } from 'mathjs';
 
-function simplify_power_ratio(numer_vars, denom_vars)
+function simplify_power_ratio(numer_vars, denom_vars, pow)
 {
 	let combined_vars = {};
 
@@ -26,7 +26,7 @@ function simplify_power_ratio(numer_vars, denom_vars)
 	{
 		if (!combined_vars[v])
 			continue;
-
+		combined_vars[v] *= pow;
 		if (combined_vars[v] > 0)
 			simple_numer[v] = combined_vars[v];
 		else
@@ -151,17 +151,17 @@ export class PowerRatioExprProblem extends ExprProblem
 			numer.k = denom.k + 1;
 		let k_fract = new Fraction(0, numer.k, denom.k);
 		k_fract.reduce();
-		let simple_expr = simplify_power_ratio(numer.vars, denom.vars);
+		let pow = interval_rand(-this.ctx.max_val, this.ctx.max_val);
+		let simple_expr = simplify_power_ratio(numer.vars, denom.vars, pow);
 		let denom_term_str = var_term_to_str(simple_expr.denom);
 		let denom_append = denom_term_str === "1" ? "" : "/(" + denom_term_str + ")";
-
-		this.result = k_fract.numer + "/" + k_fract.den + " * " + var_term_to_str(simple_expr.numer)
-			+ denom_append;
-
+		this.result = (k_fract.numer + "/" + k_fract.den + " * " + var_term_to_str(simple_expr.numer)
+			+ denom_append);
+		
 		let numer_str = k_fract.numer + " * " + numer.var_expr;
 		let denom_str = k_fract.den + " * " + denom.var_expr ;
-
-		return {str: numer_str + "/(" + denom_str + ")", tex: "\\frac{" + parse(numer_str).toTex()
-			+ "}{" + parse(denom_str).toTex() + "}"};
+// 		console.log("numer_str", numer_str);
+		return {str: "(" + k_fract.numer + "/" + k_fract.den + ") * (" + numer.var_expr + "/" + denom.var_expr + ") ^ " + pow, tex: "\\frac{" + k_fract.numer + "}{" + k_fract.den + "} \\left( \\frac{" + parse(numer.var_expr).toTex()
+			+ "}{" + parse(denom.var_expr).toTex() + "}  \\right) ^ {" + pow + "}"  };
 	}
 }
